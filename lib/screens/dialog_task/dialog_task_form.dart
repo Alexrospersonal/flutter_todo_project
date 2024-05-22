@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/screens/date/date_controller.dart';
 import 'package:flutter_todo_project/screens/homepage/homepage_model.dart';
 import 'package:flutter_todo_project/services/category.dart';
 import 'package:flutter_todo_project/services/category_manager.dart';
@@ -41,6 +42,10 @@ class _NewTaskFormState extends State<NewTaskForm> {
         TaskDescriptionField(descriptionController: _descriptionController),
         TaskCategoryField(selectCategory: selectCategory),
         const SizedBox(height: 20),
+        const SizedBox(height: 10),
+        const DateWidget(),
+        // DateWidget(),
+        const SizedBox(height: 10),
         TaskButtons(addNewTask: addNewTask)
       ],
     );

@@ -37,6 +37,10 @@ class DateModel extends ChangeNotifier {
   List<int> getYearsList() {
     return List<int>.generate(12, (index) => currentYear + index);
   }
+
+  int getDaysInMonth() {
+    return DateTime(year, month + 1, 0).day;
+  }
 }
 
 final List<String> months = [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/screens/date/date_filters_widget.dart';
 import 'package:flutter_todo_project/screens/date/date_model.dart';
 import 'package:flutter_todo_project/screens/date/select_day_widget.dart';
 import 'package:flutter_todo_project/screens/date/select_month_widget.dart';
@@ -49,7 +50,8 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
           builder: (context, value, child) {
             return value ? const SelectYearWidget() : const SizedBox.shrink();
           },
-        )
+        ),
+        const FilterWrapper()
       ],
     );
   }

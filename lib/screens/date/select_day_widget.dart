@@ -11,8 +11,9 @@ class SelectDayWidget extends StatefulWidget {
 
 class _SelectDayWidgetState extends State<SelectDayWidget> {
   List<int> _getDaysInMonth() {
-    final now = DateTime.now();
-    final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
+    final daysInMonth =
+        Provider.of<DateModel>(context, listen: false).getDaysInMonth();
+
     return List<int>.generate(daysInMonth, (index) => index + 1);
   }
 
@@ -97,8 +98,6 @@ class DaysGridRectangleWidget extends StatelessWidget {
     }
   }
 
-  // TODO: Зробити провірку якщо число менше за сьогоднішнє і місяць теперішній то всі
-  // менші числа стають не клікабельними і сірими.
   @override
   Widget build(BuildContext context) {
     return InkWell(

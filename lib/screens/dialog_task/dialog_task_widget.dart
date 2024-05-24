@@ -31,20 +31,25 @@ class AddNewTaskDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          child: SingleChildScrollView(
-              child: Column(
-            children: [
-              Text('Create new Task'),
-              SizedBox(height: 15),
-              NewTaskForm()
-            ],
-          ))),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Dialog(
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: SingleChildScrollView(
+                child: Column(
+              children: [
+                Text('Create new Task'),
+                SizedBox(height: 15),
+                NewTaskForm()
+              ],
+            ))),
+      ),
     );
   }
 }

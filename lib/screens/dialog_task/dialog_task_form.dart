@@ -41,7 +41,6 @@ class _NewTaskFormState extends State<NewTaskForm> {
         const SizedBox(height: 20),
         TaskDescriptionField(descriptionController: _descriptionController),
         TaskCategoryField(selectCategory: selectCategory),
-        const SizedBox(height: 20),
         const SizedBox(height: 10),
         const DateWidget(),
         // DateWidget(),
@@ -115,7 +114,7 @@ class _TaskCategoryFieldState extends State<TaskCategoryField> {
   }
 }
 
-class TaskDescriptionField extends StatelessWidget {
+class TaskDescriptionField extends StatefulWidget {
   const TaskDescriptionField({
     super.key,
     required TextEditingController descriptionController,
@@ -124,10 +123,36 @@ class TaskDescriptionField extends StatelessWidget {
   final TextEditingController _descriptionController;
 
   @override
+  State<TaskDescriptionField> createState() => _TaskDescriptionFieldState();
+}
+
+class _TaskDescriptionFieldState extends State<TaskDescriptionField> {
+  final FocusNode _focusNode = FocusNode();
+  bool _isFocused = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      setState(() {
+        _isFocused = _focusNode.hasFocus;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    widget._descriptionController.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: _descriptionController,
-      maxLines: null,
+      controller: widget._descriptionController,
+      focusNode: _focusNode,
+      maxLines: _isFocused ? 5 : 1,
       keyboardType: TextInputType.multiline,
       textInputAction: TextInputAction.newline,
       decoration: const InputDecoration(
@@ -149,7 +174,7 @@ class TaskNameField extends StatelessWidget {
     return TextField(
       controller: _titleController,
       decoration: const InputDecoration(hintText: 'Назва завдання'),
-      autofocus: false,
+      autofocus: true,
     );
   }
 }

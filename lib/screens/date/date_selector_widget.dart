@@ -80,6 +80,7 @@ class DateSelectButtonsWidget extends StatelessWidget {
     String dayOfWeek = context.watch<DateModel>().getDayOfWeekAsString();
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         ElevatedButton(
             onPressed: () {
@@ -101,7 +102,7 @@ class DateSelectButtonsWidget extends StatelessWidget {
               _isMonthViewVisible.value = false;
               _isYearViewVisible.value = !_isYearViewVisible.value;
             },
-            child: Text('Year: $year')),
+            child: Text('$year')),
       ],
     );
   }

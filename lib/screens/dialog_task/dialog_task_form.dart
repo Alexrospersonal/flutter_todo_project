@@ -149,7 +149,7 @@ class TaskNameField extends StatelessWidget {
     return TextField(
       controller: _titleController,
       decoration: const InputDecoration(hintText: 'Назва завдання'),
-      autofocus: true,
+      autofocus: false,
     );
   }
 }

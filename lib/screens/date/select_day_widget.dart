@@ -50,30 +50,68 @@ class DaysGridRectangleWidget extends StatelessWidget {
       required this.index});
 
   final Color dayColor = const Color.fromARGB(255, 65, 64, 64);
+  final Color deactiveBoxColor = const Color.fromARGB(255, 211, 211, 211);
 
   final List<int> daysInMonth;
   final int selectedDay;
   final int index;
 
+  bool validateCreatedDate(BuildContext context) {
+    var currentDate =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+    var createdDate = DateTime(
+        Provider.of<DateModel>(context, listen: false).year,
+        Provider.of<DateModel>(context, listen: false).month,
+        daysInMonth[index]);
+
+    if (createdDate.isBefore(currentDate)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  Color getTextColor(BuildContext context) {
+    if (validateCreatedDate(context)) {
+      return Colors.white;
+    }
+
+    return daysInMonth[index] == selectedDay ? Colors.white : dayColor;
+  }
+
+  Color getBoxColor(BuildContext context) {
+    if (validateCreatedDate(context)) {
+      return deactiveBoxColor;
+    }
+
+    return daysInMonth[index] == selectedDay
+        ? Colors.blueAccent
+        : Colors.white54;
+  }
+
+  void changeDay(BuildContext context) {
+    if (validateCreatedDate(context) == false) {
+      Provider.of<DateModel>(context, listen: false)
+          .changeDay(daysInMonth[index]);
+    }
+  }
+
+  // TODO: Зробити провірку якщо число менше за сьогоднішнє і місяць теперішній то всі
+  // менші числа стають не клікабельними і сірими.
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Provider.of<DateModel>(context, listen: false)
-          .changeDay(daysInMonth[index]),
+      onTap: () => changeDay(context),
       child: Ink(
         decoration: BoxDecoration(
-          color: daysInMonth[index] == selectedDay
-              ? Colors.blueAccent[400]
-              : Colors.white54,
+          color: getBoxColor(context),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
           child: Text(
             daysInMonth[index].toString(),
-            style: TextStyle(
-                color:
-                    daysInMonth[index] == selectedDay ? Colors.white : dayColor,
-                fontSize: 16),
+            style: TextStyle(color: getTextColor(context), fontSize: 16),
           ),
         ),
       ),

@@ -15,6 +15,7 @@ class NewTaskForm extends StatefulWidget {
 class _NewTaskFormState extends State<NewTaskForm> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final ValueNotifier<bool> _isPriority = ValueNotifier<bool>(false);
 
   Category? _selectedCategory;
 
@@ -40,13 +41,43 @@ class _NewTaskFormState extends State<NewTaskForm> {
         TaskNameField(titleController: _titleController),
         const SizedBox(height: 20),
         TaskDescriptionField(descriptionController: _descriptionController),
-        TaskCategoryField(selectCategory: selectCategory),
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          TaskCategoryField(selectCategory: selectCategory),
+          const Text("Пріорітетно:"),
+          PriorityToggleWidget(isPriority: _isPriority),
+        ]),
         const SizedBox(height: 10),
         const DateWidget(),
-        // DateWidget(),
         const SizedBox(height: 10),
         TaskButtons(addNewTask: addNewTask)
       ],
+    );
+  }
+}
+
+/// Toggle priority flag in dialog window.
+class PriorityToggleWidget extends StatelessWidget {
+  const PriorityToggleWidget({
+    super.key,
+    required ValueNotifier<bool> isPriority,
+  }) : _isPriority = isPriority;
+
+  final ValueNotifier<bool> _isPriority;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<bool>(
+      valueListenable: _isPriority,
+      builder: (context, value, child) {
+        return IconButton(
+          icon: const Icon(Icons.flag),
+          iconSize: 40,
+          color: _isPriority.value ? Colors.red : Colors.grey,
+          onPressed: () {
+            _isPriority.value = !_isPriority.value;
+          },
+        );
+      },
     );
   }
 }
@@ -92,25 +123,62 @@ class TaskCategoryField extends StatefulWidget {
 
 class _TaskCategoryFieldState extends State<TaskCategoryField> {
   Category selectedCategory = CategoryManager.instance.getItem(0);
+  final _newCategoryTextField = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     List<Category> categoryList = CategoryManager.instance.getItems();
 
-    return DropdownButton(
-        hint: const Text("Choose category"),
-        value: selectedCategory,
-        items: categoryList.map<DropdownMenuItem<Category>>((cat) {
-          return DropdownMenuItem(value: cat, child: Text(cat.name));
-        }).toList(),
-        onChanged: (category) {
-          setState(() {
-            Category cat = category ?? CategoryManager.instance.getItem(0);
+    // TODO: переписати сатегорії на стан вибір категорій
+    void addNewCategory() {
+      setState(() {
+        var newCategory =
+            CategoryManager.instance.addItem(_newCategoryTextField.text);
+        selectedCategory = newCategory;
+      });
+    }
 
-            widget.selectCategory(cat);
-            selectedCategory = cat;
-          });
-        });
+    return Row(children: [
+      DropdownButton(
+          hint: const Text("Choose category"),
+          value: selectedCategory,
+          items: categoryList.map<DropdownMenuItem<Category>>((cat) {
+            return DropdownMenuItem(value: cat, child: Text(cat.name));
+          }).toList(),
+          onChanged: (category) {
+            setState(() {
+              Category cat = category ?? CategoryManager.instance.getItem(0);
+
+              widget.selectCategory(cat);
+              selectedCategory = cat;
+            });
+          }),
+      IconButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return SimpleDialog(
+                  title: const Text("Add new category"),
+                  children: [
+                    TextField(
+                      controller: _newCategoryTextField,
+                      decoration:
+                          const InputDecoration(hintText: 'Назва завдання'),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          addNewCategory();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Add"))
+                  ],
+                );
+              },
+            );
+          },
+          icon: const Icon(Icons.add))
+    ]);
   }
 }
 

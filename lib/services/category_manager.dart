@@ -23,9 +23,10 @@ class CategoryManager extends Manager<Category> {
   static CategoryManager get instance => _instance;
 
   @override
-  void addItem(String name) {
+  Category addItem(String name) {
     Category newCategory = Category(id: _list.length, name: name);
     _list.add(newCategory);
+    return newCategory;
   }
 
   @override

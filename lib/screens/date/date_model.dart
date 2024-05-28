@@ -5,6 +5,11 @@ class DateModel extends ChangeNotifier {
   int month = DateTime.now().month;
   int year = DateTime.now().year;
 
+  int hour = DateTime.now().hour;
+  int minute = DateTime.now().minute;
+
+  bool timeless = true;
+
   final int currentYear = DateTime.now().year;
 
   void changeDay(int newDay) {
@@ -22,8 +27,19 @@ class DateModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeTime(int newHour, int newMinute) {
+    hour = newHour;
+    minute = newMinute;
+    timeless = false;
+    notifyListeners();
+  }
+
   DateTime getDateTime() {
     return DateTime(year, month, day);
+  }
+
+  getTimeOfDay() {
+    return TimeOfDay(hour: hour, minute: minute);
   }
 
   String getDayOfWeekAsString() {
@@ -32,6 +48,10 @@ class DateModel extends ChangeNotifier {
 
   String getFormatedDateAsString() {
     return 'Date: $day/${months[month - 1]}/$year';
+  }
+
+  String getFormatedTimeAsString() {
+    return 'Time: $hour:$minute';
   }
 
   List<int> getYearsList() {

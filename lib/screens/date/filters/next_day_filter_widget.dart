@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 class NextDayFilter extends StatelessWidget {
   const NextDayFilter({super.key});
 
+  // TODO: поправити функцію, може розбити на менші і винести в окремий обєкт
   void setNextDay(BuildContext context) {
     DateModel dateModel = Provider.of<DateModel>(context, listen: false);
 

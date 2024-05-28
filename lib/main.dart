@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 void main() {
   runApp(ChangeNotifierProvider(
     create: (context) => HomepageModel(),
-    child: MainApp(),
+    child: const MainApp(),
   ));
 
   CategoryManager categoryManager = CategoryManager.instance;
@@ -24,6 +24,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomePage());
+    return const MaterialApp(
+        // locale: Locale('uk', 'UA'),
+        // supportedLocales: [
+        //   Locale('en', 'US'),
+        //   Locale('uk', 'UA'),
+        // ],
+        // localizationsDelegates: [
+        //   GlobalMaterialLocalizations.delegate,
+        //   GlobalWidgetsLocalizations.delegate,
+        //   GlobalCupertinoLocalizations.delegate,
+        // ],
+        home: HomePage());
   }
 }

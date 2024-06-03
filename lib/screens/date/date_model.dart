@@ -27,6 +27,14 @@ class DateModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeDate(DateTime date) {
+    print("Set a new date $date");
+    year = date.year;
+    month = date.month;
+    day = date.day;
+    notifyListeners();
+  }
+
   void changeTime(int newHour, int newMinute) {
     hour = newHour;
     minute = newMinute;
@@ -78,12 +86,4 @@ final List<String> months = [
   'Грудень'
 ];
 
-List<String> daysOfWeek = [
-  'Понеділок',
-  'Вівторок',
-  'Середа',
-  'Четвер',
-  'П\'ятниця',
-  'Субота',
-  'Неділя'
-];
+List<String> daysOfWeek = ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя'];

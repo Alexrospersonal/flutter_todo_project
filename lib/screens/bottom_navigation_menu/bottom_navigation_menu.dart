@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigateMenu extends StatelessWidget {
-  const BottomNavigateMenu({
-    super.key,
-  });
+  final int selectedIndex;
+  final Function(int) onItemTapped;
+
+  const BottomNavigateMenu(
+      {super.key, required this.selectedIndex, required this.onItemTapped});
 
   @override
   Widget build(BuildContext context) {
@@ -14,30 +16,42 @@ class BottomNavigateMenu extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                // Обробник події для першої кнопки
+                onItemTapped(0);
               },
-              icon: const Icon(Icons.menu),
+              icon: Icon(
+                Icons.menu,
+                color: selectedIndex == 0 ? Colors.blueAccent : Colors.black,
+              ),
             ),
             IconButton(
               onPressed: () {
-                // Обробник події для першої кнопки
+                onItemTapped(1);
               },
-              icon: const Icon(Icons.home),
+              icon: Icon(
+                Icons.home,
+                color: selectedIndex == 1 ? Colors.blueAccent : Colors.black,
+              ),
             ),
             const SizedBox(
               width: 10,
             ),
             IconButton(
               onPressed: () {
-                // Обробник події для першої кнопки
+                onItemTapped(2);
               },
-              icon: const Icon(Icons.calendar_month),
+              icon: Icon(
+                Icons.calendar_month,
+                color: selectedIndex == 2 ? Colors.blueAccent : Colors.black,
+              ),
             ),
             IconButton(
               onPressed: () {
-                // Обробник події для першої кнопки
+                onItemTapped(3);
               },
-              icon: const Icon(Icons.account_circle),
+              icon: Icon(
+                Icons.account_circle,
+                color: selectedIndex == 3 ? Colors.blueAccent : Colors.black,
+              ),
             ),
           ],
         ));

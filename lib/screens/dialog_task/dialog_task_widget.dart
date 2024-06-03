@@ -1,29 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/screens/date/date_model.dart';
 import 'package:flutter_todo_project/screens/dialog_task/dialog_task_form.dart';
-
-/// Class for dialog menu widget,
-/// create dialog window with the new task form.
-// class AddNewTaskDialog extends StatelessWidget {
-//   const AddNewTaskDialog({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SimpleDialog(
-//       title: const Center(
-//         child: Text('-Створити нове завдання-'),
-//       ),
-//       backgroundColor: Colors.white.withOpacity(0.1),
-//       alignment: Alignment.center,
-//       children: const [
-//         SingleChildScrollView(
-//             child: Padding(
-//           padding: EdgeInsets.all(25.0),
-//           child: NewTaskForm(),
-//         ))
-//       ],
-//     );
-//   }
-// }
+import 'package:provider/provider.dart';
 
 /// Create the dialog which contains form for createing a new task
 class AddNewTaskDialog extends StatelessWidget {
@@ -37,19 +17,40 @@ class AddNewTaskDialog extends StatelessWidget {
       },
       child: Dialog(
         backgroundColor: Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
         insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: SingleChildScrollView(
-                child: Column(
-              children: [
-                Text('Create new Task'),
-                SizedBox(height: 15),
-                NewTaskForm()
-              ],
-            ))),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(34)),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    spreadRadius: -5
+                  )
+                ],
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.white60, Colors.white10]
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(34)),
+                border: Border.all(width: 2, color: Colors.white30)
+              ),
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                  child: SingleChildScrollView(
+                      child: Column(
+                    children: [ChangeNotifierProvider(create: (context) => DateModel(), child: const NewTaskForm())],
+                  ))),
+            ),
+          ),
+        ),
       ),
     );
   }
 }
+

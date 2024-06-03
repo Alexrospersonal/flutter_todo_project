@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/screens/calendar_page/calendar_page.dart';
 import 'package:flutter_todo_project/screens/homepage/homepage_model.dart';
 import 'package:flutter_todo_project/screens/homepage/homepage_controller.dart';
+import 'package:flutter_todo_project/screens/homepage/homepage_widget.dart';
 import 'package:flutter_todo_project/services/category_manager.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +14,7 @@ void main() {
 
   CategoryManager categoryManager = CategoryManager.instance;
 
-  categoryManager.addItem("All");
+  categoryManager.addItem("Несортоване");
   categoryManager.addItem("Home");
   categoryManager.addItem("GYM");
   categoryManager.addItem("Work");
@@ -25,16 +27,23 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        // locale: Locale('uk', 'UA'),
-        // supportedLocales: [
-        //   Locale('en', 'US'),
-        //   Locale('uk', 'UA'),
-        // ],
-        // localizationsDelegates: [
-        //   GlobalMaterialLocalizations.delegate,
-        //   GlobalWidgetsLocalizations.delegate,
-        //   GlobalCupertinoLocalizations.delegate,
-        // ],
-        home: HomePage());
+      title: "Планюсик",
+      // color: ,
+      // initialRoute: '/',
+      // routes: {
+      //   '/': (context) => const HomePage(),
+      //   '/calendar': (context) => const CalendarPage()
+      // }
+      // locale: Locale('uk', 'UA'),
+      // supportedLocales: [
+      //   Locale('en', 'US'),
+      //   Locale('uk', 'UA'),
+      // ],
+      // localizationsDelegates: [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
+      home: HomePage());
   }
 }

@@ -11,19 +11,50 @@ class DateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final ValueNotifier<bool> isDateViewVisible = ValueNotifier<bool>(false);
     final ValueNotifier<bool> isTimeViewVisible = ValueNotifier<bool>(false);
+    final ValueNotifier<bool> isRepeat = ValueNotifier<bool>(false);
+    final List<bool> _selectedDays = <bool>[
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ];
 
     return ChangeNotifierProvider(
       create: (context) => DateModel(),
       child: Column(children: [
+        Row(children: [
+          const Text("Багаторазове:"),
+          ValueListenableBuilder(
+              valueListenable: isRepeat,
+              builder: (context, value, child) {
+                return Switch(
+                    value: value,
+                    onChanged: (value) {
+                      isRepeat.value = !isRepeat.value;
+                    });
+              })
+        ]),
         // Date button and info field
-        Row(
-          children: [
-            DateOpenButtonWidget(
-                isGridViewVisible: isDateViewVisible, buttonName: 'date'),
-            const SizedBox(width: 20),
-            DateTextLabelWidget(isGridViewVisible: isDateViewVisible),
-          ],
+        ValueListenableBuilder(
+          valueListenable: isRepeat,
+          builder: (context, value, child) {
+            return isRepeat.value
+                ? SelectRepeatDaysWidget(selectedDays: _selectedDays)
+                : Row(
+                    children: [
+                      DateOpenButtonWidget(
+                          isGridViewVisible: isDateViewVisible,
+                          buttonName: 'date'),
+                      const SizedBox(width: 20),
+                      DateTextLabelWidget(isGridViewVisible: isDateViewVisible),
+                    ],
+                  );
+          },
         ),
+
         // Date selector widget
         ValueListenableBuilder<bool>(
           valueListenable: isDateViewVisible,
@@ -42,6 +73,44 @@ class DateWidget extends StatelessWidget {
         ),
       ]),
     );
+  }
+}
+
+class SelectRepeatDaysWidget extends StatefulWidget {
+  const SelectRepeatDaysWidget({
+    super.key,
+    required List<bool> selectedDays,
+  }) : _selectedDays = selectedDays;
+
+  final List<bool> _selectedDays;
+
+  @override
+  State<SelectRepeatDaysWidget> createState() => _SelectRepeatDaysWidgetState();
+}
+
+class _SelectRepeatDaysWidgetState extends State<SelectRepeatDaysWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return ToggleButtons(
+        isSelected: widget._selectedDays,
+        selectedColor: Colors.white,
+        selectedBorderColor: Colors.blue[900],
+        fillColor: Colors.blue[600],
+        color: Colors.black,
+        onPressed: (index) {
+          setState(() {
+            widget._selectedDays[index] = !widget._selectedDays[index];
+          });
+        },
+        children: const [
+          Text("Пн"),
+          Text("Вт"),
+          Text("Ср"),
+          Text("Чт"),
+          Text("Пт"),
+          Text("Сб"),
+          Text("Нд"),
+        ]);
   }
 }
 

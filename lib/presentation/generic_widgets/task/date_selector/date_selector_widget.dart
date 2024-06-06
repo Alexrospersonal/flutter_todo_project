@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
@@ -15,13 +16,7 @@ class DateSelectorWidget extends StatefulWidget {
 class _DateSelectorWidgetState extends State<DateSelectorWidget> {
   int _selectedIndex = 0;
 
-  final List<Widget> dateElements = const [
-    Placeholder(),
-    TimePickerWidget(),
-    Placeholder(),
-    Placeholder(),
-    Placeholder()
-  ];
+ 
   
   void _onItemTapped(int index) {
     setState(() {
@@ -29,13 +24,29 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
     });
   }
 
+  void backToMain() {
+    setState(() {
+      _selectedIndex = 0;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    
+    final List<Widget> dateElements = [
+      const Placeholder(),
+      TimePickerWidget(backToMain: backToMain),
+      const Placeholder(),
+      const Placeholder(),
+      const Placeholder()
+    ];
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Dialog.fullscreen(
         // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
-        backgroundColor: const Color.fromARGB(255, 235, 235, 235),
+        backgroundColor: Colors.transparent,
         // shadowColor: Colors.black,
         // insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: SingleChildScrollView(
@@ -122,7 +133,13 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
 }
 
 class TimePickerWidget extends StatefulWidget {
-  const TimePickerWidget({super.key});
+
+  final Function backToMain;
+
+  const TimePickerWidget({
+    super.key,
+    required this.backToMain
+  });
 
   @override
   State<TimePickerWidget> createState() => _TimePickerWidgetState();
@@ -131,6 +148,10 @@ class TimePickerWidget extends StatefulWidget {
 class _TimePickerWidgetState extends State<TimePickerWidget> {
   bool fromAllDay = false;
   bool twelveHourFormat = false;
+  int hourFormat = 24;
+  TextEditingController hoursController = TextEditingController();
+  TextEditingController minutesController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -156,19 +177,19 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // Hours
-            const Flexible(
+            Flexible(
               flex: 3,
-              child: NumberInput(name: "Години")
+              child: NumberInput(name: "Години", maxValue: hourFormat,controller: hoursController,enabled: !fromAllDay,)
             ),
             const Flexible(
               flex: 0,
               child: DoubleDotTimeDivider()
               ),
-            const Flexible(
+            Flexible(
               flex: 3,
-              child: NumberInput(name: "Хвилини")
+              child: NumberInput(name: "Хвилини", maxValue: 60,controller: minutesController,enabled: !fromAllDay)
             ),
-            twelveHourFormat ? Flexible(
+            twelveHourFormat ? const Flexible(
               flex: 2,
               child: AmPmToggleContainer(),
             ) : const SizedBox.shrink()
@@ -183,7 +204,11 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
               activeTrackColor: const Color.fromARGB(255, 231, 231, 231),
               value: twelveHourFormat,
               onChanged:(value) => setState(() {
-                twelveHourFormat = !twelveHourFormat;
+                hourFormat = hourFormat == 24 ? 13: 24;
+                if (fromAllDay == false) {
+                  twelveHourFormat = !twelveHourFormat;
+                }
+                hoursController.clear();
               }),
             ),
             Text(
@@ -202,10 +227,15 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
               value: fromAllDay,
               onChanged:(value) => setState(() {
                 fromAllDay = !fromAllDay;
+                if (fromAllDay) {
+                  hoursController.clear();
+                  minutesController.clear();
+                  twelveHourFormat = false;
+                }
               }),
             ),
             Text(
-              "Протягом дня",
+              "Без часу",
               style: TextStyle(
                 fontSize: 16,
                 height: 1,
@@ -215,14 +245,14 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
           ],
         ),
         // Row with cancel and comfirm buttons
-        const Row(
+        Row(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButtonWidget(buttonName: "Відхилити", buttonColor: Colors.grey),
-            SizedBox(width: 20),
-            TextButtonWidget(buttonName: "Підтвердити", buttonColor: Colors.black),
+            TextButtonWidget(buttonName: "Відхилити", buttonColor: Colors.grey, backToMain: widget.backToMain),
+            const SizedBox(width: 20),
+            TextButtonWidget(buttonName: "Підтвердити", buttonColor: Colors.black, backToMain: widget.backToMain),
           ],
         )
       ],
@@ -246,7 +276,13 @@ class _AmPmToggleContainerState extends State<AmPmToggleContainer> {
   Widget build(BuildContext context) {
     return ToggleButtons(
       direction: Axis.vertical,
+      fillColor: const Color.fromRGBO(118, 253, 172, 1),
       selectedBorderColor: const Color.fromRGBO(118, 253, 172, 1),
+      selectedColor: Colors.white,
+      borderRadius: BorderRadius.circular(15),
+      constraints: const BoxConstraints(
+        maxHeight: 43
+      ),
       isSelected: isSelected,
       onPressed: (index) {
         setState(() {
@@ -256,29 +292,21 @@ class _AmPmToggleContainerState extends State<AmPmToggleContainer> {
         });
       },
       children: const [
-        SizedBox(
-          width: 60,
-          height: 20,
-          child: Center(
-            child: Text(
-              "AM",
-              style: TextStyle(
-                fontSize: 20
-              ),
-              )
-          ),
-        ),
-        SizedBox(
-          width: 60,
-          height: 20,
-          child: Center(
-            child: Text(
-              "PM",
-              style: TextStyle(
-                fontSize: 20
-              ),
+        Center(
+          child: Text(
+            "AM",
+            style: TextStyle(
+              fontSize: 18
+            ),
             )
-          ),
+        ),
+        Center(
+          child: Text(
+            "PM",
+            style: TextStyle(
+              fontSize: 18
+            ),
+          )
         ),
       ],
     );
@@ -305,19 +333,27 @@ class DoubleDotTimeDivider extends StatelessWidget {
 
 class NumberInput extends StatefulWidget {
   final String name;
+  final int maxValue;
+  final TextEditingController controller;
+  final bool enabled;
 
-  const NumberInput({super.key, required this.name});
+  const NumberInput({
+    super.key,
+    required this.name,
+    required this.maxValue,
+    required this.controller,
+    required this.enabled
+  });
 
   @override
   State<NumberInput> createState() => _NumberInputState();
 }
 
 class _NumberInputState extends State<NumberInput> {
-  TextEditingController controller = TextEditingController();
-
+  
   @override
   void dispose() {
-    controller.dispose();
+    widget.controller.dispose();
     super.dispose();
   }
 
@@ -339,11 +375,25 @@ class _NumberInputState extends State<NumberInput> {
             borderRadius: BorderRadius.circular(20)
           ),
           child: TextField(
-            controller: controller,
+            controller: widget.controller,
             keyboardType: TextInputType.number,
+            enabled: widget.enabled,
             maxLength: 2,
             textAlign: TextAlign.center,
             textAlignVertical: TextAlignVertical.center,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              TextInputFormatter.withFunction((oldValue, newValue) {
+                final enteredNumber = int.tryParse(newValue.text);
+                if (enteredNumber != null && enteredNumber >= widget.maxValue) {
+                  return const TextEditingValue(text: '00', selection: TextSelection.collapsed(offset: 2));
+                }
+                return newValue;
+              }),
+            ],
+            cursorHeight: 60,
+            cursorWidth: 2,
+            cursorColor: const Color.fromRGBO(118, 253, 172, 1),
             decoration: const InputDecoration(
               border: InputBorder.none,
               label: null,
@@ -372,18 +422,20 @@ class _NumberInputState extends State<NumberInput> {
 class TextButtonWidget extends StatelessWidget {
   final String buttonName;
   final Color buttonColor;
+  final Function backToMain;
 
   const TextButtonWidget({
     super.key,
     required this.buttonName,
-    required this.buttonColor
+    required this.buttonColor,
+    required this.backToMain
     });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("---Tapped");
+        backToMain();
       },
       child: Container(
         height: 25,

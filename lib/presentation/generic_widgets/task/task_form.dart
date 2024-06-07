@@ -24,7 +24,7 @@ class _TaskFormState extends State<TaskForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        const TaskFormTitleWidget(),
+        const TaskFormTitleWidget(title: "створити завдання"),
         const SizedBox(height: 30),
         TaskNameField(titleController: _titleController),
         const SizedBox(height: 20),
@@ -108,15 +108,18 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
 }
 
 class TaskFormTitleWidget extends StatelessWidget {
+  final String title;
+
   const TaskFormTitleWidget({
     super.key,
+    required this.title
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
       Text(
-        "Створити завдання".toUpperCase(),
+        title.toUpperCase(),
         style: const TextStyle(fontSize: 21.0, fontWeight: FontWeight.w500, fontFamily: 'Montserrat'),
       ),
       InkWell(

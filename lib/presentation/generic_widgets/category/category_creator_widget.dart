@@ -35,7 +35,7 @@ class CategoryCreatorWidget extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const TaskFormTitleWidget(),
+                      const TaskFormTitleWidget(title: "створити список",),
                       const SizedBox(height: 20),
                       TaskNameField(titleController: categoryNameController),
                       const SizedBox(height: 20),

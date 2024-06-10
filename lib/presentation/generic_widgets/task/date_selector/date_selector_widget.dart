@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
@@ -36,18 +37,18 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
   Widget build(BuildContext context) {
     
     final List<Widget> dateElements = [
-      const Placeholder(),
+      const DateSelectorListInfoWidget(),
       TimePickerWidget(backToMain: backToMain),
       DaysInWeekPickerWidget(backToMain: backToMain),
-      const Placeholder(),
-      const Placeholder()
+      TaskDurationPickerWidget(backToMain: backToMain),
+      NotificationSelectorWidget(backToMain: backToMain)
     ];
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Dialog.fullscreen(
         // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
         // shadowColor: Colors.black,
         // insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: SingleChildScrollView(
@@ -110,7 +111,7 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
                     ),
                     const SizedBox(height: 5),
                     Container(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
                       alignment: Alignment.center,
                       height: 240,
                       width: 450,
@@ -132,6 +133,497 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
     );
   }
 }
+
+class NotificationSelectorWidget extends StatefulWidget {
+  final Function backToMain;
+
+  const NotificationSelectorWidget({
+    super.key,
+    required this.backToMain
+  });
+
+  @override
+  State<NotificationSelectorWidget> createState() => _NotificationSelectorWidget();
+}
+
+class _NotificationSelectorWidget extends State<NotificationSelectorWidget> {
+
+  String firstNotificationText = "Додати";
+  IconData firstNotificationIcon = Icons.notification_add;
+  List<bool> notificationButtonsState = [false, false, false];
+
+  @override
+  Widget build(Object context) {
+    return Column(
+      children: [
+        // Title
+        Row(
+          children: [
+            Text("Створіть нагадування",
+              style: TextStyle(
+                fontSize: 18,
+                height: 1,
+                fontWeight: FontWeight.normal
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            // Row with add and delete buttons and text
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    notificationButtonsState[0] = !notificationButtonsState[0];
+
+                    setState(() {
+                      if (notificationButtonsState[0] == false) {
+                        firstNotificationText = "Додати";
+                        firstNotificationIcon = Icons.notification_add;
+                      } else {
+                        firstNotificationText = "Змінити";
+                        firstNotificationIcon = Icons.edit_notifications;
+                      }
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: !notificationButtonsState[0] ? 
+                        const Color.fromARGB(255, 231, 231, 231) :
+                          const Color.fromRGBO(118, 253, 172, 1),
+                      borderRadius: BorderRadius.circular(25)
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(firstNotificationIcon),
+                          const SizedBox(width: 3),
+                          Text(
+                            firstNotificationText,
+                            style: const TextStyle(
+                              fontSize: 16
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 7),
+                // Delete button
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      notificationButtonsState[0] = false;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: !notificationButtonsState[0] ? 
+                        const Color.fromARGB(255, 231, 231, 231) :
+                          const Color.fromARGB(255, 253, 118, 118),
+                      borderRadius: BorderRadius.circular(15)
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.delete_forever_rounded,
+                            color: !notificationButtonsState[0] ?
+                              Color.fromARGB(255, 129, 129, 129):
+                                Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(width: 5,),
+            // Row with text for notification
+            const Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Нагадати\nза",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                        height: 1,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(width: 5,),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "01",
+                      style: TextStyle(
+                        fontSize: 18,
+                        height: 1,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    Text(
+                      "день",
+                      style: TextStyle(
+                        fontSize: 12,
+                        height: 1,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 5,),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "09",
+                      style: TextStyle(
+                        fontSize: 18,
+                        height: 1,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    Text(
+                      "годин",
+                      style: TextStyle(
+                        fontSize: 12,
+                        height: 1,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 5,),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "34",
+                      style: TextStyle(
+                        fontSize: 18,
+                        height: 1,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                    Text(
+                      "хвилин",
+                      style: TextStyle(
+                        fontSize: 12,
+                        height: 1,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
+        const Divider(
+              color: Color.fromRGBO(118, 253, 172, 1),
+            ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButtonWidget(buttonName: "Відхилити", buttonColor: Colors.grey, backToMain: widget.backToMain),
+            const SizedBox(width: 20),
+            TextButtonWidget(buttonName: "Підтвердити", buttonColor: Colors.black, backToMain: widget.backToMain),
+          ],
+        ),
+      ],
+    );
+  }
+  
+}
+
+class DateSelectorListInfoWidget extends StatelessWidget {
+  const DateSelectorListInfoWidget({super.key});
+  
+  @override
+  Widget build(Object context) {
+    return const Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Дата",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey
+              ),
+            ),
+            Text("26/05/2025",
+            textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            )
+          ],
+        ),
+        Divider(
+          height: 5,
+          color: Color.fromRGBO(118, 253, 172, 1),
+        ),
+        SizedBox(height: 10,),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Година",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey
+              ),
+            ),
+            Text("18:00",
+            textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            )
+          ],
+        ),
+        Divider(
+          height: 5,
+          color: Color.fromRGBO(118, 253, 172, 1),
+        ),
+        SizedBox(height: 10,),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Повторення:",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey
+              ),
+            ),
+            Text("Вт, Пт, Нд",
+            textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            )
+          ],
+        ),
+        Divider(
+          height: 5,
+          color: Color.fromRGBO(118, 253, 172, 1),
+        ),
+        SizedBox(height: 10,),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Тривалість:",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey
+              ),
+            ),
+            Text("4 год. 18 хв.",
+            textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            )
+          ],
+        ),
+        Divider(
+          height: 5,
+          color: Color.fromRGBO(118, 253, 172, 1),
+        ),
+        SizedBox(height: 10,),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Нагадати за:",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.grey
+              ),
+            ),
+            Text("дні: 1, год: 4, хв: 17",
+            textAlign: TextAlign.end,
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            )
+          ],
+        ),
+        Divider(
+          height: 5,
+          color: Color.fromRGBO(118, 253, 172, 1),
+        ),
+      ],
+    );
+  }
+  
+}
+
+class TaskDurationPickerWidget extends StatefulWidget {
+  final Function backToMain;
+
+  const TaskDurationPickerWidget({
+    super.key,
+    required this.backToMain
+  });
+
+  @override
+  State<TaskDurationPickerWidget> createState() => _TaskDurationPickerWidgetState();
+}
+
+class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
+  bool isActive = false;
+  bool notificatioOfEnd = false;
+  int hourFormat = 24;
+
+  TextEditingController hoursController = TextEditingController();
+  TextEditingController minutesController = TextEditingController();
+
+  DateTime startDate = DateTime.now();
+  DateTime? endDate;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        // Header Row
+        const Row(
+          children: [
+            Text("Твивалість завдання",
+              style: TextStyle(
+                fontSize: 18,
+                height: 1,
+                fontWeight: FontWeight.normal
+              ),
+            ),
+          ],
+        ),
+        // Row with switchers
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Switch(
+              activeColor: const Color.fromRGBO(118, 253, 172, 1),
+              activeTrackColor: const Color.fromARGB(255, 231, 231, 231),
+              value: isActive,
+              onChanged:(value) => setState(() {
+                isActive = !isActive;
+              }),
+            ),
+            const SizedBox(width: 5),
+            Text(
+              isActive ? "Вимкнути\nтривалість" : "Увімкнути\nтривалість",
+              style: const TextStyle(
+                fontSize: 16,
+                height: 1,
+                fontWeight: FontWeight.normal
+              ),
+            ),
+            const SizedBox(width: 50),
+            Switch(
+              activeColor: const Color.fromRGBO(118, 253, 172, 1),
+              activeTrackColor: const Color.fromARGB(255, 231, 231, 231),
+              value: notificatioOfEnd,
+              onChanged:(value) => setState(() {
+                notificatioOfEnd = !notificatioOfEnd;
+              }),
+            ),
+            const SizedBox(width: 5),
+            const Text("Сповіщати\nпро кінець",
+              style: TextStyle(
+                fontSize: 16,
+                height: 1,
+                fontWeight: FontWeight.normal
+              ),
+            ),
+          ],
+        ),
+        // Row with times
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Hours
+            Flexible(
+              flex: 1,
+              child: NumberInput(name: "Години", maxValue: hourFormat,controller: hoursController,enabled: isActive)
+            ),
+            const Flexible(
+              flex: 0,
+              child: DoubleDotTimeDivider()
+              ),
+            Flexible(
+              flex: 1,
+              child: NumberInput(name: "Хвилини", maxValue: 60,controller: minutesController,enabled: isActive)
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Початок:\n${startDate.day}/${startDate.month}/${startDate.year} ${startDate.hour}:${startDate.minute}",
+              style: const TextStyle(
+                height: 1,
+                fontSize: 16
+              ),
+            ),
+            Text(
+              "Кінець:\n${startDate.day}/${startDate.month}/${startDate.year} ${startDate.hour}:${startDate.minute}",
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                height: 1,
+                fontSize: 16,
+              ),
+            )
+          ],
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextButtonWidget(buttonName: "Відхилити", buttonColor: Colors.grey, backToMain: widget.backToMain),
+            const SizedBox(width: 20),
+            TextButtonWidget(buttonName: "Підтвердити", buttonColor: Colors.black, backToMain: widget.backToMain),
+          ],
+        ),
+      ],
+    );
+  }
+
+}
+
 
 class DaysInWeekPickerWidget extends StatefulWidget {
   final Function backToMain;
@@ -211,7 +703,7 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
               }),
             ),
             // const SizedBox(width: 5),
-            const Text("Закінчення повтору",
+            const Text("Додати кінцеву",
               style: TextStyle(
                 fontSize: 16,
                 height: 1,
@@ -392,7 +884,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
       children: [
         const Row(
           children: [
-            Text("Введіть час",
+            Text("Додати годину",
               style: TextStyle(
                 fontSize: 18,
                 height: 1,
@@ -401,7 +893,7 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
             ),
           ],
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 10),
         // Row with time picker
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -595,13 +1087,13 @@ class _NumberInputState extends State<NumberInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          height: 85,
+          height: 87,
           constraints: const BoxConstraints(
             maxWidth: 160,
             minWidth: 90
           ),
-          // alignment: Alignment.center,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 2),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.fromLTRB(10, 23, 10, 2),
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 228, 228, 228),
             borderRadius: BorderRadius.circular(20)
@@ -628,6 +1120,7 @@ class _NumberInputState extends State<NumberInput> {
             cursorColor: const Color.fromRGBO(118, 253, 172, 1),
             decoration: const InputDecoration(
               border: InputBorder.none,
+              hintText: "00",
               label: null,
               counterText: '',
               contentPadding: EdgeInsets.symmetric(vertical: 15)
@@ -639,13 +1132,13 @@ class _NumberInputState extends State<NumberInput> {
             ),
           ),
         ),
-        const SizedBox(height: 3),
-          Text(
-            widget.name,
-            style: const TextStyle(
-              fontSize: 15
-            ),
-        )
+        // const SizedBox(height: 3),
+        // Text(
+        //     widget.name,
+        //     style: const TextStyle(
+        //       fontSize: 15
+        //   ),
+        // )
       ],
     );
   }

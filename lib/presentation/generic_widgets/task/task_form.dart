@@ -62,17 +62,24 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+        // TODO: Create alternative dialog
+
         onPressed: () {
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              barrierColor: Colors.white.withOpacity(0.5),
-              builder: (BuildContext context) {
-                return BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: const DateSelectorWidget());
-              },
-            );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder:(context) => DateSelectorWidget2())
+          );
+
+          // showDialog(
+          //     context: context,
+          //     barrierDismissible: false,
+          //     barrierColor: Colors.white.withOpacity(0.5),
+          //     builder: (BuildContext context) {
+          //       return BackdropFilter(
+          //         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          //         child: const DateSelectorWidget());
+          //     },
+          //   );
         },
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(0, 0)),

@@ -1,13 +1,349 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
+
+
+class DateSelectorWidget2 extends StatefulWidget {
+  const DateSelectorWidget2({super.key});
+
+  @override
+  State<DateSelectorWidget2> createState() => _DateSelectorWidget2State();
+}
+
+// TODO: розробити розрахунки розмірів.
+class _DateSelectorWidget2State extends State<DateSelectorWidget2> {
+  bool isFirstLarge = true;
+  Duration animDuration = const Duration(milliseconds: 100);
+
+  double minHeight = 0.25;
+  double maxHeight = 0.60 - 0.01;
+  double titleHeight = 0.07;
+  double doneButtonHeight = 0.07;
+
+  double padding = 8.0;
+
+  void _toggleSizes(bool res) {
+    setState(() {
+      isFirstLarge = res;
+    });
+  }
+
+  void _swipeToggleHandler(DragUpdateDetails details) {
+    if (details.primaryDelta! < -10) {
+      // print("Swipe Up");
+      if (isFirstLarge) {
+        _toggleSizes(false);
+      }
+    }
+    else if (details.primaryDelta! > 10) {
+      // print("Swipe Down");
+      if (!isFirstLarge) {
+        _toggleSizes(true);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height - padding * 4;
+    double paddingHeight = screenHeight * 0.01;
+
+    double maxSize = screenHeight * maxHeight;
+    double minSize = screenHeight * minHeight;
+
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      body: GestureDetector(
+        onVerticalDragUpdate: _swipeToggleHandler,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(padding, padding * 3, padding, 0),
+          child: Column(
+            children: <Widget>[
+              DateTitleCardWidget(
+                screenHeight: screenHeight,
+                titleHeight: titleHeight,
+                child: const TaskFormTitleWidget(title: "дата та час"),
+              ),
+              DateSelectorCardWidget(
+                minSize: minSize,
+                maxSize: maxSize,
+                isFirstLarge: isFirstLarge,
+                toggleSizes: _toggleSizes,
+                isTop: true,
+                child: const CalendarCardWidget(),
+              ),
+              SizedBox(height: paddingHeight),
+              DateSelectorCardWidget(
+                minSize: minSize,
+                maxSize: maxSize,
+                isFirstLarge: !isFirstLarge,
+                toggleSizes: _toggleSizes,
+                isTop: false,
+                child: const DateSettingsWidget()
+              ),
+              SizedBox(height: paddingHeight),
+              DateDoneButtonCardWidget(
+                screenHeight: screenHeight,
+                doneButtonHeight: doneButtonHeight,
+                child: DoneDateButton(action: () {}),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  } 
+}
+
+class DateSettingsWidget extends StatefulWidget {
+  const DateSettingsWidget({super.key});
+
+  @override
+  State<DateSettingsWidget> createState() => _DateSettingsWidgetSatte();
+}
+
+class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
+
+  final PageController _pageController = PageController();
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    // _pageController.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.linear);
+    _pageController.jumpToPage(index);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size displaySize = MediaQuery.of(context).size;
+    double width = displaySize.width * 0.9;
+    double height = displaySize.height * 0.45;
+
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            DateSelectorButton(
+              icon: Icons.list,
+              index: 0,
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+              buttonName: "Опис",
+            ),
+            const SizedBox(width: 5),
+            DateSelectorButton(
+              icon: Icons.timer_outlined,
+              index: 1,
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+              buttonName: "Час",
+            ),
+            const SizedBox(width: 5),
+            DateSelectorButton(
+              icon: Icons.edit_calendar_rounded,
+              index: 2,
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+              buttonName: "Повтор",
+            ),
+            const SizedBox(width: 5),
+            DateSelectorButton(
+              icon: Icons.timelapse_rounded,
+              index: 3,
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+              buttonName: "Тривалість",
+            ),
+            const SizedBox(width: 5),
+            DateSelectorButton(
+              icon: Icons.notification_add_rounded,
+              index: 4,
+              selectedIndex: _selectedIndex,
+              onItemTapped: _onItemTapped,
+              buttonName: "Нагадування",
+            ),
+          ],
+        ),
+        const SizedBox(height: 7,),
+        SizedBox(
+          width: width,
+          height: height,
+          child: PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            children: const [
+              Placeholder(),
+              Placeholder(),
+              Placeholder(),
+              Placeholder(),
+              Placeholder(),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+  
+}
+
+
+
+class DateDoneButtonCardWidget extends StatelessWidget {
+  const DateDoneButtonCardWidget({
+    super.key,
+    required this.screenHeight,
+    required this.doneButtonHeight,
+    required this.child
+  });
+
+  final double screenHeight;
+  final double doneButtonHeight;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: Container(
+        height: screenHeight * doneButtonHeight,
+        color: Colors.transparent,
+        child: child
+      ),
+    );
+  }
+}
+
+class DateTitleCardWidget extends StatelessWidget {
+  const DateTitleCardWidget({
+    super.key,
+    required this.screenHeight,
+    required this.titleHeight,
+    required this.child
+  });
+
+  final Widget child;
+  final double screenHeight;
+  final double titleHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: screenHeight * titleHeight,
+      color: Colors.transparent,
+      padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+      child: child,
+    );
+  }
+}
+
+class DateSelectorCardWidget extends StatelessWidget {
+  final double minSize;
+  final double maxSize;
+  final bool isFirstLarge;
+  final void Function(bool) toggleSizes;
+  final bool isTop;
+  final Widget child;
+
+  const DateSelectorCardWidget({
+    super.key,
+    required this.minSize,
+    required this.maxSize,
+    required this.isFirstLarge,
+    required this.toggleSizes,
+    required this.isTop,
+    required this.child
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        toggleSizes(isTop);
+      },
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          gradient: const LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.center,
+            tileMode: TileMode.decal,
+            colors: [
+              Color.fromRGBO(250, 255, 255, 1),
+              Color.fromRGBO(250, 255, 255, 0),
+            ]
+            )
+        ),
+        child: Opacity(
+          opacity: isFirstLarge == false ? 0.24 : 1,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+              boxShadow: const [
+                BoxShadow(
+                  color: Color.fromARGB(255, 212, 212, 212),
+                  spreadRadius: 0,
+                  blurRadius: 4,
+                  offset: Offset(0, 4),
+                ),
+              ]
+            ),
+            height: isFirstLarge ? maxSize : minSize,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: IgnorePointer(
+                ignoring: isFirstLarge == true ? false : true,
+                child: SingleChildScrollView(
+                  child: child,
+                ),
+              ),
+            )
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CalendarCardWidget extends StatelessWidget {
+  const CalendarCardWidget({super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        CalendarWidget()
+      ],
+    );
+  }
+}
+
+
+
+
+
 
 class DateSelectorWidget extends StatefulWidget {
   const DateSelectorWidget({super.key});
@@ -34,8 +370,7 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    
+  Widget build(BuildContext context) { 
     final List<Widget> dateElements = [
       const DateSelectorListInfoWidget(),
       TimePickerWidget(backToMain: backToMain),
@@ -44,95 +379,173 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
       NotificationSelectorWidget(backToMain: backToMain)
     ];
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Dialog.fullscreen(
-        // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
-        backgroundColor: const Color.fromARGB(0, 0, 0, 0),
-        // shadowColor: Colors.black,
-        // insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const TaskFormTitleWidget(title: "обрати дату",),
-                    const SizedBox(height: 5),
-                    Container(
-                      alignment: Alignment.center,
-                      height: 295,
-                      width: 450,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: const CalendarWidget(),
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      // direction: Axis.horizontal,
-                      children: [
-                        DateSelectorButton(
-                          icon: Icons.list,
-                          index: 0,
-                          selectedIndex: _selectedIndex,
-                          onItemTapped: _onItemTapped,
-                        ),
-                        DateSelectorButton(
-                          icon: Icons.timer_outlined,
-                          index: 1,
-                          selectedIndex: _selectedIndex,
-                          onItemTapped: _onItemTapped,
-                        ),
-                        DateSelectorButton(
-                          icon: Icons.edit_calendar_rounded,
-                          index: 2,
-                          selectedIndex: _selectedIndex,
-                          onItemTapped: _onItemTapped,
-                        ),
-                        DateSelectorButton(
-                          icon: Icons.timelapse_rounded,
-                          index: 3,
-                          selectedIndex: _selectedIndex,
-                          onItemTapped: _onItemTapped,
-                        ),
-                        DateSelectorButton(
-                          icon: Icons.notification_add_rounded,
-                          index: 4,
-                          selectedIndex: _selectedIndex,
-                          onItemTapped: _onItemTapped,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
-                      alignment: Alignment.center,
-                      height: 240,
-                      width: 450,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15)
-                      ),
-                      child: dateElements[_selectedIndex],
-                    ),
-                    const SizedBox(height: 8),
-                    DoneDateButton(action: () {})
-                  ]
-                )
+    return const Dialog.fullscreen(
+      backgroundColor:Color.fromARGB(0, 0, 0, 0),
+      child: Padding(
+        padding: EdgeInsets.all(0.0),
+        child:  SafeArea(child: AnimatedWidget())
+      ),
+    );
+
+  //   return GestureDetector(
+  //     onTap: () => FocusScope.of(context).unfocus(),
+  //     child: Dialog.fullscreen(
+  //       // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
+  //       backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+  //       // shadowColor: Colors.black,
+  //       // insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+  //       child: SingleChildScrollView(
+  //         child: Column(
+  //           children: [
+  //             Padding(
+  //               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   const TaskFormTitleWidget(title: "обрати дату",),
+  //                   Container(
+  //                     alignment: Alignment.center,
+  //                     height: 295,
+  //                     width: 450,
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.white,
+  //                       borderRadius: BorderRadius.circular(15)
+  //                     ),
+  //                     child: const CalendarWidget(),
+  //                   ),
+  //                   const SizedBox(height: 5),
+  //                   Row(
+  //                     mainAxisSize: MainAxisSize.max,
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     // direction: Axis.horizontal,
+  //                     children: [
+  //                       DateSelectorButton(
+  //                         icon: Icons.list,
+  //                         index: 0,
+  //                         selectedIndex: _selectedIndex,
+  //                         onItemTapped: _onItemTapped,
+  //                       ),
+  //                       DateSelectorButton(
+  //                         icon: Icons.timer_outlined,
+  //                         index: 1,
+  //                         selectedIndex: _selectedIndex,
+  //                         onItemTapped: _onItemTapped,
+  //                       ),
+  //                       DateSelectorButton(
+  //                         icon: Icons.edit_calendar_rounded,
+  //                         index: 2,
+  //                         selectedIndex: _selectedIndex,
+  //                         onItemTapped: _onItemTapped,
+  //                       ),
+  //                       DateSelectorButton(
+  //                         icon: Icons.timelapse_rounded,
+  //                         index: 3,
+  //                         selectedIndex: _selectedIndex,
+  //                         onItemTapped: _onItemTapped,
+  //                       ),
+  //                       DateSelectorButton(
+  //                         icon: Icons.notification_add_rounded,
+  //                         index: 4,
+  //                         selectedIndex: _selectedIndex,
+  //                         onItemTapped: _onItemTapped,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   const SizedBox(height: 5),
+  //                   Container(
+  //                     padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+  //                     alignment: Alignment.center,
+  //                     height: 240,
+  //                     width: 450,
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.white,
+  //                       borderRadius: BorderRadius.circular(15)
+  //                     ),
+  //                     child: dateElements[_selectedIndex],
+  //                   ),
+  //                   const SizedBox(height: 8),
+  //                   DoneDateButton(action: () {})
+  //                 ]
+  //               )
+  //             ),
+  //           ],
+  //         ),
+  //       ),
+  //     )
+  //   );
+  }
+}
+
+class AnimatedWidget extends StatefulWidget {
+  const AnimatedWidget({super.key});
+
+  @override
+  State<AnimatedWidget> createState() => _AnimatedWidgetState();
+}
+
+class _AnimatedWidgetState extends State<AnimatedWidget> {
+  Duration duration = const Duration(milliseconds: 100);
+  int _flex1 = 6, _flex2 = 1, _flex3 = 4, _flex4 = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height - 40;
+
+    var height1 = (_flex1 * height) / (_flex1 + _flex2 + _flex3 + _flex4);
+    var height2 = (_flex2 * height) / (_flex1 + _flex2 + _flex3 + _flex4);
+    var height3 = (_flex3 * height) / (_flex1 + _flex2 + _flex3 + _flex4);
+    var height4 = (_flex4 * height) / (_flex1 + _flex2 + _flex3 + _flex4);
+
+    print("Height: ${height1 + height2 + height3 + height4}");
+
+    return Column(
+          children: [
+            GestureDetector(
+              onTap: () =>  setState(() {
+                _flex1 = 6;
+                _flex3 = 4;
+              }),
+              child: AnimatedContainer(
+                duration: duration,
+                height: height1,
+                child: Container(
+                  color: Colors.red,
+                ),
               ),
-            ],
-          ),
-        ),
-      )
+            ),
+            // const SizedBox(height: 5),
+            AnimatedContainer(
+              height: height2,
+              duration: duration,
+              color: Colors.blue,
+            ),
+            // const SizedBox(height: 5),
+            GestureDetector(
+              onTap: () =>  setState(() {
+                _flex1 = 4;
+                _flex3 = 6;
+              }),
+              child: AnimatedContainer(
+                height: height3,
+                duration: duration,
+                child: Container(
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+            // const SizedBox(height: 5),
+            AnimatedContainer(
+              height: height4,
+              duration: duration,
+              color: Colors.blue,
+            ),
+          ]
     );
   }
 }
+
+
+
 
 class NotificationSelectorWidget extends StatefulWidget {
   final Function backToMain;
@@ -1228,35 +1641,112 @@ class DoneDateButton extends StatelessWidget {
   }
 }
 
+// class DateSelectorButton extends StatelessWidget {
+
+//   final IconData icon;
+//   final int index;
+//   final int selectedIndex;
+//   final Function(int) onItemTapped;
+//   final String buttonName;
+  
+//   const DateSelectorButton({
+//       super.key,
+//       required this.icon,
+//       required this.index,
+//       required this.selectedIndex,
+//       required this.onItemTapped,
+//       required this.buttonName
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Flexible(
+//       flex: index == selectedIndex ? 3 : 1,
+//       child: ElevatedButton(
+//           onPressed: () => onItemTapped(index),
+//           style: ButtonStyle(
+//             minimumSize: MaterialStateProperty.all(const Size(0, 0)),
+//             padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 6, horizontal: 0)),
+//             foregroundColor: MaterialStateProperty.all(Colors.black),
+//             backgroundColor: MaterialStateProperty.all(
+//               index == selectedIndex ? const Color.fromRGBO(118, 253, 172, 1) : const Color.fromARGB(255, 230, 230, 230)
+//               ),
+//             elevation: MaterialStateProperty.all(0),
+//             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+//               RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(12.0), // Change the radius as needed
+//               ),
+//             ),
+//           ),
+//           child: Row(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Icon(icon),
+//               index == selectedIndex ?
+//                 Text(buttonName,
+//                   style: const TextStyle(
+//                     height: 1
+//                   ),
+//                 ): const SizedBox.shrink()
+//             ],
+//           )
+//       ),
+//     );
+//   }
+// }
+
 class DateSelectorButton extends StatelessWidget {
 
   final IconData icon;
   final int index;
   final int selectedIndex;
   final Function(int) onItemTapped;
+  final String buttonName;
   
   const DateSelectorButton({
       super.key,
       required this.icon,
       required this.index,
       required this.selectedIndex,
-      required this.onItemTapped
+      required this.onItemTapped,
+      required this.buttonName
   });
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: () => onItemTapped(index),
-        style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size(0, 0)),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 6, horizontal: 20)),
-          foregroundColor: MaterialStateProperty.all(Colors.black),
-          backgroundColor: MaterialStateProperty.all(
-            index == selectedIndex ? const Color.fromRGBO(118, 253, 172, 1) : Colors.white
-            ),
-          elevation: MaterialStateProperty.all(0),
+    return GestureDetector(
+      onTap: () => onItemTapped(index),
+      child: AnimatedContainer(
+        constraints: BoxConstraints(
+          minWidth: 45,
+          maxWidth: 120
         ),
-        child: Icon(icon)
+        alignment: Alignment.center,
+        width: index == selectedIndex ? 120 : 45,
+        duration: const Duration(milliseconds: 150),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+        decoration: BoxDecoration(
+          color: index == selectedIndex ?
+            const Color.fromRGBO(118, 253, 172, 1) :
+              const Color.fromARGB(255, 230, 230, 230),
+          borderRadius: BorderRadius.circular(12)
+        ),
+        child: Row(
+          children: [
+            Icon(icon),
+            if (index == selectedIndex)
+              Expanded(
+                child: Text(
+                  buttonName, // Use your buttonName variable here
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(height: 1),
+                  textAlign: TextAlign.center,
+                ),
+              )
+          ],
+        )
+      ),
     );
   }
 }

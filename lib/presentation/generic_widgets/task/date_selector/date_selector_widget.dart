@@ -1,7 +1,10 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
@@ -57,41 +60,54 @@ class _DateSelectorWidget2State extends State<DateSelectorWidget2> {
 
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: GestureDetector(
-        onVerticalDragUpdate: _swipeToggleHandler,
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(padding, padding * 3, padding, 0),
-          child: Column(
-            children: <Widget>[
-              DateTitleCardWidget(
-                screenHeight: screenHeight,
-                titleHeight: titleHeight,
-                child: const TaskFormTitleWidget(title: "дата та час"),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/bg/bg1.jpg'),
+            fit: BoxFit.cover,
+            opacity: 0.75,
+          ),
+          color: Colors.black
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: GestureDetector(
+            onVerticalDragUpdate: _swipeToggleHandler,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(padding, padding * 3, padding, 0),
+              child: Column(
+                children: <Widget>[
+                  DateTitleCardWidget(
+                    screenHeight: screenHeight,
+                    titleHeight: titleHeight,
+                    child: const TaskFormTitleWidget(title: "дата та час"),
+                  ),
+                  DateSelectorCardWidget(
+                    minSize: minSize,
+                    maxSize: maxSize,
+                    isFirstLarge: isFirstLarge,
+                    toggleSizes: _toggleSizes,
+                    isTop: true,
+                    child: const CalendarCardWidget(),
+                  ),
+                  SizedBox(height: paddingHeight),
+                  DateSelectorCardWidget(
+                    minSize: minSize,
+                    maxSize: maxSize,
+                    isFirstLarge: !isFirstLarge,
+                    toggleSizes: _toggleSizes,
+                    isTop: false,
+                    child: const DateSettingsWidget()
+                  ),
+                  SizedBox(height: paddingHeight),
+                  DateDoneButtonCardWidget(
+                    screenHeight: screenHeight,
+                    doneButtonHeight: doneButtonHeight,
+                    child: DoneDateButton(action: () {}),
+                    ),
+                ],
               ),
-              DateSelectorCardWidget(
-                minSize: minSize,
-                maxSize: maxSize,
-                isFirstLarge: isFirstLarge,
-                toggleSizes: _toggleSizes,
-                isTop: true,
-                child: const CalendarCardWidget(),
-              ),
-              SizedBox(height: paddingHeight),
-              DateSelectorCardWidget(
-                minSize: minSize,
-                maxSize: maxSize,
-                isFirstLarge: !isFirstLarge,
-                toggleSizes: _toggleSizes,
-                isTop: false,
-                child: const DateSettingsWidget()
-              ),
-              SizedBox(height: paddingHeight),
-              DateDoneButtonCardWidget(
-                screenHeight: screenHeight,
-                doneButtonHeight: doneButtonHeight,
-                child: DoneDateButton(action: () {}),
-                ),
-            ],
+            ),
           ),
         ),
       ),
@@ -115,8 +131,8 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
     setState(() {
       _selectedIndex = index;
     });
-    // _pageController.animateToPage(index, duration: const Duration(milliseconds: 200), curve: Curves.linear);
-    _pageController.jumpToPage(index);
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+    // _pageController.jumpToPage(index);
   }
 
   @override
@@ -129,7 +145,7 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
   Widget build(BuildContext context) {
     Size displaySize = MediaQuery.of(context).size;
     double width = displaySize.width * 0.9;
-    double height = displaySize.height * 0.45;
+    double height = displaySize.height * 0.43;
 
     return Column(
       children: [
@@ -144,7 +160,7 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
               onItemTapped: _onItemTapped,
               buttonName: "Опис",
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 3),
             DateSelectorButton(
               icon: Icons.timer_outlined,
               index: 1,
@@ -152,7 +168,7 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
               onItemTapped: _onItemTapped,
               buttonName: "Час",
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 3),
             DateSelectorButton(
               icon: Icons.edit_calendar_rounded,
               index: 2,
@@ -160,7 +176,7 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
               onItemTapped: _onItemTapped,
               buttonName: "Повтор",
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 3),
             DateSelectorButton(
               icon: Icons.timelapse_rounded,
               index: 3,
@@ -168,7 +184,7 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
               onItemTapped: _onItemTapped,
               buttonName: "Тривалість",
             ),
-            const SizedBox(width: 5),
+            const SizedBox(width: 3),
             DateSelectorButton(
               icon: Icons.notification_add_rounded,
               index: 4,
@@ -178,7 +194,7 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
             ),
           ],
         ),
-        const SizedBox(height: 7,),
+        const SizedBox(height: 15),
         SizedBox(
           width: width,
           height: height,
@@ -189,22 +205,19 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
                 _selectedIndex = index;
               });
             },
-            children: const [
-              Placeholder(),
-              Placeholder(),
-              Placeholder(),
-              Placeholder(),
-              Placeholder(),
+            children: [
+              const DateSelectorListInfoWidget(),
+              const TimePickerWidget(),
+              const DaysInWeekPickerWidget(),
+              TaskDurationPickerWidget(backToMain: () {}),
+              NotificationSelectorWidget(backToMain: () {})
             ],
           ),
         )
       ],
     );
-  }
-  
+  } 
 }
-
-
 
 class DateDoneButtonCardWidget extends StatelessWidget {
   const DateDoneButtonCardWidget({
@@ -280,46 +293,28 @@ class DateSelectorCardWidget extends StatelessWidget {
       onTap: () {
         toggleSizes(isTop);
       },
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: const LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.center,
-            tileMode: TileMode.decal,
-            colors: [
-              Color.fromRGBO(250, 255, 255, 1),
-              Color.fromRGBO(250, 255, 255, 0),
-            ]
-            )
-        ),
-        child: Opacity(
-          opacity: isFirstLarge == false ? 0.24 : 1,
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 100),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+      child: Opacity(
+        opacity: isFirstLarge == false ? 0.35 : 1,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          decoration: BoxDecoration(
+            border: Border.all(
               color: Colors.white,
-              boxShadow: const [
-                BoxShadow(
-                  color: Color.fromARGB(255, 212, 212, 212),
-                  spreadRadius: 0,
-                  blurRadius: 4,
-                  offset: Offset(0, 4),
-                ),
-              ]
+              width: 1
             ),
-            height: isFirstLarge ? maxSize : minSize,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: IgnorePointer(
-                ignoring: isFirstLarge == true ? false : true,
-                child: SingleChildScrollView(
-                  child: child,
-                ),
-              ),
-            )
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white.withOpacity(0.75),
           ),
+          height: isFirstLarge ? maxSize : minSize,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: IgnorePointer(
+              ignoring: isFirstLarge == true ? false : true,
+              child: SingleChildScrollView(
+                child: child,
+              ),
+            ),
+          )
         ),
       ),
     );
@@ -372,8 +367,8 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
   Widget build(BuildContext context) { 
     final List<Widget> dateElements = [
       const DateSelectorListInfoWidget(),
-      TimePickerWidget(backToMain: backToMain),
-      DaysInWeekPickerWidget(backToMain: backToMain),
+      const TimePickerWidget(),
+      const DaysInWeekPickerWidget(),
       TaskDurationPickerWidget(backToMain: backToMain),
       NotificationSelectorWidget(backToMain: backToMain)
     ];
@@ -775,126 +770,75 @@ class DateSelectorListInfoWidget extends StatelessWidget {
   
   @override
   Widget build(Object context) {
-    return const Column(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.5),
+        borderRadius:BorderRadius.circular(15),
+        border: Border.all(
+          color: Colors.white,
+          width: 1
+        )
+      ),
+      child: const SingleChildScrollView(
+        child: Column(
           children: [
-            Text("Дата",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-              ),
-            ),
-            Text("26/05/2025",
-            textAlign: TextAlign.end,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            )
+            ListInfoItem(label: "Дата", text: "26/05/2025",),
+            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            SizedBox(height: 10),
+            ListInfoItem(label: "Година", text: "18:00",),
+            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            SizedBox(height: 10),
+            ListInfoItem(label: "Повторення", text: "Вт, Пт, Нд",),
+            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            SizedBox(height: 10),
+            ListInfoItem(label: "Тривалість", text: "4 год. 18 хв.",),
+            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            SizedBox(height: 10),
+            ListInfoItem(label: "Нагадати за", text: "дні: 1, год: 4, хв: 17",),
+            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            SizedBox(height: 10),
           ],
         ),
-        Divider(
-          height: 5,
-          color: Color.fromRGBO(118, 253, 172, 1),
-        ),
-        SizedBox(height: 10,),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Година",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-              ),
-            ),
-            Text("18:00",
-            textAlign: TextAlign.end,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            )
-          ],
-        ),
-        Divider(
-          height: 5,
-          color: Color.fromRGBO(118, 253, 172, 1),
-        ),
-        SizedBox(height: 10,),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Повторення:",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-              ),
-            ),
-            Text("Вт, Пт, Нд",
-            textAlign: TextAlign.end,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            )
-          ],
-        ),
-        Divider(
-          height: 5,
-          color: Color.fromRGBO(118, 253, 172, 1),
-        ),
-        SizedBox(height: 10,),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Тривалість:",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-              ),
-            ),
-            Text("4 год. 18 хв.",
-            textAlign: TextAlign.end,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            )
-          ],
-        ),
-        Divider(
-          height: 5,
-          color: Color.fromRGBO(118, 253, 172, 1),
-        ),
-        SizedBox(height: 10,),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Нагадати за:",
-              style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey
-              ),
-            ),
-            Text("дні: 1, год: 4, хв: 17",
-            textAlign: TextAlign.end,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            )
-          ],
-        ),
-        Divider(
-          height: 5,
-          color: Color.fromRGBO(118, 253, 172, 1),
-        ),
-      ],
+      ),
     );
   }
   
+}
+
+class ListInfoItem extends StatelessWidget {
+  final String label;
+  final String text;
+
+  const ListInfoItem({
+    super.key,
+    required this.label,
+    required this.text
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 20,
+            color: Colors.grey
+          ),
+        ),
+        Text(
+          text,
+          textAlign: TextAlign.end,
+          style: const TextStyle(
+            fontSize: 20,
+          ),
+        )
+      ],
+    );
+  }
 }
 
 class TaskDurationPickerWidget extends StatefulWidget {
@@ -1036,28 +980,19 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
 
 }
 
-
 class DaysInWeekPickerWidget extends StatefulWidget {
-  final Function backToMain;
-
-  const DaysInWeekPickerWidget({
-    super.key,
-    required this.backToMain
-  });
+  const DaysInWeekPickerWidget({ super.key });
 
   @override
   State<DaysInWeekPickerWidget> createState() => _DaysInWeekPickerWidgetState();
 }
 
 class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
-  final List<bool> _selectedDays = List.generate(7, (index) => false);
+  final List<bool> selectedDays = List.generate(7, (index) => false);
+  final List<String> weekDays = ['Пн','Вт','Ср','Чт','Пт','Сб','Нд',];
 
-  final List<String> _weekDays = ['Пн','Вт','Ср','Чт','Пт','Сб','Нд',];
-
-  bool _isEndless = true;
-
+  bool isEndless = true;
   DateTime dateOfTheEnd = DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day + 1);
-
   String dateOfTheEndText = "Без кінця";
 
   void changeDateOfEnd(DateTime date) {
@@ -1067,22 +1002,45 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
     });
   }
 
+  void showEndOfRepeatDayDialog() {
+    if (isEndless == false) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        barrierColor: Colors.white.withOpacity(0.5),
+        builder:(context) {
+          return DialogContainer(
+            children: [
+              InnerDialogContainer(
+                title: "Дата завершення",
+                child: CalendarWidget(changeDate: changeDateOfEnd)
+              ),
+              Positioned(
+                left: 155-30,
+                right: 155-30,
+                bottom: -25,
+                child: DoneButton(action: () {},)
+              )
+            ],
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Row(
-          children: [
-            Text("Виберіть дні повторення завдання",
-              style: TextStyle(
-                fontSize: 18,
-                height: 1,
-                fontWeight: FontWeight.normal
-              ),
-            ),
-          ],
+        const Text("Виберіть дні повторення завдання",
+          style: TextStyle(
+            fontSize: 18,
+            height: 1,
+            fontWeight: FontWeight.normal
+          ),
         ),
         const SizedBox(height: 10),
         // Row with days
@@ -1090,9 +1048,9 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
-            _weekDays.length,
+            weekDays.length,
             (index) {
-              return DayInWeekLableWidget(dayName: _weekDays[index], index: index, selectedDays: _selectedDays,);
+              return DayInWeekLableWidget(dayName: weekDays[index], index: index, selectedDays: selectedDays,);
             }
           )           // DayInWeekLableWidget(dayName: "Пн",)
         ),
@@ -1101,111 +1059,125 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Switch(
-              activeColor: const Color.fromRGBO(118, 253, 172, 1),
-              activeTrackColor: const Color.fromARGB(255, 231, 231, 231),
-              value: !_isEndless,
-              onChanged:(value) => setState(() {
-                _isEndless = !_isEndless;
-                if (_isEndless == false) {
+            SwitchWithLabel(
+              state: !isEndless,
+              label: "Додати кінцеву",
+              callback: (value) => setState(() {
+                isEndless = !isEndless;
+                if (isEndless == false) {
                   dateOfTheEndText = "${dateOfTheEnd.year}/${dateOfTheEnd.month}/${dateOfTheEnd.day}";
                 } else {
                   dateOfTheEndText = "Без кінця";
                 }
-              }),
+              })
             ),
-            // const SizedBox(width: 5),
-            const Text("Додати кінцеву",
-              style: TextStyle(
-                fontSize: 16,
-                height: 1,
-                fontWeight: FontWeight.normal
-              ),
+            DialogCallButton(
+              state: isEndless,
+              text: dateOfTheEndText,
+              callback: showEndOfRepeatDayDialog,
             ),
-            const SizedBox(width: 40),
-            GestureDetector(
-              onTap: () {
-                if (_isEndless == false) {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    barrierColor: Colors.white.withOpacity(0.5),
-                    builder:(context) {
-                      return BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child: GestureDetector(
-                          onTap: () => FocusScope.of(context).unfocus(),
-                          child: SimpleDialog(
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
-                            backgroundColor: Colors.white,
-                            shadowColor: Colors.black,
-                            insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                            children: [
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const TaskFormTitleWidget(title: "Дата завершення"),
-                                        SizedBox(
-                                          width: 400,
-                                          height: 300,
-                                          child: Center(
-                                            child: CalendarWidget(changeDate: changeDateOfEnd,)
-                                          ),
-                                        )
-                                        // CalendarWidget()
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 155-30,
-                                    right: 155-30,
-                                    bottom: -25,
-                                    child: DoneButton(action: () {},)
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }
-                
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                decoration: BoxDecoration(
-                  color: _isEndless ? 
-                    const Color.fromARGB(255, 231, 231, 231) :
-                      const Color.fromRGBO(118, 253, 172, 1),
-                  borderRadius: BorderRadius.circular(25)
-                ),
-                child: Center(
-                  child: Text(dateOfTheEndText),
-                ),
-              ),
-            )
           ],
         ),
-        const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButtonWidget(buttonName: "Відхилити", buttonColor: Colors.grey, backToMain: widget.backToMain),
-            const SizedBox(width: 20),
-            TextButtonWidget(buttonName: "Підтвердити", buttonColor: Colors.black, backToMain: widget.backToMain),
-          ]
-        )
       ]
     );
   }
+}
 
+class DialogCallButton extends StatelessWidget {
+  final bool state;
+  final String text;
+  final Function() callback;
+
+  const DialogCallButton({
+    super.key,
+    required this.state,
+    required this.text,
+    required this.callback
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: callback,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+        decoration: BoxDecoration(
+          color: state ? 
+            const Color.fromARGB(255, 231, 231, 231) :
+              const Color.fromRGBO(118, 253, 172, 1),
+          borderRadius: BorderRadius.circular(25)
+        ),
+        child: Center(
+          child: Text(text),
+        ),
+      ),
+    );
+  }
+}
+
+
+class InnerDialogContainer extends StatelessWidget {
+  final String title;
+  final Widget child;
+
+  const InnerDialogContainer({
+    super.key,
+    required this.title,
+    required this.child
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TaskFormTitleWidget(title: title),
+          SizedBox(
+            width: 400,
+            height: 300,
+            child: Center(
+              child: child
+            ),
+          )
+          // CalendarWidget()
+        ],
+      ),
+    );
+  }
+}
+
+class DialogContainer extends StatelessWidget {
+  final List<Widget> children;
+
+  const DialogContainer({
+    super.key,
+    required this.children
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SimpleDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
+          backgroundColor: Colors.white,
+          shadowColor: Colors.black,
+          insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: children
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  
 }
 
 class DayInWeekLableWidget extends StatefulWidget {
@@ -1238,16 +1210,10 @@ class _DayInWeekLableWidgetState extends State<DayInWeekLableWidget> {
           });
         },
         child: Container(
-          constraints: const BoxConstraints(
-            maxHeight: 90,
-            maxWidth: 47
-          ),
+          margin: const EdgeInsets.all(2),
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 40),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: const Color.fromARGB(255, 231, 231, 231),
-              width: 2
-            ),
             color: widget.selectedDays[widget.index] ?
               const Color.fromRGBO(118, 253, 172, 1) :
                 const Color.fromARGB(255, 241, 241, 241)
@@ -1269,12 +1235,8 @@ class _DayInWeekLableWidgetState extends State<DayInWeekLableWidget> {
 }
 
 class TimePickerWidget extends StatefulWidget {
-
-  final Function backToMain;
-
   const TimePickerWidget({
     super.key,
-    required this.backToMain
   });
 
   @override
@@ -1288,111 +1250,271 @@ class _TimePickerWidgetState extends State<TimePickerWidget> {
   TextEditingController hoursController = TextEditingController();
   TextEditingController minutesController = TextEditingController();
 
+  @override
+  void initState() {
+    super.initState();
+    hoursController.text = DateTime.now().hour.toString().padLeft(2, '0');
+    minutesController.text = DateTime.now().minute.toString().padLeft(2, '0');
+  }
+
+  void changeFromAllDay(value) => setState(() {
+    fromAllDay = !fromAllDay;
+    if (fromAllDay) {
+      hoursController.clear();
+      minutesController.clear();
+      twelveHourFormat = false;
+    } else {
+      setTime(DateTime.now());
+    }
+  });
+
+  void changeHoursFormat(value) => setState(() {
+    hourFormat = hourFormat == 24 ? 13: 24;
+    if (fromAllDay == false) {
+      twelveHourFormat = !twelveHourFormat;
+    }
+    hoursController.clear();
+  });
+
+  void setTime(DateTime date) {
+    hoursController.text = date.hour.toString().padLeft(2, '0');
+    minutesController.text = date.minute.toString().padLeft(2, '0');
+  }
+
+  void addTimeToTime(DateTime date) {
+    var dateNow = DateTime.now();
+    
+    var newDate = DateTime(
+      dateNow.year,
+      dateNow.month,
+      dateNow.day,
+      dateNow.hour + date.hour,
+      dateNow.minute + date.minute
+    );
+    if (!fromAllDay) {
+      setTime(newDate);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Row(
+        SwitchWithLabel(
+          state: fromAllDay,
+          label: "Без часу",
+          callback: changeFromAllDay,
+        ),
+        const SizedBox(height: 5),
+        ClockContainerWidget(
+          hourInput:NumberInput(
+            name: "Години",
+            maxValue: hourFormat,
+            controller: hoursController,
+            enabled: !fromAllDay
+          ),
+          minuteInput: NumberInput(
+            name: "Хвилини",
+            maxValue: 60,
+            controller: minutesController,
+            enabled: !fromAllDay
+          ),
+          twelveHourFormat: twelveHourFormat
+        ),
+        const SizedBox(height: 5),
+        SwitchWithLabel(
+          state: twelveHourFormat,
+          label: "AM/PM",
+          callback: changeHoursFormat,
+        ), 
+        const SizedBox(height: 5),   
+        TimeTemplatesContainer(
           children: [
-            Text("Додати годину",
+            TimeTemplateItem(callback: addTimeToTime,hour: 1,minutes: 0),
+            TimeTemplateItem(callback: addTimeToTime,hour: 0,minutes: 30),
+            TimeTemplateItem(callback: addTimeToTime,hour: 12,minutes: 0),
+            TimeTemplateItem(callback: addTimeToTime,hour: 3,minutes: 45),
+          ],
+        )  
+      ],
+    );
+  }
+}
+
+class TimeTemplateItem extends StatelessWidget {
+  final Function(DateTime date) callback;
+  final int hour;
+  final int minutes;
+
+  const TimeTemplateItem({
+    super.key,
+    required this.callback,
+    required this.hour,
+    required this.minutes
+  });
+
+  String generateText() {
+    String name = "+";
+    if (hour > 0) {
+      name += "$hour год";
+    }
+    if (name.length > 1) {
+      name += " ";
+    }
+    if (minutes > 0 ) {
+      name += "$minutes хв";
+    }
+    return name;
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        var dateNow = DateTime.now();
+
+        var newDate = DateTime(
+          dateNow.year,
+          dateNow.month,
+          dateNow.day,
+          hour,
+          minutes
+        );
+
+        callback(newDate);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15)
+        ),
+        child: Text(
+          generateText(),
+          style: const TextStyle(
+            fontSize: 18
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TimeTemplatesContainer extends StatelessWidget {
+  final List<Widget> children;
+
+  const TimeTemplatesContainer({
+    super.key,
+    required this.children
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Wrap(
+      alignment: WrapAlignment.start,
+      spacing: 10,
+      runSpacing: 10,
+      children: children,
+    );
+  }
+}
+
+class ClockContainerWidget extends StatelessWidget {
+  final Widget hourInput;
+  final Widget minuteInput;
+  final bool twelveHourFormat;
+
+  const ClockContainerWidget({
+    super.key,
+    required this.hourInput,
+    required this.minuteInput,
+    required this.twelveHourFormat
+  });
+  
+  @override
+  Widget build(BuildContext context) {
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // Hours
+        Flexible(
+          flex: 3,
+          child: hourInput
+        ),
+        const Flexible(
+          flex: 0,
+          child: DoubleDotTimeDivider()
+          ),
+        Flexible(
+          flex: 3,
+          child: minuteInput
+        ),
+        if (twelveHourFormat)
+          const Flexible(
+          flex: 2,
+          child: AmPmToggleContainer(),
+         )
+      ],
+    );
+  } 
+}
+
+class SwitchWithLabel extends StatelessWidget {
+  final bool state;
+  final String label;
+  final Function(bool) callback;
+
+  const SwitchWithLabel({
+    super.key,
+    required this.state,
+    required this.label,
+    required this.callback
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Row(
+          children: [
+            Switch(
+              thumbIcon: MaterialStateProperty.resolveWith<Icon?>((Set<MaterialState> states) {
+                if (states.contains(MaterialState.disabled)) {
+                  return const Icon(Icons.close);
+                }
+                return null; // All other states will use the default thumbIcon.
+              }),
+              activeColor: const Color.fromRGBO(118, 253, 172, 1),
+              activeTrackColor: const Color.fromARGB(255, 231, 231, 231),
+              trackOutlineColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                return Colors.white; // Use the default color.
+              }),
+              trackOutlineWidth: MaterialStateProperty.resolveWith<double?>((Set<MaterialState> states) {
+                return 2;
+              }),
+              trackColor: MaterialStateProperty.resolveWith<Color>((Set<MaterialState> states) {
+                return Colors.grey[300]!;
+              }),
+              value: state,
+              onChanged: callback,
+            ),
+            const SizedBox(width: 10,),
+            Text(
+              label,
               style: TextStyle(
                 fontSize: 18,
                 height: 1,
-                fontWeight: FontWeight.normal
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        // Row with time picker
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Hours
-            Flexible(
-              flex: 3,
-              child: NumberInput(name: "Години", maxValue: hourFormat,controller: hoursController,enabled: !fromAllDay,)
-            ),
-            const Flexible(
-              flex: 0,
-              child: DoubleDotTimeDivider()
-              ),
-            Flexible(
-              flex: 3,
-              child: NumberInput(name: "Хвилини", maxValue: 60,controller: minutesController,enabled: !fromAllDay)
-            ),
-            twelveHourFormat ? const Flexible(
-              flex: 2,
-              child: AmPmToggleContainer(),
-            ) : const SizedBox.shrink()
-          ],
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Switch(
-              activeColor: const Color.fromRGBO(118, 253, 172, 1),
-              activeTrackColor: const Color.fromARGB(255, 231, 231, 231),
-              value: twelveHourFormat,
-              onChanged:(value) => setState(() {
-                hourFormat = hourFormat == 24 ? 13: 24;
-                if (fromAllDay == false) {
-                  twelveHourFormat = !twelveHourFormat;
-                }
-                hoursController.clear();
-              }),
-            ),
-            Text(
-              "AM/PM",
-              style: TextStyle(
-                fontSize: 16,
-                height: 1,
-                color: fromAllDay ? Colors.black : Colors.grey
-              )
-            ),
-            const SizedBox(width: 30),
-            // From day setting button
-            Switch(
-              activeColor: const Color.fromRGBO(118, 253, 172, 1),
-              activeTrackColor: const Color.fromARGB(255, 231, 231, 231),
-              value: fromAllDay,
-              onChanged:(value) => setState(() {
-                fromAllDay = !fromAllDay;
-                if (fromAllDay) {
-                  hoursController.clear();
-                  minutesController.clear();
-                  twelveHourFormat = false;
-                }
-              }),
-            ),
-            Text(
-              "Без часу",
-              style: TextStyle(
-                fontSize: 16,
-                height: 1,
-                color: fromAllDay ? Colors.black : Colors.grey
+                color: state ? Colors.black : Colors.grey
               )
             )
           ],
-        ),
-        // Row with cancel and comfirm buttons
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButtonWidget(buttonName: "Відхилити", buttonColor: Colors.grey, backToMain: widget.backToMain),
-            const SizedBox(width: 20),
-            TextButtonWidget(buttonName: "Підтвердити", buttonColor: Colors.black, backToMain: widget.backToMain),
-          ],
-        )
-      ],
-    );
+        );
   }
 }
 
@@ -1507,7 +1629,7 @@ class _NumberInputState extends State<NumberInput> {
           alignment: Alignment.center,
           padding: const EdgeInsets.fromLTRB(10, 23, 10, 2),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 228, 228, 228),
+            color: Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.circular(20)
           ),
           child: TextField(
@@ -1609,7 +1731,6 @@ class TextButtonWidget extends StatelessWidget {
   // }
 }
 
-
 class DoneDateButton extends StatelessWidget {
   final Function action;
 
@@ -1633,67 +1754,16 @@ class DoneDateButton extends StatelessWidget {
           backgroundColor: const Color.fromRGBO(118, 253, 172, 1),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20)),
+            side: BorderSide(
+              color: Color.fromARGB(255, 225, 255, 237),
+              width: 1
+            )
           ),
         ),
       ),
     );
   }
 }
-
-// class DateSelectorButton extends StatelessWidget {
-
-//   final IconData icon;
-//   final int index;
-//   final int selectedIndex;
-//   final Function(int) onItemTapped;
-//   final String buttonName;
-  
-//   const DateSelectorButton({
-//       super.key,
-//       required this.icon,
-//       required this.index,
-//       required this.selectedIndex,
-//       required this.onItemTapped,
-//       required this.buttonName
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Flexible(
-//       flex: index == selectedIndex ? 3 : 1,
-//       child: ElevatedButton(
-//           onPressed: () => onItemTapped(index),
-//           style: ButtonStyle(
-//             minimumSize: MaterialStateProperty.all(const Size(0, 0)),
-//             padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 6, horizontal: 0)),
-//             foregroundColor: MaterialStateProperty.all(Colors.black),
-//             backgroundColor: MaterialStateProperty.all(
-//               index == selectedIndex ? const Color.fromRGBO(118, 253, 172, 1) : const Color.fromARGB(255, 230, 230, 230)
-//               ),
-//             elevation: MaterialStateProperty.all(0),
-//             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-//               RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(12.0), // Change the radius as needed
-//               ),
-//             ),
-//           ),
-//           child: Row(
-//             crossAxisAlignment: CrossAxisAlignment.center,
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Icon(icon),
-//               index == selectedIndex ?
-//                 Text(buttonName,
-//                   style: const TextStyle(
-//                     height: 1
-//                   ),
-//                 ): const SizedBox.shrink()
-//             ],
-//           )
-//       ),
-//     );
-//   }
-// }
 
 class DateSelectorButton extends StatelessWidget {
 
@@ -1703,7 +1773,9 @@ class DateSelectorButton extends StatelessWidget {
   final Function(int) onItemTapped;
   final String buttonName;
   
-  const DateSelectorButton({
+  const 
+  
+  DateSelectorButton({
       super.key,
       required this.icon,
       required this.index,
@@ -1717,18 +1789,18 @@ class DateSelectorButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => onItemTapped(index),
       child: AnimatedContainer(
-        constraints: BoxConstraints(
-          minWidth: 45,
+        constraints: const BoxConstraints(
+          minWidth: 40,
           maxWidth: 120
         ),
         alignment: Alignment.center,
-        width: index == selectedIndex ? 120 : 45,
-        duration: const Duration(milliseconds: 150),
-        padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+        width: index == selectedIndex ? 120 : 40,
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.symmetric(vertical: 6, horizontal:8),
         decoration: BoxDecoration(
           color: index == selectedIndex ?
             const Color.fromRGBO(118, 253, 172, 1) :
-              const Color.fromARGB(255, 230, 230, 230),
+              Color.fromARGB(255, 255, 255, 255),
           borderRadius: BorderRadius.circular(12)
         ),
         child: Row(

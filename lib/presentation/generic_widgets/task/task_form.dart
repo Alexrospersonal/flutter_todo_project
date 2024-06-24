@@ -67,7 +67,7 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder:(context) => DateSelectorWidget2())
+            MaterialPageRoute(builder:(context) => DateSelectorWidget())
           );
 
           // showDialog(

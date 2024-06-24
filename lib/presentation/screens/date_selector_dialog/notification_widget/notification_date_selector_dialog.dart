@@ -1,19 +1,28 @@
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 
-/// Create the dialog which contains form for createing a new task
-class NewTaskDialogWidget extends StatelessWidget {
-  const NewTaskDialogWidget({super.key});
+class NotifiacationDateSelectorDialog extends StatefulWidget {
+  final List<Widget> children;
+  final Function()? callback;
 
+  const NotifiacationDateSelectorDialog({
+    super.key,
+    required this.children,
+    this.callback
+  });
+
+  @override
+  State<NotifiacationDateSelectorDialog> createState() => _NotifiacationDateSelectorDialogState2();
+}
+
+class _NotifiacationDateSelectorDialogState2 extends State<NotifiacationDateSelectorDialog> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
+      onTap: () => FocusScope.of(context).unfocus(),
       child: Dialog(
         backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
@@ -32,16 +41,14 @@ class NewTaskDialogWidget extends StatelessWidget {
                     borderRadius: const BorderRadius.all(Radius.circular(34)),
                     border: Border.all(width: 2, color: Colors.white30)
                   ),
-                  child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                      child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              TaskForm()
-                            ],
-                          )
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                    child: SingleChildScrollView(
+                        child: Column(
+                          children: widget.children,
                         )
-                      ),
+                      )
+                    ),
                 ),
               ),
             ),
@@ -49,7 +56,11 @@ class NewTaskDialogWidget extends StatelessWidget {
               left: 155-30,
               right: 155-30,
               bottom: -8,
-              child: DoneButton(action: () {print("Pressed"); },)
+              child: DoneButton(action: () {
+                if (widget.callback != null) {
+                  widget.callback!();
+                }
+              })
             )
           ],
         ),

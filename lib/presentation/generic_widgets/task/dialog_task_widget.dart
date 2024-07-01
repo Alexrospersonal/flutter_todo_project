@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
@@ -49,7 +48,14 @@ class NewTaskDialogWidget extends StatelessWidget {
               left: 155-30,
               right: 155-30,
               bottom: -8,
-              child: DoneButton(action: () {print("Pressed"); },)
+              child: DoneButton(action: () async {
+                // var db = DbService.db;
+                // db.writeTxn(() async {
+                //   Task task = Task();
+                //   task.title = "Task title 1";
+                //   await db.tasks.put(task);
+                // });
+              },)
             )
           ],
         ),

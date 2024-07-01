@@ -21,6 +21,6 @@ class Task {
 
   @override
   String toString() {
-    return "$name";
+    return name;
   }
 }

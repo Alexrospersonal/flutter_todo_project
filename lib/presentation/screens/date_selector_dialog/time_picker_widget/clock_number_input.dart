@@ -41,7 +41,7 @@ class _NumberInputState extends State<NumberInput> {
           alignment: Alignment.center,
           padding: const EdgeInsets.fromLTRB(10, 23, 10, 2),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: const Color.fromARGB(255, 255, 255, 255),
             borderRadius: BorderRadius.circular(20)
           ),
           child: TextField(

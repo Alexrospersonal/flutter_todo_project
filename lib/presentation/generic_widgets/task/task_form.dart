@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/category/category_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/color_picker_widget.dart';
@@ -67,19 +65,8 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder:(context) => DateSelectorWidget())
+            MaterialPageRoute(builder:(context) => const DateSelectorWidget())
           );
-
-          // showDialog(
-          //     context: context,
-          //     barrierDismissible: false,
-          //     barrierColor: Colors.white.withOpacity(0.5),
-          //     builder: (BuildContext context) {
-          //       return BackdropFilter(
-          //         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          //         child: const DateSelectorWidget());
-          //     },
-          //   );
         },
         style: ButtonStyle(
           minimumSize: MaterialStateProperty.all(const Size(0, 0)),

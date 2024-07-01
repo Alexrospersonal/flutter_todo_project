@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/category/category_creator_widget.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/data/services/category_manager.dart';
+import 'package:provider/provider.dart';
 
 class CategorySelectorWidget extends StatefulWidget {
   const CategorySelectorWidget({super.key});
@@ -13,50 +15,47 @@ class CategorySelectorWidget extends StatefulWidget {
 }
 
 class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
-  Category selectedCategory = CategoryManager.instance.getItem(0);
-  final _categoryNameController = TextEditingController();
+  // Category selectedCategory = CategoryManager.instance.getItem(0);
+  // final _categoryNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    // TaskState state = Provider.of<TaskState>(context, listen: false);
+    BuildContext providerContext = context;
+
     List<Category> categoryList = CategoryManager.instance.getItems();
 
-    void addNewCategory() {
-      setState(() {
-        var newCategory = CategoryManager.instance.addItem(_categoryNameController.text);
-        selectedCategory = newCategory;
-        _categoryNameController.clear();
-      });
-    }
-
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Container(
-        height: 35,
-        padding: const EdgeInsets.fromLTRB(10, 1.5, 10, 1.5),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.7),
-          borderRadius: BorderRadius.circular(65),
-        ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton(
-              dropdownColor: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              hint: const Text("Choose category"),
-              style: const TextStyle(color: Colors.black, fontSize: 13.0, fontFamily: 'Montserrat', overflow: TextOverflow.ellipsis),
-              value: selectedCategory,
-              items: categoryList.map<DropdownMenuItem<Category>>((cat) {
-                return DropdownMenuItem(value: cat, child: SizedBox(
-                  width: 80,
-                  child: Text(cat.name, overflow: TextOverflow.ellipsis)));
-              }).toList(),
-              onChanged: (category) {
-                setState(() {
-                  Category cat = category ?? CategoryManager.instance.getItem(0);
-                  // widget.selectCategory(cat);
-                  selectedCategory = cat;
-                });
-              }),
-        ),
+      Selector<TaskState, Category>(
+        selector: (context, taskState) => taskState.category,
+        builder: (context, category, child) {
+          return Container(
+            height: 35,
+            padding: const EdgeInsets.fromLTRB(10, 1.5, 10, 1.5),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(65),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                  dropdownColor: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  hint: const Text("Choose category"),
+                  style: const TextStyle(color: Colors.black, fontSize: 13.0, fontFamily: 'Montserrat', overflow: TextOverflow.ellipsis),
+                  value: category,
+                  items: categoryList.map<DropdownMenuItem<Category>>((cat) {
+                    return DropdownMenuItem(value: cat, child: SizedBox(
+                      width: 80,
+                      child: Text(cat.name, overflow: TextOverflow.ellipsis)));
+                  }).toList(),
+                  onChanged: (newCategory) {
+                    context.read<TaskState>().setCategory(newCategory!);
+                  }),
+            ),
+          );
+        },
       ),
+      
 
       // Invoke a new category dialog window.
       ElevatedButton(
@@ -68,7 +67,10 @@ class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
               builder: (BuildContext context) {
                 return BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: CategoryCreatorWidget(categoryNameController: _categoryNameController, addNewCategory: addNewCategory));
+                  child: CategoryCreatorWidget(
+                    context: providerContext
+                  )
+                );
               },
             );
           },

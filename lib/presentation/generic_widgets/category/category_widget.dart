@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/domain/model/homepage_model.dart';
+import 'package:flutter_todo_project/domain/entities/homepage_model.dart';
 import 'package:flutter_todo_project/data/services/category_manager.dart';
 import 'package:provider/provider.dart';
 

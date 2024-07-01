@@ -6,6 +6,8 @@ abstract class Manager<T extends ManagerItem> {
 
   void addItem(String name);
 
+  void addItems(List<String> categories);
+
   T removeItem(int id);
 
   T getItem(int id);
@@ -27,6 +29,13 @@ class CategoryManager extends Manager<Category> {
     Category newCategory = Category(id: _list.length, name: name);
     _list.add(newCategory);
     return newCategory;
+  }
+  
+  @override
+  void addItems(List<String> categories) {
+    for (var catName in categories) {
+      addItem(catName);
+    }
   }
 
   @override

@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/data/services/category_manager.dart';
+import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
+import 'package:provider/provider.dart';
 
-class CategoryCreatorWidget extends StatelessWidget {
-  const CategoryCreatorWidget(
-      {
-        super.key,
-        required this.categoryNameController,
-        required this.addNewCategory  
-      }
-    );
+class CategoryCreatorWidget extends StatefulWidget {
+  final BuildContext context;
 
-  final TextEditingController categoryNameController;
-  final Function addNewCategory;
+  const CategoryCreatorWidget({
+    super.key,
+    required this.context
+  });
+
+  @override
+  State<CategoryCreatorWidget> createState() => _CategoryCreatorWidgetState();
+}
+
+class _CategoryCreatorWidgetState extends State<CategoryCreatorWidget> {
+  final categoryNameController = TextEditingController();
+
+  void addNewCategory() {
+    var newCategory = CategoryManager.instance.addItem(categoryNameController.text);  
+    widget.context.read<TaskState>().setCategory(newCategory);  
+    categoryNameController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-            onTap: () {
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: SimpleDialog(
@@ -57,7 +69,7 @@ class CategoryCreatorWidget extends StatelessWidget {
                 left: 155-30,
                 right: 155-30,
                 bottom: -25,
-                child: DoneButton(action: addNewCategory)
+                child: DoneButton(action: () => addNewCategory())
               )
             ]
           )

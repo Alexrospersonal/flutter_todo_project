@@ -1,7 +1,7 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/dialog_task_widget.dart';
+import 'package:provider/provider.dart';
 
 class CreateTaskBottomButton extends StatelessWidget {
   const CreateTaskBottomButton({super.key});
@@ -20,7 +20,10 @@ class CreateTaskBottomButton extends StatelessWidget {
         barrierLabel: "Add Task",
         barrierColor: Colors.transparent,
         pageBuilder: (context, anim1, anim2) {
-          return const NewTaskDialogWidget();
+          return ChangeNotifierProvider(
+            create: (context) => TaskState(),
+            child: const NewTaskDialogWidget()
+          );
         },
         transitionBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(

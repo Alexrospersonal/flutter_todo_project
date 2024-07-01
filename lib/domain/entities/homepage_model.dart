@@ -25,7 +25,6 @@ class HomepageModel extends ChangeNotifier {
 
   // TODO: Виправити на позначеня як завершене і додати фільтри
   void removeTask(int id) {
-    print("remove from Id: $id");
     db[id].done = true;
     notifyListeners();
   }

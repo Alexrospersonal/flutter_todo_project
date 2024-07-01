@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/task/date_selector/date_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/date_selector_info_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/day_in_week_widget/days_in_week_picker_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_date_selector_widget.dart';

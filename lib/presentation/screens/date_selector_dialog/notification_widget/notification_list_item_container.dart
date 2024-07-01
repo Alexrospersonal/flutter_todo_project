@@ -36,13 +36,13 @@ class _NotifiactionListItemContainerState extends State<NotifiactionListItemCont
           return NotifiacationDateSelectorDialog(
             children: [
               const TaskFormTitleWidget(title: "Дата нагадування"),
-              CalendarWidget(changeDate: (DateTime) {}),
+              CalendarWidget(changeDate: (DateTime date) {}),
               const SizedBox(height: 10),
               const NotificationClockWidget(),
               const SizedBox(height: 25),
             ],
             callback: () {
-              print("Babuna macaca");
+              // print("Babuna macaca");
             },
           );
         },

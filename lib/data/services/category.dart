@@ -5,6 +5,6 @@ class Category extends ManagerItem {
 
   @override
   String toString() {
-    return "$name";
+    return name;
   }
 }

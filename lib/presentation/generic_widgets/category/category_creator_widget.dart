@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_todo_project/data/services/category_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/settings.dart';
 import 'package:provider/provider.dart';
 
-class CategoryCreatorWidget extends StatefulWidget {
+class CategoryCreatorWidget extends ConsumerStatefulWidget {
   final BuildContext context;
 
   const CategoryCreatorWidget({
@@ -16,18 +16,20 @@ class CategoryCreatorWidget extends StatefulWidget {
   });
 
   @override
-  State<CategoryCreatorWidget> createState() => _CategoryCreatorWidgetState();
+  ConsumerState<CategoryCreatorWidget> createState() => _CategoryCreatorWidgetState();
 }
 
-class _CategoryCreatorWidgetState extends State<CategoryCreatorWidget> {
+class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
   final categoryNameController = TextEditingController();
   final emojiController = TextEditingController();
 
   // TODO: Додати валідацію типу коли пустий рядок і нажата кнопка то інформувало що поле пусте.
   void addNewCategory() {
     String categoryName = emojiController.text + categoryNameController.text;
-    var newCategory = CategoryManager.instance.addItem(categoryName);  
+ 
+    var newCategory = ref.read(listCategoryNotifierProvider.notifier).addCategory(categoryName);
     widget.context.read<TaskState>().setCategory(newCategory);  
+
     categoryNameController.clear();
   }
 

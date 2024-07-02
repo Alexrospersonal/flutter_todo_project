@@ -1,29 +1,27 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/category/category_creator_widget.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
-import 'package:flutter_todo_project/data/services/category_manager.dart';
 import 'package:provider/provider.dart';
 
-class CategorySelectorWidget extends StatefulWidget {
+class CategorySelectorWidget extends ConsumerStatefulWidget {
   const CategorySelectorWidget({super.key});
 
   @override
-  State<CategorySelectorWidget> createState() => _CategorySelectorWidgetState();
+  ConsumerState<CategorySelectorWidget> createState() => _CategorySelectorWidgetState();
 }
 
-class _CategorySelectorWidgetState extends State<CategorySelectorWidget> {
-  // Category selectedCategory = CategoryManager.instance.getItem(0);
-  // final _categoryNameController = TextEditingController();
-
+class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget> {
   @override
   Widget build(BuildContext context) {
     // TaskState state = Provider.of<TaskState>(context, listen: false);
     BuildContext providerContext = context;
 
-    List<Category> categoryList = CategoryManager.instance.getItems();
+    List<Category> categoryList = ref.watch(listCategoryNotifierProvider);
 
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Selector<TaskState, Category>(

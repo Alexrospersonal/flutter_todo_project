@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/domain/entities/homepage_model.dart';
-import 'package:flutter_todo_project/data/services/category_manager.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 
-class CategoryList extends StatefulWidget {
+class CategoryList extends ConsumerStatefulWidget {
   const CategoryList({super.key});
 
   @override
-  State<CategoryList> createState() => _CategoryListState();
+  ConsumerState<CategoryList> createState() => _CategoryListState();
 }
 
-class _CategoryListState extends State<CategoryList> {
-  int? _selectedIndex;
+class _CategoryListState extends ConsumerState<CategoryList> {
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    CategoryManager categoryManager = CategoryManager.instance;
-    var listOfCategories = categoryManager.getItems();
+    // CategoryManager categoryManager = CategoryManager.instance;
+    var listOfCategories = ref.watch(listCategoryNotifierProvider.notifier).getCategories();
 
     return ListView.builder(
       scrollDirection: Axis.horizontal,
@@ -28,8 +27,11 @@ class _CategoryListState extends State<CategoryList> {
           onTap: () {
             setState(() {
               _selectedIndex = index;
-              var model = Provider.of<HomepageModel>(context, listen: false);
-              model.sortTasksByCategory(listOfCategories[index]);
+              var selectedCategory = ref.read(listCategoryNotifierProvider.notifier).getCategoryById(index);
+              ref.read(selectedCategoryNotifierProvider.notifier).selectCategory(selectedCategory);
+              // TODO: додати при виборі сортування завдань
+              // var model = Provider.of<HomepageModel>(context, listen: false);
+              // model.sortTasksByCategory(listOfCategories[index]);
             });
           },
           child: Container(

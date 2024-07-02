@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
-import 'package:flutter_todo_project/data/services/category_manager.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
 class TaskState extends ChangeNotifier {
   String title = "";
   String? note;
-  // TODO: Category при створенні має обиртати по замовчуванню із стану глобального який має бути написаний на Riverpod;
-  Category category = CategoryManager.instance.getItem(0);
+  Category category;
   Color color = taskColors[0];
   bool important = false;
 
@@ -25,6 +23,12 @@ class TaskState extends ChangeNotifier {
 
   Set<DateTime> notification = <DateTime>{};
 
+  TaskState({required this.category});
+
+  // static TaskState of(BuildContext context) {
+  //   // final selectedCategory = 
+  // }
+
   void setImportant() {
     important = !important;
     notifyListeners();
@@ -40,3 +44,4 @@ class TaskState extends ChangeNotifier {
     notifyListeners();
   }
 }
+

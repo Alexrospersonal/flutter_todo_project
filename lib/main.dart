@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
-import 'package:flutter_todo_project/domain/entities/homepage_model.dart';
 import 'package:flutter_todo_project/presentation/screens/homepage.dart';
-import 'package:flutter_todo_project/data/services/category_manager.dart';
-import 'package:flutter_todo_project/settings.dart';
-import 'package:provider/provider.dart';
 
 void main() async {
-  CategoryManager.instance.addItems(namesOfCaterories);
-
   WidgetsFlutterBinding.ensureInitialized();
   DbService.initialize();
-  runApp(ChangeNotifierProvider(
-    create: (context) => HomepageModel(),
-    child: const MainApp(),
-  ));
+  runApp(
+    const ProviderScope(
+      child: MainApp()
+    )
+  );
+  // runApp(ChangeNotifierProvider(
+  //   create: (context) => HomepageModel(),
+  //   child: ,
+  // ));
 }
 
 class MainApp extends StatelessWidget {

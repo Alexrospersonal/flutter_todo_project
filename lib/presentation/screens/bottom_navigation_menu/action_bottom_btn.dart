@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/data/services/category.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/dialog_task_widget.dart';
-import 'package:provider/provider.dart';
 
-class CreateTaskBottomButton extends StatelessWidget {
+class CreateTaskBottomButton extends ConsumerWidget {
   const CreateTaskBottomButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    Category cat = ref.watch(selectedCategoryNotifierProvider);
+    
     return FloatingActionButton(
-      onPressed: () => _showAddTaskDialog(context),
+      onPressed: () => _showAddTaskDialog(context, cat),
       child: const Icon(Icons.add),
     );
   }
-  void _showAddTaskDialog(BuildContext context) {
+  void _showAddTaskDialog(BuildContext context, Category cat) {
       showGeneralDialog(
         context: context,
         barrierDismissible: false,
         barrierLabel: "Add Task",
         barrierColor: Colors.transparent,
         pageBuilder: (context, anim1, anim2) {
-          return ChangeNotifierProvider(
-            create: (context) => TaskState(),
-            child: const NewTaskDialogWidget()
-          );
+          return NewTaskDialogWidget(category: cat);
         },
         transitionBuilder: (context, animation, secondaryAnimation, child) {
           return FadeTransition(

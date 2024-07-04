@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class DoneButton extends StatelessWidget {
 
-  final Function action;
+  final bool Function() action;
 
   const DoneButton({super.key, required this.action});
 
@@ -11,8 +11,10 @@ class DoneButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton.filled(
       onPressed: () {
-        action();
-        Navigator.of(context).pop();
+        bool res = action();
+        if (res) {
+          Navigator.of(context).pop();
+        }
       },
       color: const Color.fromARGB(255, 31, 31, 31),
       iconSize: 36.0,

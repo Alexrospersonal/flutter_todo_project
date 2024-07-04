@@ -49,7 +49,7 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
                 left: 155-30,
                 right: 155-30,
                 bottom: -25,
-                child: DoneButton(action: () {},)
+                child: DoneButton(action: () => true,)
               )
             ],
           );

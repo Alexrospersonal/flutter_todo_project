@@ -23,14 +23,20 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
   final categoryNameController = TextEditingController();
   final emojiController = TextEditingController();
 
-  // TODO: Додати валідацію типу коли пустий рядок і нажата кнопка то інформувало що поле пусте.
-  void addNewCategory() {
-    String categoryName = emojiController.text + categoryNameController.text;
- 
-    var newCategory = ref.read(listCategoryNotifierProvider.notifier).addCategory(categoryName);
-    widget.context.read<TaskState>().setCategory(newCategory);  
+  final _formKey = GlobalKey<FormState>();
 
-    categoryNameController.clear();
+  bool addNewCategory() {
+    if (_formKey.currentState!.validate()) {
+      String categoryName = emojiController.text + categoryNameController.text;
+  
+      var newCategory = ref.read(listCategoryNotifierProvider.notifier).addCategory(categoryName);
+      widget.context.read<TaskState>().setCategory(newCategory);  
+
+      categoryNameController.clear();
+
+      return true;
+    }
+    return false;
   }
 
   void addEmoji(String emoji) {
@@ -38,6 +44,13 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
       emojiController.clear();
       emojiController.text = emoji;
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    categoryNameController.dispose();
+    emojiController.dispose();
   }
 
   @override
@@ -58,39 +71,45 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
                 child:
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const TaskFormTitleWidget(title: "створити список",),
-                      const SizedBox(height: 20),
-                      Row(children: [
-                        Flexible(
-                          flex: 1,
-                          child: Text(
-                            emojiController.text,
-                            style: const TextStyle(
-                              fontSize: 21
-                            ),
-                            ),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const TaskFormTitleWidget(title: "створити список",),
+                        const SizedBox(height: 20),
+                        Row(children: [
+                          Flexible(
+                            flex: 1,
+                            child: Text(
+                              emojiController.text,
+                              style: const TextStyle(
+                                fontSize: 21
+                              ),
+                              ),
+                          ),
+                          Flexible (
+                            flex: 10,
+                            child: TaskNameField(
+                              titleController: categoryNameController,
+                              invalidValidationText: "Enter a category name",
+                            )
+                          ),
+                        ]),
+                        const SizedBox(height: 20),
+                        Text(
+                          "додати іконку".toUpperCase(),
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Montserrat'
+                          ),
                         ),
-                        Flexible (
-                          flex: 10,
-                          child: TaskNameField(titleController: categoryNameController)
-                        ),
-                      ]),
-                      const SizedBox(height: 20),
-                      Text(
-                        "додати іконку".toUpperCase(),
-                        style: const TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Montserrat'
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      EmojiSelector(callback: addEmoji),
-                      const SizedBox(height: 20)
-                    ]
+                        const SizedBox(height: 5),
+                        EmojiSelector(callback: addEmoji),
+                        const SizedBox(height: 20)
+                      ]
+                    ),
                   )
               ),
               Positioned(

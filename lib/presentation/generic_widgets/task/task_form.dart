@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/category/category_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/color_picker_widget.dart';
+import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/priority_button_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/date_selector/date_selector_widget.dart';
+import 'package:flutter_todo_project/presentation/styles/task_form_style.dart';
 
 
 class TaskForm extends StatefulWidget {
@@ -15,33 +18,79 @@ class TaskForm extends StatefulWidget {
 class _TaskFormState extends State<TaskForm> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
+    // TODO: треба продумаьт як передати стан форми сюди і провалідувати його
+  bool validateTaskData() {
+    if (_formKey.currentState!.validate()) {
+      return true;
+    }    
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
+    return Stack(
+      clipBehavior: Clip.none,
       children: [
-        const TaskFormTitleWidget(title: "створити завдання"),
-        const SizedBox(height: 30),
-        TaskNameField(titleController: _titleController),
-        const SizedBox(height: 20),
-        TaskDescriptionField(descriptionController: _descriptionController),
-        const SizedBox(height: 10),
-        const CategorySelectorWidget(),
-        const Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        DialogTaskFormBackgroundStyle(
           children: [
-              DateSelectorButton(),
-              SizedBox(width: 10),
-              ColorPicker(),
-              SizedBox(width: 10),
-              PriorityButton()
-            ]
-          ),
-        const SizedBox(height: 20),
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  const TaskFormTitleWidget(title: "створити завдання"),
+                  const SizedBox(height: 30),
+                  TaskNameField(
+                    titleController: _titleController,
+                    invalidValidationText: "Enter a title name",
+                  ),
+                  const SizedBox(height: 20),
+                  TaskDescriptionField(descriptionController: _descriptionController),
+                  const SizedBox(height: 10),
+                  const CategorySelectorWidget(),
+                  const Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                        DateSelectorButton(),
+                        SizedBox(width: 10),
+                        ColorPicker(),
+                        SizedBox(width: 10),
+                        PriorityButton()
+                      ]
+                    ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ],
+        ),
+        Positioned(
+          left: 155-30,
+          right: 155-30,
+          bottom: -8,
+          child: DoneButton(action: () {
+            // var db = DbService.db;
+            // db.writeTxn(() async {
+            //   Task task = Task();
+            //   task.title = "Task title 1";
+            //   await db.tasks.put(task);
+            // });
+            return validateTaskData();
+          },)
+        )
       ],
     );
+
   }
 }
 
@@ -60,8 +109,6 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        // TODO: Create alternative dialog
-
         onPressed: () {
           Navigator.push(
             context,
@@ -191,7 +238,6 @@ class _TaskDescriptionFieldState extends State<TaskDescriptionField> {
 
   @override
   void dispose() {
-    widget._descriptionController.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -227,17 +273,25 @@ class _TaskDescriptionFieldState extends State<TaskDescriptionField> {
 }
 
 class TaskNameField extends StatelessWidget {
+  final TextEditingController titleController;
+  final String invalidValidationText;
+  
   const TaskNameField({
     super.key,
-    required TextEditingController titleController,
-  }) : _titleController = titleController;
-
-  final TextEditingController _titleController;
+    required this.titleController,
+    required this.invalidValidationText
+  });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: _titleController,
+    return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return invalidValidationText;
+        }
+        return null;
+      },
+      controller: titleController,
       style: const TextStyle(fontSize: 21.0, fontWeight: FontWeight.w400, fontFamily: 'Montserrat'),
       decoration: const InputDecoration(
         hintText: 'Назва',

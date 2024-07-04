@@ -53,7 +53,6 @@ class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget>
           );
         },
       ),
-      
 
       // Invoke a new category dialog window.
       ElevatedButton(

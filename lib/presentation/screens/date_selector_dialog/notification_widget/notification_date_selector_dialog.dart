@@ -59,7 +59,9 @@ class _NotifiacationDateSelectorDialogState2 extends State<NotifiacationDateSele
               child: DoneButton(action: () {
                 if (widget.callback != null) {
                   widget.callback!();
+                  return true;
                 }
+                return false;
               })
             )
           ],

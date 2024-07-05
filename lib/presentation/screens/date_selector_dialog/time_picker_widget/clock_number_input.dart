@@ -6,13 +6,15 @@ class NumberInput extends StatefulWidget {
   final int maxValue;
   final TextEditingController controller;
   final bool enabled;
+  final void Function(String) onChanged;
 
   const NumberInput({
     super.key,
     required this.name,
     required this.maxValue,
     required this.controller,
-    required this.enabled
+    required this.enabled,
+    required this.onChanged
   });
 
   @override
@@ -51,6 +53,7 @@ class _NumberInputState extends State<NumberInput> {
             maxLength: 2,
             textAlign: TextAlign.center,
             textAlignVertical: TextAlignVertical.center,
+            onChanged: widget.onChanged,
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               TextInputFormatter.withFunction((oldValue, newValue) {

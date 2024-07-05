@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
-class TaskState extends ChangeNotifier {
+
+abstract class CalendarState extends ChangeNotifier {
+  DateTime? taskDateTime;
+
+  void setDate(DateTime newDate);
+}
+
+class TaskState extends ChangeNotifier implements CalendarState {
   String title = "";
   String? note;
   Category category;
@@ -11,6 +18,7 @@ class TaskState extends ChangeNotifier {
 
   bool hasDate = false;
   bool hasTime = false;
+  @override
   DateTime? taskDateTime;
 
   bool recurring = false;
@@ -24,10 +32,6 @@ class TaskState extends ChangeNotifier {
   Set<DateTime> notification = <DateTime>{};
 
   TaskState({required this.category});
-
-  // static TaskState of(BuildContext context) {
-  //   // final selectedCategory = 
-  // }
 
   void setImportant() {
     important = !important;
@@ -43,5 +47,47 @@ class TaskState extends ChangeNotifier {
     category = newCategory;
     notifyListeners();
   }
+  
+  @override
+  void setDate(DateTime newDate) {
+    taskDateTime = newDate;
+    hasDate = true;
+    notifyListeners();
+  }
+
+  void setTime(int hour, int minutes) {
+    if (taskDateTime != null) {
+      hasTime = true;
+      taskDateTime = DateTime(
+        taskDateTime!.day,
+        taskDateTime!.month,
+        taskDateTime!.year,
+        hour,
+        minutes
+      );
+      notifyListeners();
+    }
+  }
+  
+  void setHasDate(bool newState) {
+    if (newState == false) {
+      taskDateTime = null; // або DateTime.now() або інше значення за замовчуванням
+    } else {
+      taskDateTime = DateTime.now();
+    }
+    
+    hasDate = newState;
+    notifyListeners();
+  }
+
+  bool setHasTime(bool newState) {
+    if (hasDate) {
+      hasTime = newState;
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
 }
 

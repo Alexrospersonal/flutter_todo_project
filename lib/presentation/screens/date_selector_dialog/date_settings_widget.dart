@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/date_selector_info_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/day_in_week_widget/days_in_week_picker_widget.dart';
@@ -36,53 +38,68 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
     Size displaySize = MediaQuery.of(context).size;
     double width = displaySize.width * 0.9;
     double height = displaySize.height * 0.43;
+    List<Map<String, IconData>> selectorButtonsNames = [
+      {"Опис": Icons.list},
+      {"Час": Icons.timer_outlined},
+      {"Повтор": Icons.edit_calendar_rounded},
+      {"Тривалість": Icons.timelapse_rounded},
+      {"Нагадування": Icons.notification_add_rounded},
+    ];
 
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           mainAxisSize: MainAxisSize.max,
-          children: [
-            DateSelectorButton(
-              icon: Icons.list,
-              index: 0,
-              selectedIndex: _selectedIndex,
-              onItemTapped: _onItemTapped,
-              buttonName: "Опис",
-            ),
-            const SizedBox(width: 3),
-            DateSelectorButton(
-              icon: Icons.timer_outlined,
-              index: 1,
-              selectedIndex: _selectedIndex,
-              onItemTapped: _onItemTapped,
-              buttonName: "Час",
-            ),
-            const SizedBox(width: 3),
-            DateSelectorButton(
-              icon: Icons.edit_calendar_rounded,
-              index: 2,
-              selectedIndex: _selectedIndex,
-              onItemTapped: _onItemTapped,
-              buttonName: "Повтор",
-            ),
-            const SizedBox(width: 3),
-            DateSelectorButton(
-              icon: Icons.timelapse_rounded,
-              index: 3,
-              selectedIndex: _selectedIndex,
-              onItemTapped: _onItemTapped,
-              buttonName: "Тривалість",
-            ),
-            const SizedBox(width: 3),
-            DateSelectorButton(
-              icon: Icons.notification_add_rounded,
-              index: 4,
-              selectedIndex: _selectedIndex,
-              onItemTapped: _onItemTapped,
-              buttonName: "Нагадування",
-            ),
-          ],
+          children: List.generate(selectorButtonsNames.length, (index) => DateSelectorButton(
+            icon: selectorButtonsNames[index].entries.first.value,
+            index: index,
+            selectedIndex: _selectedIndex,
+            onItemTapped: _onItemTapped,
+            buttonName: selectorButtonsNames[index].entries.first.key
+          )).toList(),
+
+          // [
+          //   DateSelectorButton(
+          //     icon: Icons.list,
+          //     index: 0,
+          //     selectedIndex: _selectedIndex,
+          //     onItemTapped: _onItemTapped,
+          //     buttonName: "Опис",
+          //   ),
+          //   const SizedBox(width: 3),
+          //   DateSelectorButton(
+          //     icon: Icons.timer_outlined,
+          //     index: 1,
+          //     selectedIndex: _selectedIndex,
+          //     onItemTapped: _onItemTapped,
+          //     buttonName: "Час",
+          //   ),
+          //   const SizedBox(width: 3),
+          //   DateSelectorButton(
+          //     icon: Icons.edit_calendar_rounded,
+          //     index: 2,
+          //     selectedIndex: _selectedIndex,
+          //     onItemTapped: _onItemTapped,
+          //     buttonName: "Повтор",
+          //   ),
+          //   const SizedBox(width: 3),
+          //   DateSelectorButton(
+          //     icon: Icons.timelapse_rounded,
+          //     index: 3,
+          //     selectedIndex: _selectedIndex,
+          //     onItemTapped: _onItemTapped,
+          //     buttonName: "Тривалість",
+          //   ),
+          //   const SizedBox(width: 3),
+          //   DateSelectorButton(
+          //     icon: Icons.notification_add_rounded,
+          //     index: 4,
+          //     selectedIndex: _selectedIndex,
+          //     onItemTapped: _onItemTapped,
+          //     buttonName: "Нагадування",
+          //   ),
+          // ],
         ),
         const SizedBox(height: 15),
         SizedBox(

@@ -25,13 +25,15 @@ class _NotificationClockWidgetState extends State<NotificationClockWidget> {
         name: "Години",
         maxValue: hourFormat,
         controller: hoursController,
-        enabled: true
+        enabled: true,
+        onChanged: (val) {},
       ),
       minuteInput: NumberInput(
         name: "Хвилини",
         maxValue: 60,
         controller: minutesController,
-        enabled: true
+        enabled: true,
+        onChanged: (val) {},
       ),
       twelveHourFormat: twelveHourFormat
     );

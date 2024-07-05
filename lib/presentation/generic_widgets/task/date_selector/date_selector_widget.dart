@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/cards/calendar_card.dart';
@@ -9,16 +10,23 @@ import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/c
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/cards/date_title_card.dart'; 
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/date_settings_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/wide_done_button.dart';
+import 'package:provider/provider.dart';
 
 class DateSelectorWidget extends StatefulWidget {
-  const DateSelectorWidget({super.key});
+  final TaskState taskState;
+
+  const DateSelectorWidget({
+    super.key,
+    required this.taskState
+  });
 
   @override
   State<DateSelectorWidget> createState() => _DateSelectorWidgetState();
 }
 
-class _DateSelectorWidgetState extends State<DateSelectorWidget> {
+class _DateSelectorWidgetState extends State<DateSelectorWidget>  with WidgetsBindingObserver{
   bool isFirstLarge = true;
+  bool isKeyboardVisible = false;
   Duration animDuration = const Duration(milliseconds: 100);
 
   double minHeight = 0.25;
@@ -28,10 +36,33 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
 
   double padding = 8.0;
 
-  void _toggleSizes(bool res) {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();  
+    final bottomInset = View.of(context).viewInsets.bottom;
     setState(() {
-      isFirstLarge = res;
+      isKeyboardVisible = bottomInset > 0.0;
     });
+  }
+
+  void _toggleSizes(bool res) {
+    if (!isKeyboardVisible) {
+      setState(() {
+        isFirstLarge = res;
+      });
+    }
   }
 
   void _swipeToggleHandler(DragUpdateDetails details) {
@@ -57,54 +88,58 @@ class _DateSelectorWidgetState extends State<DateSelectorWidget> {
     double maxSize = screenHeight * maxHeight;
     double minSize = screenHeight * minHeight;
 
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/bg/bg1.jpg'),
-            fit: BoxFit.cover,
-            opacity: 0.75,
+    return ChangeNotifierProvider.value(
+      value: widget.taskState,
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/bg/bg1.jpg'),
+              fit: BoxFit.cover,
+              opacity: 0.75,
+            ),
+            color: Colors.black
           ),
-          color: Colors.black
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: GestureDetector(
-            onVerticalDragUpdate: _swipeToggleHandler,
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(padding, padding * 3, padding, 0),
-              child: Column(
-                children: <Widget>[
-                  DateTitleCardWidget(
-                    screenHeight: screenHeight,
-                    titleHeight: titleHeight,
-                    child: const TaskFormTitleWidget(title: "дата та час"),
-                  ),
-                  DateSelectorCardWidget(
-                    minSize: minSize,
-                    maxSize: maxSize,
-                    isFirstLarge: isFirstLarge,
-                    toggleSizes: _toggleSizes,
-                    isTop: true,
-                    child: const CalendarCardWidget(),
-                  ),
-                  SizedBox(height: paddingHeight),
-                  DateSelectorCardWidget(
-                    minSize: minSize,
-                    maxSize: maxSize,
-                    isFirstLarge: !isFirstLarge,
-                    toggleSizes: _toggleSizes,
-                    isTop: false,
-                    child: const DateSettingsWidget()
-                  ),
-                  SizedBox(height: paddingHeight),
-                  DateDoneButtonCardWidget(
-                    screenHeight: screenHeight,
-                    doneButtonHeight: doneButtonHeight,
-                    child: WideDoneButton(action: () {}),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: GestureDetector(
+              onVerticalDragUpdate: _swipeToggleHandler,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(padding, padding * 3, padding, 0),
+                child: Column(
+                  children: <Widget>[
+                    DateTitleCardWidget(
+                      screenHeight: screenHeight,
+                      titleHeight: titleHeight,
+                      child: const TaskFormTitleWidget(title: "дата та час"),
                     ),
-                ],
+                    if (!isKeyboardVisible)
+                    DateSelectorCardWidget(
+                      minSize: minSize,
+                      maxSize: maxSize,
+                      isFirstLarge: isFirstLarge,
+                      toggleSizes: _toggleSizes,
+                      isTop: true,
+                      child: const CalendarCardWidget(),
+                    ),
+                    SizedBox(height: paddingHeight),
+                    DateSelectorCardWidget(
+                      minSize: minSize,
+                      maxSize: isKeyboardVisible ? maxSize - 95: maxSize,
+                      isFirstLarge: !isFirstLarge,
+                      toggleSizes: _toggleSizes,
+                      isTop: false,
+                      child: const DateSettingsWidget()
+                    ),
+                    SizedBox(height: paddingHeight),
+                    DateDoneButtonCardWidget(
+                      screenHeight: screenHeight,
+                      doneButtonHeight: doneButtonHeight,
+                      child: WideDoneButton(action: () {}),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),

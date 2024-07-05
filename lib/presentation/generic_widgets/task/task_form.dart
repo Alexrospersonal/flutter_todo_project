@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/category/category_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/color_picker_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/priority_button_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/date_selector/date_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/task_form_style.dart';
+import 'package:provider/provider.dart';
 
 
 class TaskForm extends StatefulWidget {
@@ -27,7 +28,6 @@ class _TaskFormState extends State<TaskForm> {
     super.dispose();
   }
 
-    // TODO: треба продумаьт як передати стан форми сюди і провалідувати його
   bool validateTaskData() {
     if (_formKey.currentState!.validate()) {
       return true;
@@ -108,43 +108,46 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
 
   @override
   Widget build(BuildContext context) {
+    final taskState = Provider.of<TaskState>(context, listen: false);
+
     return ElevatedButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder:(context) => const DateSelectorWidget())
-          );
-        },
-        style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size(0, 0)),
-          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 6, horizontal: 10)),
-          foregroundColor: MaterialStateProperty.all(Colors.black),
-          backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(0.7)),
-          elevation: MaterialStateProperty.all(0),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder:(context) => DateSelectorWidget(taskState: taskState))
+        );
+      },
+      style: ButtonStyle(
+        minimumSize: MaterialStateProperty.all(const Size(0, 0)),
+        padding: MaterialStateProperty.all(const EdgeInsets.symmetric(vertical: 6, horizontal: 10)),
+        foregroundColor: MaterialStateProperty.all(Colors.black),
+        backgroundColor: MaterialStateProperty.all(Colors.white.withOpacity(0.7)),
+        elevation: MaterialStateProperty.all(0),
+      ),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        const Icon(Icons.calendar_month),
+        const SizedBox(width: 3),
+        Text(
+          _datetext,
+          style: const TextStyle(
+            fontSize: 13.0,
+            fontFamily: 'Montserrat',
+            // fontWeight: FontWeight.w400
+          ),
         ),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          const Icon(Icons.calendar_month),
-          const SizedBox(width: 3),
-          Text(
-            _datetext,
-            style: const TextStyle(
-              fontSize: 13.0,
-              fontFamily: 'Montserrat',
-              // fontWeight: FontWeight.w400
-            ),
+        const SizedBox(width: 7),
+        const Icon(Icons.timelapse),
+        const SizedBox(width: 3),
+        Text(
+          _timetext,
+          style: const TextStyle(
+            fontSize: 13.0,
+            fontFamily: 'Montserrat',
+            // fontWeight: FontWeight.w400
           ),
-          const SizedBox(width: 7),
-          const Icon(Icons.timelapse),
-          const SizedBox(width: 3),
-          Text(
-            _timetext,
-            style: const TextStyle(
-              fontSize: 13.0,
-              fontFamily: 'Montserrat',
-              // fontWeight: FontWeight.w400
-            ),
-          ),
-        ]));
+        ),
+      ])
+    );
   }
 }
 
@@ -175,39 +178,6 @@ class TaskFormTitleWidget extends StatelessWidget {
     ]);
   }
 }
-
-
-
-// class TaskButtons extends StatelessWidget {
-//   final void Function(BuildContext) addNewTask;
-
-//   const TaskButtons({super.key, required this.addNewTask});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: [
-//         ElevatedButton(
-//           onPressed: () {
-//             addNewTask(context);
-//             Navigator.of(context).pop();
-//           },
-//           style: ElevatedButton.styleFrom(fixedSize: const Size(100, 45)),
-//           child: const Icon(Icons.add),
-//         ),
-//         const SizedBox(width: 30),
-//         ElevatedButton(
-//             onPressed: () {
-//               Navigator.of(context).pop();
-//             },
-//             style: ElevatedButton.styleFrom(fixedSize: const Size(100, 45)),
-//             child: const Icon(Icons.cancel)),
-//       ],
-//     );
-//   }
-// }
-
 
 
 class TaskDescriptionField extends StatefulWidget {

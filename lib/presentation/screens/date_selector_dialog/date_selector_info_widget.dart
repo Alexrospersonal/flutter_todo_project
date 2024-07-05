@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DateSelectorInfoWidget extends StatelessWidget {
   const DateSelectorInfoWidget({super.key});
   
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
+    TaskState state = context.watch<TaskState>();
+
+    String date = state.taskDateTime != null ? DateFormat('dd/MM/yyyy').format(state.taskDateTime!) :"Без дати";
+
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -15,10 +22,10 @@ class DateSelectorInfoWidget extends StatelessWidget {
           width: 1
         )
       ),
-      child: const SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Column(
           children: [
-            ListInfoItem(label: "Дата", text: "26/05/2025",),
+            ListInfoItem(label: "Дата", text: date,),
             Divider(color: Color.fromRGBO(118, 253, 172, 1)),
             SizedBox(height: 10),
             ListInfoItem(label: "Година", text: "18:00",),

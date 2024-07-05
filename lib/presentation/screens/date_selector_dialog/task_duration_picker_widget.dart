@@ -78,7 +78,13 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
             // Hours
             Flexible(
               flex: 1,
-              child: NumberInput(name: "Години", maxValue: hourFormat,controller: hoursController,enabled: isActive)
+              child: NumberInput(
+                name: "Години",
+                maxValue: hourFormat,
+                controller: hoursController,
+                enabled: isActive,
+                onChanged: (val) {},
+              )
             ),
             const Flexible(
               flex: 0,
@@ -86,7 +92,13 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
               ),
             Flexible(
               flex: 1,
-              child: NumberInput(name: "Хвилини", maxValue: 60,controller: minutesController,enabled: isActive)
+              child: NumberInput(
+                name: "Хвилини",
+                maxValue: 60,
+                controller: minutesController,
+                enabled: isActive,
+                onChanged: (val) {},
+              )
             ),
           ],
         ),

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/am_pm_toggle_container.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/double_dot_time_divider.dart';
 
-class ClockContainerWidget extends StatelessWidget {
+class TimePickerInputsContainerWidget extends StatelessWidget {
   final Widget hourInput;
   final Widget minuteInput;
   final Widget amPmToggleInput;
   final bool twelveHourFormat;
 
-  const ClockContainerWidget({
+  const TimePickerInputsContainerWidget({
     super.key,
     required this.hourInput,
     required this.minuteInput,

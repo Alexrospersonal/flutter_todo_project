@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_todo_project/domain/utils/time_format_data.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DateSelectorInfoWidget extends StatelessWidget {
   const DateSelectorInfoWidget({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     TaskState state = context.watch<TaskState>();
 
     String date = state.taskDateTime != null ? DateFormat('dd/MM/yyyy').format(state.taskDateTime!) :"Без дати";
-
-    String time = state.hasTime ? DateFormat(DateFormat.HOUR24_MINUTE).format(state.taskDateTime!) : "Без години";
+    String time = state.hasTime ? TimeFormatData.getTaskTimeInfo(context, state.taskDateTime!) : "Без години";
 
     return Container(
       padding: const EdgeInsets.all(15),
@@ -26,6 +26,7 @@ class DateSelectorInfoWidget extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         child: Column(
+          // TODO: переписати викорстовуючи list generator
           children: [
             ListInfoItem(label: "Дата", text: date,),
             const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
@@ -33,13 +34,13 @@ class DateSelectorInfoWidget extends StatelessWidget {
             ListInfoItem(label: "Година", text: time,),
             const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
             const SizedBox(height: 10),
-            ListInfoItem(label: "Повторення", text: "Вт, Пт, Нд",),
+            const ListInfoItem(label: "Повторення", text: "Вт, Пт, Нд",),
             const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
             const SizedBox(height: 10),
-            ListInfoItem(label: "Тривалість", text: "4 год. 18 хв.",),
+            const ListInfoItem(label: "Тривалість", text: "4 год. 18 хв.",),
             const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
             const SizedBox(height: 10),
-            ListInfoItem(label: "Нагадати за", text: "дні: 1, год: 4, хв: 17",),
+            const ListInfoItem(label: "Нагадати за", text: "дні: 1, год: 4, хв: 17",),
             const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
             const SizedBox(height: 10),
           ],

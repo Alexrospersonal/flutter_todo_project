@@ -112,7 +112,7 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
             },
             children: const [
               DateSelectorInfoWidget(),
-              TimePickerWidget(),
+              TaskTimePickerWidget(),
               DaysInWeekPickerWidget(),
               TaskDurationPickerWidget(),
               NotificationSelectorWidget()

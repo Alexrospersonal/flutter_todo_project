@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/utils/time_format_data.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/am_pm_toggle_container.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/clock_container.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/clock_number_input.dart';
-import 'package:intl/intl.dart';
 
-class Clock extends ConsumerStatefulWidget {
+class CustomTimePicker extends ConsumerStatefulWidget {
   final bool isEnabled;
   final void Function(int? hour, int? minute) callback;
   final DateTime? time;
 
-  const Clock({
+  const CustomTimePicker({
     super.key,
     required this.isEnabled,
     required this.time,
@@ -18,10 +18,10 @@ class Clock extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<Clock> createState() => _ClockState();
+  ConsumerState<CustomTimePicker> createState() => _ClockState();
 }
 
-class _ClockState extends ConsumerState<Clock> {
+class _ClockState extends ConsumerState<CustomTimePicker> {
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   List<bool> amPmStatus = [false, false];
@@ -36,43 +36,10 @@ class _ClockState extends ConsumerState<Clock> {
 
   void switchAmPmInClock(String amPm) {
     if (amPm.isNotEmpty) {
-      amPmStatus = [false, false];
       int index = amPm.toLowerCase() == "am" ? 0 : 1;
+      amPmStatus = [false, false];
       amPmStatus[index] = true;
     }
-  }
-
-  List<String> format24timeToClock() {
-    String hour = "";
-    String minute = "";
-
-    if (widget.time != null) {
-      hour = widget.time!.hour.toString().padLeft(2, '0');
-      minute =  widget.time!.minute.toString().padLeft(2, '0');
-    }
-
-    return [hour, minute];
-  }
-
-  Map<String, String> format12timeToClock() {
-    Map<String, String> timeObject = {
-      "hour": "",
-      "minute": "",
-      "amPm": ""
-    };
-
-    if (widget.time != null) {
-      String formattedTime = DateFormat('hh:mm a').format(widget.time!);
-      List<String> splitedFormatedTime = formattedTime.split(' ');
-      List<String> time = splitedFormatedTime[0].split(":");
-
-      timeObject["hour"] = time[0];
-      timeObject["minute"] = time[1];
-      timeObject["amPm"] = splitedFormatedTime[1];
-    }
-
-    // return hour minute and am/pm
-    return timeObject;
   }
 
   void setTimeToTimeControllers(String hour, String minute) {
@@ -81,20 +48,21 @@ class _ClockState extends ConsumerState<Clock> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+
+    hourController.dispose();
+    minuteController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    
     final bool is24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
+    var timeFormatData = TimeFormatData.getTimeFormatData(widget.time, is24HourFormat);
+    setTimeToTimeControllers(timeFormatData.hour,timeFormatData.minute);
+    switchAmPmInClock(timeFormatData.amPm);
 
-    if (is24HourFormat) {
-      var time = format24timeToClock();
-      setTimeToTimeControllers(time[0], time[1]);
-    } else {
-      Map<String, String> time = format12timeToClock();
-      setTimeToTimeControllers(time["hour"]!, time["minute"]!);
-      switchAmPmInClock(time["amPm"]!);
-    }
-
-    return ClockContainerWidget(
+    return TimePickerInputsContainerWidget(
       hourInput:NumberInput(
         name: "Години",
         maxValue: is24HourFormat ? 24 : 13,
@@ -110,7 +78,6 @@ class _ClockState extends ConsumerState<Clock> {
         onChanged: onChangedMinute,
       ),
       amPmToggleInput: AmPmToggleContainer(
-        callback: (String s) {},
         isSelected: amPmStatus,
       ),
       twelveHourFormat: !is24HourFormat,

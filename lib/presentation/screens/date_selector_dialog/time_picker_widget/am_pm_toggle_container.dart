@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AmPmToggleContainer extends StatefulWidget {
-  final void Function(String) callback;
   final List<bool> isSelected;
 
   const AmPmToggleContainer({
     super.key,
     required this.isSelected,
-    required this.callback
   });
 
   @override
@@ -33,7 +31,6 @@ class _AmPmToggleContainerState extends State<AmPmToggleContainer> {
           for (int i = 0; i < widget.isSelected.length; i++) {
             widget.isSelected[i] = i == index;
           }
-          widget.callback(index == 0 ? "am" : "pm");
         });
       },
       children: const [

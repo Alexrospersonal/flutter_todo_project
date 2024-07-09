@@ -21,7 +21,7 @@ class _NotificationClockWidgetState extends State<NotificationClockWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ClockContainerWidget(
+    return TimePickerInputsContainerWidget(
       hourInput:NumberInput(
         name: "Години",
         maxValue: hourFormat,
@@ -36,8 +36,7 @@ class _NotificationClockWidgetState extends State<NotificationClockWidget> {
         enabled: true,
         onChanged: () {},
       ),
-      amPmToggleInput: AmPmToggleContainer(
-        callback: (String s) {},
+      amPmToggleInput: const AmPmToggleContainer(
         isSelected: [],
       ),
       twelveHourFormat: twelveHourFormat,

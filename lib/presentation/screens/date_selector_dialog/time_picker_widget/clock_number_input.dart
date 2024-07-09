@@ -24,12 +24,6 @@ class NumberInput extends StatefulWidget {
 class _NumberInputState extends State<NumberInput> {
   
   @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

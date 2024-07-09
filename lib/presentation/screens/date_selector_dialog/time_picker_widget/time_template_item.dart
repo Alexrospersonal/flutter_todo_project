@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TimeTemplateItem extends StatelessWidget {
-  final Function(DateTime date) callback;
+  final Function(int hour, int minute) callback;
   final int hour;
   final int minutes;
 
@@ -30,17 +30,7 @@ class TimeTemplateItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        var dateNow = DateTime.now();
-
-        var newDate = DateTime(
-          dateNow.year,
-          dateNow.month,
-          dateNow.day,
-          hour,
-          minutes
-        );
-
-        callback(newDate);
+            callback(hour, minutes);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),

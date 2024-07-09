@@ -24,6 +24,8 @@ class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget
 
         if (value == null) {
           _selectedDay = DateTime.now();
+        } else {
+          _selectedDay = value;
         }
 
         return TableCalendar(

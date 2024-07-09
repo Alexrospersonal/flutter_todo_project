@@ -12,6 +12,8 @@ class DateSelectorInfoWidget extends StatelessWidget {
 
     String date = state.taskDateTime != null ? DateFormat('dd/MM/yyyy').format(state.taskDateTime!) :"Без дати";
 
+    String time = state.hasTime ? DateFormat(DateFormat.HOUR24_MINUTE).format(state.taskDateTime!) : "Без години";
+
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
@@ -26,20 +28,20 @@ class DateSelectorInfoWidget extends StatelessWidget {
         child: Column(
           children: [
             ListInfoItem(label: "Дата", text: date,),
-            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
-            SizedBox(height: 10),
-            ListInfoItem(label: "Година", text: "18:00",),
-            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
-            SizedBox(height: 10),
+            const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            const SizedBox(height: 10),
+            ListInfoItem(label: "Година", text: time,),
+            const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            const SizedBox(height: 10),
             ListInfoItem(label: "Повторення", text: "Вт, Пт, Нд",),
-            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
-            SizedBox(height: 10),
+            const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            const SizedBox(height: 10),
             ListInfoItem(label: "Тривалість", text: "4 год. 18 хв.",),
-            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
-            SizedBox(height: 10),
+            const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            const SizedBox(height: 10),
             ListInfoItem(label: "Нагадати за", text: "дні: 1, год: 4, хв: 17",),
-            Divider(color: Color.fromRGBO(118, 253, 172, 1)),
-            SizedBox(height: 10),
+            const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
+            const SizedBox(height: 10),
           ],
         ),
       ),

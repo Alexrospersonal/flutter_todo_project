@@ -83,7 +83,7 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
                 maxValue: hourFormat,
                 controller: hoursController,
                 enabled: isActive,
-                onChanged: (val) {},
+                onChanged: () {},
               )
             ),
             const Flexible(
@@ -97,7 +97,7 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
                 maxValue: 60,
                 controller: minutesController,
                 enabled: isActive,
-                onChanged: (val) {},
+                onChanged: () {},
               )
             ),
           ],

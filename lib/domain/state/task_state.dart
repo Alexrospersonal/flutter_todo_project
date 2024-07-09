@@ -3,7 +3,7 @@ import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
 
-abstract class CalendarState extends ChangeNotifier {
+abstract class CalendarState {
   DateTime? taskDateTime;
 
   void setDate(DateTime newDate);
@@ -18,6 +18,7 @@ class TaskState extends ChangeNotifier implements CalendarState {
 
   bool hasDate = false;
   bool hasTime = false;
+  
   @override
   DateTime? taskDateTime;
 
@@ -59,19 +60,42 @@ class TaskState extends ChangeNotifier implements CalendarState {
     if (taskDateTime != null) {
       hasTime = true;
       taskDateTime = DateTime(
-        taskDateTime!.day,
-        taskDateTime!.month,
         taskDateTime!.year,
+        taskDateTime!.month,
+        taskDateTime!.day,
         hour,
         minutes
       );
       notifyListeners();
     }
   }
+
+  void setHour(int hour) {
+    taskDateTime = DateTime(
+      taskDateTime!.year,
+      taskDateTime!.month,
+      taskDateTime!.day,
+      hour,
+      taskDateTime!.minute,
+    );
+    notifyListeners();
+  }
+
+  void setMinutes(int minutes) {
+    taskDateTime = DateTime(
+      taskDateTime!.year,
+      taskDateTime!.month,
+      taskDateTime!.day,
+      taskDateTime!.hour,
+      minutes
+    );
+    notifyListeners();
+  }
   
   void setHasDate(bool newState) {
     if (newState == false) {
       taskDateTime = null; // або DateTime.now() або інше значення за замовчуванням
+      hasTime = false;
     } else {
       taskDateTime = DateTime.now();
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/am_pm_toggle_container.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/clock_container.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/clock_number_input.dart';
 
@@ -26,16 +27,20 @@ class _NotificationClockWidgetState extends State<NotificationClockWidget> {
         maxValue: hourFormat,
         controller: hoursController,
         enabled: true,
-        onChanged: (val) {},
+        onChanged: () {},
       ),
       minuteInput: NumberInput(
         name: "Хвилини",
         maxValue: 60,
         controller: minutesController,
         enabled: true,
-        onChanged: (val) {},
+        onChanged: () {},
       ),
-      twelveHourFormat: twelveHourFormat
+      amPmToggleInput: AmPmToggleContainer(
+        callback: (String s) {},
+        isSelected: [],
+      ),
+      twelveHourFormat: twelveHourFormat,
     );
   }
 }

@@ -5,13 +5,15 @@ import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/t
 class ClockContainerWidget extends StatelessWidget {
   final Widget hourInput;
   final Widget minuteInput;
+  final Widget amPmToggleInput;
   final bool twelveHourFormat;
 
   const ClockContainerWidget({
     super.key,
     required this.hourInput,
     required this.minuteInput,
-    required this.twelveHourFormat
+    required this.amPmToggleInput,
+    required this.twelveHourFormat,
   });
   
   @override
@@ -36,9 +38,9 @@ class ClockContainerWidget extends StatelessWidget {
           child: minuteInput
         ),
         if (twelveHourFormat)
-          const Flexible(
+          Flexible(
           flex: 2,
-          child: AmPmToggleContainer(),
+          child: amPmToggleInput
          )
       ],
     );

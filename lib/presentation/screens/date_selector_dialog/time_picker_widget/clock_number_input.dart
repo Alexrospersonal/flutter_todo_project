@@ -6,7 +6,7 @@ class NumberInput extends StatefulWidget {
   final int maxValue;
   final TextEditingController controller;
   final bool enabled;
-  final void Function(String) onChanged;
+  final void Function() onChanged;
 
   const NumberInput({
     super.key,
@@ -53,13 +53,21 @@ class _NumberInputState extends State<NumberInput> {
             maxLength: 2,
             textAlign: TextAlign.center,
             textAlignVertical: TextAlignVertical.center,
-            onChanged: widget.onChanged,
+            // onChanged: widget.onChanged,
+            onSubmitted: (value) => widget.onChanged(),
+            onTapOutside: (event) {
+              widget.onChanged();
+              FocusScope.of(context).unfocus();
+            },
             inputFormatters: [
               FilteringTextInputFormatter.digitsOnly,
               TextInputFormatter.withFunction((oldValue, newValue) {
                 final enteredNumber = int.tryParse(newValue.text);
                 if (enteredNumber != null && enteredNumber >= widget.maxValue) {
-                  return const TextEditingValue(text: '00', selection: TextSelection.collapsed(offset: 2));
+                  return const TextEditingValue(
+                    text: '',
+                    // selection: TextSelection.collapsed(offset: 2)
+                  );
                 }
                 return newValue;
               }),

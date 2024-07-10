@@ -34,7 +34,7 @@ class _ClockState extends ConsumerState<CustomTimePicker> {
     widget.callback(null, int.parse(hourController.text));
   }
 
-  void switchAmPmInClock(String amPm) {
+  void switchAmPmInTimePicker(String amPm) {
     if (amPm.isNotEmpty) {
       int index = amPm.toLowerCase() == "am" ? 0 : 1;
       amPmStatus = [false, false];
@@ -58,9 +58,9 @@ class _ClockState extends ConsumerState<CustomTimePicker> {
   @override
   Widget build(BuildContext context) {
     final bool is24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
-    var timeFormatData = TimeFormatData.getTimeFormatData(widget.time, is24HourFormat);
-    setTimeToTimeControllers(timeFormatData.hour,timeFormatData.minute);
-    switchAmPmInClock(timeFormatData.amPm);
+    var time = FormatedTime.getFormatedTime(widget.time, is24HourFormat);
+    setTimeToTimeControllers(time.hour,time.minute);
+    switchAmPmInTimePicker(time.amPm);
 
     return TimePickerInputsContainerWidget(
       hourInput:NumberInput(

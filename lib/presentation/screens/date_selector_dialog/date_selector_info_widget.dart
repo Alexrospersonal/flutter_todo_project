@@ -12,7 +12,7 @@ class DateSelectorInfoWidget extends StatelessWidget {
     TaskState state = context.watch<TaskState>();
 
     String date = state.taskDateTime != null ? DateFormat('dd/MM/yyyy').format(state.taskDateTime!) :"Без дати";
-    String time = state.hasTime ? TimeFormatData.getTaskTimeInfo(context, state.taskDateTime!) : "Без години";
+    String time = state.hasTime ? FormatedTime.getTaskTimeInfo(context, state.taskDateTime!) : "Без години";
 
     return Container(
       padding: const EdgeInsets.all(15),

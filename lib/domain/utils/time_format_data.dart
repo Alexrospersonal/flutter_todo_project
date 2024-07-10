@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TimeFormatData {
+class FormatedTime {
   String hour;
   String minute;
   String amPm;
 
-  TimeFormatData(this.hour, this.minute, this.amPm);
+  FormatedTime(this.hour, this.minute, this.amPm);
 
-  static TimeFormatData getTimeFormatData(DateTime? time, bool is24HourFormat) {
+  static FormatedTime getFormatedTime(DateTime? time, bool is24HourFormat) {
     if (time == null) {
-      return TimeFormatData("", "", "");
+      return FormatedTime("", "", "");
     }
 
     if (is24HourFormat) {
@@ -20,19 +20,19 @@ class TimeFormatData {
     }
   }
 
-  static TimeFormatData format24timeToClock(DateTime time) {
+  static FormatedTime format24timeToClock(DateTime time) {
     String hour = time.hour.toString().padLeft(2, '0');
     String minute =  time.minute.toString().padLeft(2, '0');
 
-    return TimeFormatData(hour, minute, "");
+    return FormatedTime(hour, minute, "");
   }
 
-  static TimeFormatData format12timeToClock(DateTime time) {
+  static FormatedTime format12timeToClock(DateTime time) {
     String formattedTime = DateFormat('hh:mm a').format(time);
     List<String> splitedFormatedTime = formattedTime.split(' ');
     List<String> timeSplited = splitedFormatedTime[0].split(":");
     
-    return TimeFormatData(timeSplited[0], timeSplited[1], splitedFormatedTime[1]);
+    return FormatedTime(timeSplited[0], timeSplited[1], splitedFormatedTime[1]);
   }
 
   static String getTaskTimeInfo(BuildContext context, DateTime time) {

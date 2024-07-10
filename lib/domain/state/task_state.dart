@@ -22,8 +22,11 @@ class TaskState extends ChangeNotifier implements CalendarState {
   @override
   DateTime? taskDateTime;
 
-  bool recurring = false;
+  bool isRecurring = false;
   List<bool> recurringDays = List.generate(7, (index) => false);
+
+  // TODO: додати функцію зміни стану для виклику вибору кінця повторнення
+  bool endOfRecurring = false;
   DateTime? recurringEndDate;
 
   bool hasDuration = false;
@@ -33,6 +36,27 @@ class TaskState extends ChangeNotifier implements CalendarState {
   Set<DateTime> notification = <DateTime>{};
 
   TaskState({required this.category});
+
+
+  bool setIsRecurring(bool state) {
+    if (hasDate) {
+      isRecurring = state;
+      if (!state) {
+        recurringDays = List.generate(7, (index) => false);
+      }
+      notifyListeners();
+      return true;
+    }
+    return false;
+  }
+
+  void setRecurringDays(int selectedDay) {
+    if (isRecurring) {
+      recurringDays[selectedDay] = !recurringDays[selectedDay];
+      recurringDays = recurringDays.sublist(0);
+      notifyListeners();
+    }
+  }
 
   void setImportant() {
     important = !important;
@@ -96,6 +120,8 @@ class TaskState extends ChangeNotifier implements CalendarState {
     if (newState == false) {
       taskDateTime = null; // або DateTime.now() або інше значення за замовчуванням
       hasTime = false;
+      isRecurring = false;
+      resetRecurringDays();
     } else {
       taskDateTime = DateTime.now();
     }
@@ -111,6 +137,10 @@ class TaskState extends ChangeNotifier implements CalendarState {
       return true;
     }
     return false;
+  }
+
+  void resetRecurringDays() {
+    recurringDays = List.generate(7, (index) => false);
   }
 
 }

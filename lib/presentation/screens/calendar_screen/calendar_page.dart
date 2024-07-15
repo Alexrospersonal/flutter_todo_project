@@ -13,7 +13,8 @@ class CalendarScreen extends StatelessWidget {
           Expanded(
               child: Padding(
             padding: EdgeInsets.all(8.0),
-            child: CalendarWidget(),
+            // child: CalendarWidget(),
+            child: Placeholder(),
           )),
           // Expanded(child: Placeholder())
         ],

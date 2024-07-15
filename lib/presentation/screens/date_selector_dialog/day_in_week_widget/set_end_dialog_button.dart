@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SetEndDialogButton extends StatelessWidget {
   final bool state;
   final String text;
-  final Function() callback;
+  final Function(BuildContext  context) callback;
 
   const SetEndDialogButton({
     super.key,
@@ -15,7 +15,7 @@ class SetEndDialogButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: callback,
+      onTap: () => callback(context),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 15),
         decoration: BoxDecoration(

@@ -37,12 +37,33 @@ class TaskState extends ChangeNotifier implements CalendarState {
 
   TaskState({required this.category});
 
+  void setRecurringEndDate(DateTime endDate) {
+    if (recurringEndDate != null && recurringEndDate!.compareTo(endDate) == 0) {
+      endOfRecurring = false;
+      recurringEndDate = null;
+    } else {
+      recurringEndDate = endDate;
+      endOfRecurring = true;
+    }
+    notifyListeners();
+  }
+
+  bool setEndOfRecurring(bool state) {
+    if (isRecurring) {
+      endOfRecurring = state;
+      recurringEndDate = null;
+      notifyListeners();
+    }
+    return endOfRecurring;
+  }
 
   bool setIsRecurring(bool state) {
     if (hasDate) {
       isRecurring = state;
       if (!state) {
         recurringDays = List.generate(7, (index) => false);
+        recurringEndDate = null;
+        endOfRecurring = false;
       }
       notifyListeners();
       return true;

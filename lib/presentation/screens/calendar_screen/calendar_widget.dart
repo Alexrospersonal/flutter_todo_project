@@ -6,8 +6,15 @@ import 'package:table_calendar/table_calendar.dart';
 
 class CalendarWidget<T extends CalendarState> extends StatefulWidget {
   final void Function(DateTime)? changeDate;
+  final DateTime? recurringEndDate;
+  final List<bool> weekdays;
 
-  const CalendarWidget({super.key, this.changeDate});
+  const CalendarWidget({
+    super.key,
+    required this.weekdays,
+    this.changeDate,
+    this.recurringEndDate,
+    });
 
   @override
   State<CalendarWidget> createState() => _CalendarWidgetState<T>();
@@ -15,6 +22,20 @@ class CalendarWidget<T extends CalendarState> extends StatefulWidget {
 
 class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget> {
   DateTime _selectedDay = DateTime.now();
+
+  bool isHighlighted(DateTime day) {
+    if (widget.recurringEndDate == null) {
+      if (day.isAfter(_selectedDay)) {
+        return widget.weekdays[day.weekday-1];
+      }
+      return false;
+    }
+
+    if (day.isBefore(_selectedDay) || day.isAfter(widget.recurringEndDate!)) {
+      return false;
+    }
+    return widget.weekdays[day.weekday-1];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +60,7 @@ class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget
             return isSameDay(_selectedDay, day);
           },
           onDaySelected: (selectedDay, focusedDay) {
-              context.read<T>().setDate(selectedDay);
-
               _selectedDay = selectedDay;
-              // _focusedDay = focusedDay;
 
               if (widget.changeDate != null) {
                 widget.changeDate!(selectedDay);
@@ -58,7 +76,71 @@ class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget
           calendarStyle: const CalendarStyle(
             cellMargin: EdgeInsets.all(0),
           ),
-          calendarBuilders: const CalendarBuilders()
+          calendarBuilders: CalendarBuilders(
+            defaultBuilder: (context, day, focusedDay) {
+              if (widget.recurringEndDate != null && isSameDay(widget.recurringEndDate, day)) {
+                return Container(
+                  margin: const EdgeInsets.all(4.0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 190, 121, 16),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    '${day.day}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              }
+              else if (isHighlighted(day)) {
+                return Container(
+                  margin: const EdgeInsets.all(4.0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 255, 200, 118),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    '${day.day}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              }
+            },
+            todayBuilder: (context, day, focusedDay) {
+              
+            },
+            selectedBuilder: (context, day, focusedDay) {
+              return Container(
+                margin: const EdgeInsets.all(4.0),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Text(
+                  '${day.day}',
+                  style: TextStyle(color: Colors.white),
+                ),
+              );
+            },
+            outsideBuilder: (context, day, focusedDay) {
+              if (widget.recurringEndDate != null && isSameDay(widget.recurringEndDate, day)) {
+                return Container(
+                  margin: const EdgeInsets.all(4.0),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 190, 121, 16),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Text(
+                    '${day.day}',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              }
+            },
+          )
         );
       },
     );

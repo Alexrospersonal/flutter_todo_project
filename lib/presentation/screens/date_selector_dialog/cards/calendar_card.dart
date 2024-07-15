@@ -28,7 +28,13 @@ class CalendarCardWidget extends StatelessWidget {
               opacity: hasDate ? 1 : 0.5,
               child: IgnorePointer(
                 ignoring: hasDate ? false : true,
-                child: const CalendarWidget<TaskState>()
+                child: CalendarWidget<TaskState>(
+                  weekdays: context.watch<TaskState>().recurringDays,
+                  recurringEndDate: context.watch<TaskState>().recurringEndDate,
+                  changeDate: (DateTime selectedDay) {
+                    context.read<TaskState>().setDate(selectedDay);
+                  }
+                )
               ),
             )
           ],

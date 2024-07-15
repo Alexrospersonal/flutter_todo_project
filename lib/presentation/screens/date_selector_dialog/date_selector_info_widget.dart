@@ -7,12 +7,28 @@ import 'package:provider/provider.dart';
 class DateSelectorInfoWidget extends StatelessWidget {
   const DateSelectorInfoWidget({super.key});
 
+  String getDaysOfTaskRepetat(List<bool> week) {
+    List<String> weekdays = [
+      "Пн", "Вт", "Ср", "Чт","Пт", "Сб","Нд"
+    ];
+    
+    return weekdays
+    .asMap()
+    .entries
+    .where((element) => week[element.key])
+    .map((e) => e.value)
+    .join(",");
+  }
+
   @override
   Widget build(BuildContext context) {
     TaskState state = context.watch<TaskState>();
 
     String date = state.taskDateTime != null ? DateFormat('dd/MM/yyyy').format(state.taskDateTime!) :"Без дати";
     String time = state.hasTime ? FormatedTime.getTaskTimeInfo(context, state.taskDateTime!) : "Без години";
+    String daysOfTaskRepeat = state.recurringDays.any((element) => element) == true
+      ? getDaysOfTaskRepetat(state.recurringDays)
+        : "Без повторень"; 
 
     return Container(
       padding: const EdgeInsets.all(15),
@@ -34,7 +50,7 @@ class DateSelectorInfoWidget extends StatelessWidget {
             ListInfoItem(label: "Година", text: time,),
             const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
             const SizedBox(height: 10),
-            const ListInfoItem(label: "Повторення", text: "Вт, Пт, Нд",),
+            ListInfoItem(label: "Повторення", text: daysOfTaskRepeat,),
             const Divider(color: Color.fromRGBO(118, 253, 172, 1)),
             const SizedBox(height: 10),
             const ListInfoItem(label: "Тривалість", text: "4 год. 18 хв.",),

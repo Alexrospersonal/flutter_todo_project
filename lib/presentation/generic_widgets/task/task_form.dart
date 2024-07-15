@@ -4,7 +4,7 @@ import 'package:flutter_todo_project/presentation/generic_widgets/category/categ
 import 'package:flutter_todo_project/presentation/generic_widgets/color_picker_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/priority_button_widget.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/task/date_selector/date_selector_widget.dart';
+import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/date_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/task_form_style.dart';
 import 'package:provider/provider.dart';
 

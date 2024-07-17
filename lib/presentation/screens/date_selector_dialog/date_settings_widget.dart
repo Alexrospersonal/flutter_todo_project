@@ -56,48 +56,6 @@ class _DateSettingsWidgetSatte extends State<DateSettingsWidget> {
             onItemTapped: _onItemTapped,
             buttonName: selectorButtonsNames[index].entries.first.key
           )).toList(),
-
-          // [
-          //   DateSelectorButton(
-          //     icon: Icons.list,
-          //     index: 0,
-          //     selectedIndex: _selectedIndex,
-          //     onItemTapped: _onItemTapped,
-          //     buttonName: "Опис",
-          //   ),
-          //   const SizedBox(width: 3),
-          //   DateSelectorButton(
-          //     icon: Icons.timer_outlined,
-          //     index: 1,
-          //     selectedIndex: _selectedIndex,
-          //     onItemTapped: _onItemTapped,
-          //     buttonName: "Час",
-          //   ),
-          //   const SizedBox(width: 3),
-          //   DateSelectorButton(
-          //     icon: Icons.edit_calendar_rounded,
-          //     index: 2,
-          //     selectedIndex: _selectedIndex,
-          //     onItemTapped: _onItemTapped,
-          //     buttonName: "Повтор",
-          //   ),
-          //   const SizedBox(width: 3),
-          //   DateSelectorButton(
-          //     icon: Icons.timelapse_rounded,
-          //     index: 3,
-          //     selectedIndex: _selectedIndex,
-          //     onItemTapped: _onItemTapped,
-          //     buttonName: "Тривалість",
-          //   ),
-          //   const SizedBox(width: 3),
-          //   DateSelectorButton(
-          //     icon: Icons.notification_add_rounded,
-          //     index: 4,
-          //     selectedIndex: _selectedIndex,
-          //     onItemTapped: _onItemTapped,
-          //     buttonName: "Нагадування",
-          //   ),
-          // ],
         ),
         const SizedBox(height: 15),
         SizedBox(

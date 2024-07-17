@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:provider/provider.dart';
@@ -83,12 +82,12 @@ class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget
                   margin: const EdgeInsets.all(4.0),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 190, 121, 16),
+                    color: const Color.fromARGB(255, 190, 121, 16),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Text(
                     '${day.day}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 );
               }
@@ -102,13 +101,11 @@ class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget
                   ),
                   child: Text(
                     '${day.day}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 );
               }
-            },
-            todayBuilder: (context, day, focusedDay) {
-              
+              return null;
             },
             selectedBuilder: (context, day, focusedDay) {
               return Container(
@@ -120,7 +117,7 @@ class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget
                 ),
                 child: Text(
                   '${day.day}',
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               );
             },
@@ -130,15 +127,16 @@ class _CalendarWidgetState<T extends CalendarState> extends State<CalendarWidget
                   margin: const EdgeInsets.all(4.0),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 190, 121, 16),
+                    color:const Color.fromARGB(255, 190, 121, 16),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Text(
                     '${day.day}',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 );
               }
+              return null;
             },
           )
         );

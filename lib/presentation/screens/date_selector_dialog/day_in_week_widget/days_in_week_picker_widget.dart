@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/data/services/db.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/custom_alert_dialog.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
@@ -23,10 +22,6 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
   late TaskState taskState;
   bool isEndless = true;
 
-  // void toggleDay(int index) {
-  //   taskState.setRecurringDays(index);
-  // }
-
   void switchRecurringStatus(bool state) {
     bool result = taskState.setIsRecurring(state);
     if (!result) {
@@ -39,23 +34,6 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
       );
     }
   }
-
-  // void showEndOfRepeatDayDialog(BuildContext providerContext) {
-  //   bool result = taskState.isRecurring;
-
-  //   if (result) {
-  //     showDialog(
-  //       context: providerContext,
-  //       barrierDismissible: false,
-  //       barrierColor: Colors.white.withOpacity(0.5),
-  //       builder:(context) {
-  //         var res = providerContext.watch<TaskState>();
-
-  //         return DialogForEndDateOfRepeatly(providerState: res);
-  //       },
-  //     );
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,60 +57,9 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
           label: "Додати повторення",
           callback: switchRecurringStatus
         ),
-        // Row with days
-        // Selector<TaskState, List<bool>>(
-        //   selector: (context, state) => state.recurringDays,
-        //   builder:(context, recurringDays, child) => 
-        //   Row(
-        //     mainAxisSize: MainAxisSize.max,
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: List.generate(
-        //       weekDays.length,
-        //       (index) {
-        //         return DayInWeekLableWidget(
-        //           dayName: weekDays[index],
-        //           index: index,
-        //           selectedDay: recurringDays[index],
-        //           callback: toggleDay,
-        //         );
-        //       }
-        //     )           // DayInWeekLableWidget(dayName: "Пн",)
-        //   ),
-        // ),
         WeekdaysContainer(taskState: taskState),
         const SizedBox(height: 5),
         RepetitionEndDateRowContainer(taskState: taskState)
-        // Row(
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //   children: [
-        //     Selector<TaskState, bool>(
-        //       selector: (context, state) => state.endOfRecurring,
-        //       builder: (context, endOfRecurring, child) {
-        //         return SwitchWithLabel(
-        //           state: endOfRecurring,
-        //           label: "Додати кінцеву",
-        //           callback: (value) {
-        //             var res = context.read<TaskState>().setEndOfRecurring(value);
-        //             if (res) {
-        //               showEndOfRepeatDayDialog(context);
-        //             }
-        //           }
-        //         );
-        //       }, 
-        //     ),
-        //     Selector<TaskState, DateTime?>(
-        //       selector: (context, state) => state.recurringEndDate,
-        //       builder: (context, recurringEndDate, child) {
-        //         return SetEndDialogButton(
-        //         state: recurringEndDate != null ? false : true,
-        //         text: recurringEndDate != null ? DateFormat('dd/MM/yyyy').format(recurringEndDate) : "Без кінця",
-        //         callback: recurringEndDate != null ? showEndOfRepeatDayDialog: (BuildContext context) {},
-        //         );
-        //       },
-        //     )
-        //   ],
-        // ),
       ]
     );
   }

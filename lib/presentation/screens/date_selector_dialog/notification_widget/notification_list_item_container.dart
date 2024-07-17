@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
-import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_clock.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_date_selector_dialog.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_list_button.dart';
@@ -34,15 +33,11 @@ class _NotifiactionListItemContainerState extends State<NotifiactionListItemCont
         barrierColor: Colors.white.withOpacity(0.5),
         builder:(context) {
           return NotifiacationDateSelectorDialog(
-            children: [
-              const TaskFormTitleWidget(title: "Дата нагадування"),
-              // TODO: Виприавити в цьому місці календар
-              // CalendarWidget(
-              //   changeDate: (DateTime date) {}
-              // ),
-              const SizedBox(height: 10),
-              const NotificationClockWidget(),
-              const SizedBox(height: 25),
+            children: const [
+              TaskFormTitleWidget(title: "Дата нагадування"),
+              SizedBox(height: 10),
+              NotificationClockWidget(),
+              SizedBox(height: 25),
             ],
             callback: () {
               // print("Babuna macaca");

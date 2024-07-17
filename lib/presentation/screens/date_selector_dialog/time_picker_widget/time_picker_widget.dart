@@ -50,7 +50,7 @@ class _TaskTimePickerWidgetState extends State<TaskTimePickerWidget> {
       Provider.of<TaskState>(context, listen: false).setHour(hour);
     }
     if (minute != null) {
-      Provider.of<TaskState>(context, listen: false).setMinutes(minute);
+      Provider.of<TaskState>(context, listen: false).setMinute(minute);
     }
   }
 

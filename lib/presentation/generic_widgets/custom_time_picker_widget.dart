@@ -31,7 +31,11 @@ class _ClockState extends ConsumerState<CustomTimePicker> {
   }
 
   void onChangedMinute() {
-    widget.callback(null, int.parse(hourController.text));
+    if (minuteController.text.isEmpty) {
+      widget.callback(null, 0);
+    } else {
+      widget.callback(null, int.parse(minuteController.text));
+    }
   }
 
   void switchAmPmInTimePicker(String amPm) {

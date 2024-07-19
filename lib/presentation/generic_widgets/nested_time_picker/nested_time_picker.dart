@@ -37,6 +37,9 @@ class _NestedTimePickerState extends State<NestedTimePicker> {
   // TODO: переробити вірне переключання
   //щоб pm міняв годину і навпаки можливо провіряти годину чи вона більше 12 чи ні
   void getAmPmTogglingResult(int position) {
+    print("Testing");
+
+
     amPm = position;
     if (position == 1) {
       timeFromInput = TimeOfDay(

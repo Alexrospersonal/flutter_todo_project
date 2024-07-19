@@ -8,15 +8,15 @@ InputDecoration timePickerInputStyle = InputDecoration(
   focusedBorder: OutlineInputBorder(
     borderRadius: const BorderRadius.all(Radius.circular(mediumBorderRadius)),
     borderSide: BorderSide(
-      width: 2.0,
+      width: baseBorderWidth,
       color: comfirmBtnColor
     )
   ),
   enabledBorder: OutlineInputBorder(
     borderRadius: const BorderRadius.all(Radius.circular(mediumBorderRadius)),
     borderSide: BorderSide(
-      width: 2.0,
-      color: Colors.grey[350]!
+      width: baseBorderWidth,
+      color: borderColor
     )
   ),
   contentPadding: const EdgeInsets.all(10),

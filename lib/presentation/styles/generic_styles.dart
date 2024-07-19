@@ -15,10 +15,13 @@ const double bigBorderRadius = 16.0;
 const double mediumBorderRadius = 8.0;
 const double smallBorderRadius = 4.0;
 
+const double baseBorderWidth = 2.0;
+
 const double cardPadding = 15.0;
 
 final Color cancelBtnColor = Colors.red[400]!;
 final Color comfirmBtnColor = Colors.green[400]!;
+final Color borderColor = Colors.grey[350]!;
 const double amountOfColorDimming = 0.3;
 
 const double regularButtonWidth = 150.0;

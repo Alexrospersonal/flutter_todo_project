@@ -9,3 +9,8 @@ Color darkenColor(Color color, {double amount = 0.1}) {
 
   return Color.fromARGB(color.alpha, red, green, blue);
 }
+
+enum TimePickerInputType {
+  hour,
+  minute
+}

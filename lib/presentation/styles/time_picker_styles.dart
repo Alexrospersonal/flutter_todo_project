@@ -1,36 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
+import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 
-InputDecoration timePickerInputStyle = InputDecoration(
+const InputDecoration timePickerInputStyle = InputDecoration(
   hintText: "00",
   filled: true,
-  fillColor: Colors.grey[200],
+  fillColor: inputBackgroundColor,
   focusedBorder: OutlineInputBorder(
-    borderRadius: const BorderRadius.all(Radius.circular(mediumBorderRadius)),
+    borderRadius: BorderRadius.all(Radius.circular(mediumBorderRadius)),
     borderSide: BorderSide(
       width: baseBorderWidth,
-      color: comfirmBtnColor
+      color: primaryColor
     )
   ),
   enabledBorder: OutlineInputBorder(
-    borderRadius: const BorderRadius.all(Radius.circular(mediumBorderRadius)),
+    borderRadius: BorderRadius.all(Radius.circular(mediumBorderRadius)),
     borderSide: BorderSide(
-      width: baseBorderWidth,
-      color: borderColor
+      width: 0,
+      color: Colors.transparent
     )
   ),
-  contentPadding: const EdgeInsets.all(10),
+  focusColor: primaryColor,
+  contentPadding: EdgeInsets.all(10),
   counterText: '',
 );
 
 const TextStyle timePickerTextStyle = TextStyle(
-  fontSize: 60,
+  fontSize: 54,
   height: 1,
-  fontWeight: FontWeight.bold
+  color: greyTextColor,
+  fontFamily: "Fixel",
+  fontWeight: FontWeight.w500
 );
 
 const TextStyle timePickerInputSeparatorStyle = TextStyle(
-  fontSize: 60,
-  fontWeight: FontWeight.bold,
+  fontSize: 54,
+  color: greyTextColor,
+  fontFamily: "Fixel",
+  fontWeight: FontWeight.w500,
   height: 1.2
 );

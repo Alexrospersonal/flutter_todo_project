@@ -31,9 +31,7 @@ flutter:
     - assets/images/bg/bg1.jpg
     - assets/images/textures/noise.jpg
   fonts:
-    - family: Montserrat
+    - family: Fixel
       fonts:
-        - asset: assets/fonts/Montserrat-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Montserrat-SemiBold.ttf
+        - asset: assets/FixelVariable.ttf
           weight: 500

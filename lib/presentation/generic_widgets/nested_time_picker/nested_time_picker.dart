@@ -3,6 +3,7 @@ import 'package:flutter_todo_project/domain/utils/generic.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/input_formatters.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/regular_button.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
+import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:flutter_todo_project/presentation/styles/time_picker_styles.dart';
 import 'package:intl/intl.dart';
 
@@ -99,62 +100,40 @@ class _NestedTimePickerState extends State<NestedTimePicker> {
       amPm = getAmPm(formattedTime);
     }
     
-    return Container(
-      width: 350,
-      height: 195,
-      padding: const EdgeInsets.all(cardPadding),
-      decoration: outerCardStyle,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.title != null)
-          Text(
-            widget.title!.toUpperCase(),
-            style: titleStyle,
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              NestedTimePickerInput(
-                flex: 1,
-                inputType: TimePickerInputType.hour,
-                initialTime: hour,
-                callback: getTime
-              ),
-              const TimePickerInputSeparator(),
-              NestedTimePickerInput(
-                flex: 1,
-                inputType: TimePickerInputType.minute,
-                initialTime: minute,
-                callback: getTime
-              ),
-              if (!is24HourFormat)
-                NestedAmPmToggle(
-                  flex: 0,
-                  initialValue: amPm,
-                  callback: getAmPmTogglingResult,
-                )
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              RegularButton(
-                text: "Cancel",
-                style: cancelButtonStyle,
-                onPressed: () {},
-              ),
-              RegularButton(
-                text: "Done",
-                style: comfirmButtonStyle,
-                onPressed: () {},
-              ),
-            ],
-          )
-      ]),
-    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.title != null)
+        Text(
+          widget.title!.toUpperCase(),
+          style: titleStyle,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            NestedTimePickerInput(
+              flex: 1,
+              inputType: TimePickerInputType.hour,
+              initialTime: hour,
+              callback: getTime
+            ),
+            const TimePickerInputSeparator(),
+            NestedTimePickerInput(
+              flex: 1,
+              inputType: TimePickerInputType.minute,
+              initialTime: minute,
+              callback: getTime
+            ),
+            if (!is24HourFormat)
+              NestedAmPmToggle(
+                flex: 0,
+                initialValue: amPm,
+                callback: getAmPmTogglingResult,
+              )
+          ],
+        ),
+    ]);
   }
 }
 
@@ -189,18 +168,17 @@ class _NestedAmPmToggleState extends State<NestedAmPmToggle> {
     return Flexible(
       flex: widget.flex,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+        margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(mediumBorderRadius),
+          color: inputBackgroundColor,
+        ),
         child: ToggleButtons(
           direction: Axis.vertical,
           constraints: const BoxConstraints(
             maxHeight: 37
           ),
           borderRadius: BorderRadius.circular(mediumBorderRadius),
-          borderWidth: baseBorderWidth,
-          borderColor: borderColor,
-          selectedColor: Colors.white,
-          selectedBorderColor: comfirmBtnColor,
-          fillColor: comfirmBtnColor,
           isSelected: isSelected,
           onPressed: (index) {
             setState(() {
@@ -281,7 +259,7 @@ class _NestedTimePickerInputState extends State<NestedTimePickerInput> {
         inputFormatters: getNumberInputFormatters(maxValue),
         maxLength: 2,
         textAlign: TextAlign.center,
-        cursorHeight: 55,
+        cursorHeight: 50,
         textAlignVertical: TextAlignVertical.center,
         decoration: timePickerInputStyle,
         onSubmitted: (value) {
@@ -312,12 +290,15 @@ class TimePickerInputSeparator extends StatelessWidget {
   
   @override
   Widget build(Object context) {
-    return const Flexible(
+    return Flexible(
         flex: 0,
-        child: Text(
-        ":",
-        style: timePickerInputSeparatorStyle
-      ),
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+          child: const Text(
+            ":",
+            style: timePickerInputSeparatorStyle
+          ),
+        ),
     );
   }
 }

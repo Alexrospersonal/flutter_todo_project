@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
 import 'package:flutter_todo_project/presentation/screens/homepage.dart';
+import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 
 void main() async {
@@ -32,14 +33,20 @@ class MainApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.grey[400],
         body: Center(
-          child: NestedTimePicker(
-          initialDate: DateTime.now(),
-          getTime: (TimeOfDay? time) {
-            if (time != null) {
-              print("Time: $time");
-            }
-          },
-          title: "налаштування часу",
+          child: Container(
+            width: 350,
+            height: 195,
+            padding: const EdgeInsets.all(cardPadding),
+            decoration: outerCardStyle,
+            child: NestedTimePicker(
+            initialDate: DateTime.now(),
+            getTime: (TimeOfDay? time) {
+              if (time != null) {
+                print("Time: $time");
+              }
+            },
+            // title: "налаштування часу",
+            ),
           ),
         ),
       )

@@ -189,17 +189,23 @@ class _NestedAmPmToggleState extends State<NestedAmPmToggle> {
             widget.callback(index);
           },
           children: const [
-          Center(
-            child: Text(
-              "AM",
-              style: regularButtonTextStyle
-              )
+          SizedBox(
+            width: 43,
+            child: Center(
+              child: Text(
+                "AM",
+                style: regularButtonTextStyle
+                )
+            ),
           ),
-          Center(
-            child: Text(
-              "PM",
-              style: regularButtonTextStyle,
-            )
+          SizedBox(
+            width: 43,
+            child: Center(
+              child: Text(
+                "PM",
+                style: regularButtonTextStyle,
+              )
+            ),
           ),
         ],
         ),

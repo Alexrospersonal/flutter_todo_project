@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   provider: ^6.1.2
   table_calendar: ^3.1.1
   flutter_riverpod: ^2.5.1
@@ -30,8 +32,10 @@ flutter:
   assets:
     - assets/images/bg/bg1.jpg
     - assets/images/textures/noise.jpg
+
   fonts:
-    - family: Fixel
+    - family: FixelVariable
       fonts:
-        - asset: assets/FixelVariable.ttf
-          weight: 500
+        - asset: assets/fonts/FixelVariable.ttf
+flutter_intl:
+  enabled: true

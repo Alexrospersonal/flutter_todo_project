@@ -47,8 +47,9 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
   toggleButtonsTheme: ToggleButtonsThemeData(
     borderRadius: BorderRadius.circular(mediumBorderRadius),
     constraints: const BoxConstraints(
-      maxWidth: 43,
-      maxHeight: 80
+      // minWidth: 43,
+      // maxWidth: 43,
+      // maxHeight: 80
     ),
     selectedColor: inputBackgroundColor,
     fillColor: primaryColor,

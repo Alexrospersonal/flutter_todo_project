@@ -176,6 +176,7 @@ class _NestedAmPmToggleState extends State<NestedAmPmToggle> {
         child: ToggleButtons(
           direction: Axis.vertical,
           constraints: const BoxConstraints(
+            maxWidth: 43,
             maxHeight: 37
           ),
           borderRadius: BorderRadius.circular(mediumBorderRadius),

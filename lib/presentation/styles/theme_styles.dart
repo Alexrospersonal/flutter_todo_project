@@ -24,6 +24,39 @@ const double amountOfColorDimming = 0.3;
 
 const double regularButtonWidth = 150.0;
 
+// final ThemeData lightTheme = ThemeData.light().copyWith(
+//   colorScheme: const ColorScheme(
+//     brightness: Brightness.light,
+//     primary: primaryColor,
+//     onPrimary: onPrimaryColor,
+//     secondary: Color.fromRGBO(47, 215, 184, 1),
+//     onSecondary: Colors.white,
+//     error: Colors.red,
+//     onError: Colors.white,
+//     // background: Colors.white,
+//     // onBackground: Color.fromRGBO(53, 53, 53, 1),
+//     surface: Color.fromRGBO(238, 240, 242, 1),
+//     onSurface: Color.fromRGBO(53, 53, 53, 1)
+//   ),
+//   iconTheme:const IconThemeData(
+//     color: Color.fromRGBO(60, 60, 60, 1)
+//   ),
+//   // filledButtonTheme: FilledButtonThemeData(
+//   //   style: comfirmButtonStyle
+//   // ),
+//   toggleButtonsTheme: ToggleButtonsThemeData(
+//     borderRadius: BorderRadius.circular(mediumBorderRadius),
+//     constraints: const BoxConstraints(
+//     ),
+//     selectedColor: inputBackgroundColor,
+//     fillColor: primaryColor,
+//     color: textColor,
+//     borderColor: Colors.transparent,
+//     borderWidth: 0
+//   ),
+// );
+
+
 final ThemeData lightTheme = ThemeData.light().copyWith(
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
@@ -33,23 +66,18 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
     onSecondary: Colors.white,
     error: Colors.red,
     onError: Colors.white,
-    background: Colors.white,
-    onBackground: Color.fromRGBO(53, 53, 53, 1),
+    // background: Colors.white,
+    // onBackground: Color.fromRGBO(53, 53, 53, 1),
     surface: Color.fromRGBO(238, 240, 242, 1),
     onSurface: Color.fromRGBO(53, 53, 53, 1)
   ),
   iconTheme:const IconThemeData(
     color: Color.fromRGBO(60, 60, 60, 1)
   ),
-  // filledButtonTheme: FilledButtonThemeData(
-  //   style: comfirmButtonStyle
-  // ),
+
   toggleButtonsTheme: ToggleButtonsThemeData(
     borderRadius: BorderRadius.circular(mediumBorderRadius),
     constraints: const BoxConstraints(
-      // minWidth: 43,
-      // maxWidth: 43,
-      // maxHeight: 80
     ),
     selectedColor: inputBackgroundColor,
     fillColor: primaryColor,
@@ -59,7 +87,36 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
   ),
 );
 
-// colors
+final ThemeData darkTheme = ThemeData.dark().copyWith(
+  colorScheme: const ColorScheme(
+    brightness: Brightness.dark,
+    primary: primaryColor,
+    onPrimary: onPrimaryColor,
+    secondary: Color.fromRGBO(47, 215, 184, 1),
+    onSecondary: Colors.white,
+    error: Colors.red,
+    onError: Colors.white,
+    // background: Colors.white,
+    // onBackground: Color.fromRGBO(53, 53, 53, 1),
+    surface: Color.fromRGBO(49, 49, 49, 1),
+    onSurface: onPrimaryColor
+  ),
+  iconTheme:const IconThemeData(
+    color: Color.fromRGBO(60, 60, 60, 1)
+  ),
+
+  toggleButtonsTheme: ToggleButtonsThemeData(
+    borderRadius: BorderRadius.circular(mediumBorderRadius),
+    constraints: const BoxConstraints(
+    ),
+    selectedColor: inputBackgroundColor,
+    fillColor: primaryColor,
+    color: textColor,
+    borderColor: Colors.transparent,
+    borderWidth: 0
+  ),
+);
+
 
 
 

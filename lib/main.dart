@@ -2,31 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
-import 'package:flutter_todo_project/domain/state/lang_state.dart';
+import 'package:flutter_todo_project/domain/repository/settings/settings_repository.dart';
+import 'package:flutter_todo_project/domain/repository/settings/settings_repository_interface.dart';
+import 'package:flutter_todo_project/domain/state/locale_state.dart';
+import 'package:flutter_todo_project/domain/state/theme_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
-import 'package:flutter_todo_project/presentation/screens/homepage.dart';
-import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
+import 'package:flutter_todo_project/presentation/generic_widgets/settings_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DbService.initialize();
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(
-    const ProviderScope(
-      child: MainApp()
+    ProviderScope(
+      child: MainApp(preferences: prefs)
     )
   );
 }
 
 class MainApp extends ConsumerWidget {
-  const MainApp({super.key});
+  final SharedPreferences preferences;
+
+  const MainApp({
+    super.key,
+    required this.preferences
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    Locale currentLocale = ref.watch(localeProvider);
-    
-    return MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {    
+    final settingsModeAsync  = ref.watch(settingsNotifierProvider);
+
+    return settingsModeAsync.when(
+      data: (settings) {
+        return MaterialApp(
       title: "Планюсик",
       localizationsDelegates: const [
           S.delegate,
@@ -35,13 +46,43 @@ class MainApp extends ConsumerWidget {
           GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: currentLocale, // uk - Ukrainian lang
+      locale: settings.locale, // uk - Ukrainian lang
       theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: settings.isDarkTheme,
 
       // home: const HomePage()
       // TODO: Testing timepicker
-      home: const TimePickerTest()
+      home: TimePickerTest()
       );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, stackTrace) {
+        return Scaffold(
+        body: Center(
+          child: Text('Error: $error'),
+        ));
+      },
+    );
+    
+    // return MaterialApp(
+    //   title: "Планюсик",
+    //   localizationsDelegates: const [
+    //       S.delegate,
+    //       GlobalMaterialLocalizations.delegate,
+    //       GlobalWidgetsLocalizations.delegate,
+    //       GlobalCupertinoLocalizations.delegate,
+    //   ],
+    //   supportedLocales: S.delegate.supportedLocales,
+    //   locale: currentLocale, // uk - Ukrainian lang
+    //   theme: lightTheme,
+    //   darkTheme: darkTheme,
+    //   themeMode: currentThemeMode,
+
+    //   // home: const HomePage()
+    //   // TODO: Testing timepicker
+    //   home: TimePickerTest()
+    //   );
   }
 }
 
@@ -55,18 +96,17 @@ class TimePickerTest extends ConsumerStatefulWidget {
 
 class _TimePickerTestState extends ConsumerState<TimePickerTest> {
   // Це функція відповідає за зміну мови на початку запуску додатка
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final systemLocale = View.of(context).platformDispatcher.locale;
-      ref.read(localeProvider.notifier).state = systemLocale;
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     final systemLocale = View.of(context).platformDispatcher.locale;
+  //     ref.read(localeProvider.notifier).state = systemLocale;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    Locale locale = Localizations.localeOf(context);
 
     return Scaffold(
       backgroundColor: Colors.grey[400],
@@ -74,18 +114,15 @@ class _TimePickerTestState extends ConsumerState<TimePickerTest> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Locale newLocale = locale.languageCode == 'en' ? const Locale('uk') : const Locale('en');
-                ref.read(localeProvider.notifier).state = newLocale;
-              },
-              child: Text(S.of(context).langName)
-            ),
+            const SettingsWidget(),
             Container(
               width: 350,
               height: 195,
               padding: const EdgeInsets.all(cardPadding),
-              decoration: outerCardStyle,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(bigBorderRadius),
+                color: Theme.of(context).cardColor
+              ),
               child: NestedTimePicker(
                 title: S.of(context).selectNotificationTime,
                 initialDate: DateTime.now(),

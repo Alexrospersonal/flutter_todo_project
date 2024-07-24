@@ -4,7 +4,6 @@ import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 const InputDecoration timePickerInputStyle = InputDecoration(
   hintText: "00",
   filled: true,
-  fillColor: inputBackgroundColor,
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(mediumBorderRadius)),
     borderSide: BorderSide(
@@ -20,22 +19,20 @@ const InputDecoration timePickerInputStyle = InputDecoration(
     )
   ),
   focusColor: primaryColor,
-  contentPadding: EdgeInsets.all(10),
+  contentPadding: EdgeInsetsDirectional.symmetric(vertical: 10, horizontal: 0),
   counterText: '',
 );
 
 const TextStyle timePickerTextStyle = TextStyle(
-  fontSize: 54,
-  height: 1,
+  fontSize: 52,
+  height: 1.2,
   color: greyTextColor,
-  fontFamily: "Fixel",
   fontWeight: FontWeight.w500
 );
 
 const TextStyle timePickerInputSeparatorStyle = TextStyle(
-  fontSize: 54,
+  fontSize: 56,
   color: greyTextColor,
-  fontFamily: "Fixel",
   fontWeight: FontWeight.w500,
-  height: 1.2
+  height: 1.3
 );

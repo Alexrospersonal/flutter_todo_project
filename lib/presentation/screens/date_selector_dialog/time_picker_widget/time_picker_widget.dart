@@ -85,7 +85,7 @@ class _TaskTimePickerWidgetState extends State<TaskTimePickerWidget> {
                   TimeTemplateItem(callback: addTimeToTime,hour: 1,minutes: 0),
                   TimeTemplateItem(callback: addTimeToTime,hour: 0,minutes: 30),
                   TimeTemplateItem(callback: addTimeToTime,hour: 12,minutes: 0),
-                  TimeTemplateItem(callback: addTimeToTime,hour: 3,minutes: 45),
+                  TimeTemplateItem(callback: addTimeToTime,hour: 3, minutes: 45),
                 ],
               )  
             ],

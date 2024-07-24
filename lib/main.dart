@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
-import 'package:flutter_todo_project/domain/repository/settings/settings_repository.dart';
-import 'package:flutter_todo_project/domain/repository/settings/settings_repository_interface.dart';
-import 'package:flutter_todo_project/domain/state/locale_state.dart';
-import 'package:flutter_todo_project/domain/state/theme_state.dart';
+import 'package:flutter_todo_project/domain/state/settings_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
+import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour%20format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/settings_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
@@ -38,7 +36,7 @@ class MainApp extends ConsumerWidget {
     return settingsModeAsync.when(
       data: (settings) {
         return MaterialApp(
-      title: "Планюсик",
+      title: "Notifire",
       localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,
@@ -53,7 +51,7 @@ class MainApp extends ConsumerWidget {
 
       // home: const HomePage()
       // TODO: Testing timepicker
-      home: TimePickerTest()
+      home: const TimePickerTest()
       );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -65,20 +63,6 @@ class MainApp extends ConsumerWidget {
       },
     );
     
-    // return MaterialApp(
-    //   title: "Планюсик",
-    //   localizationsDelegates: const [
-    //       S.delegate,
-    //       GlobalMaterialLocalizations.delegate,
-    //       GlobalWidgetsLocalizations.delegate,
-    //       GlobalCupertinoLocalizations.delegate,
-    //   ],
-    //   supportedLocales: S.delegate.supportedLocales,
-    //   locale: currentLocale, // uk - Ukrainian lang
-    //   theme: lightTheme,
-    //   darkTheme: darkTheme,
-    //   themeMode: currentThemeMode,
-
     //   // home: const HomePage()
     //   // TODO: Testing timepicker
     //   home: TimePickerTest()
@@ -95,43 +79,39 @@ class TimePickerTest extends ConsumerStatefulWidget {
 }
 
 class _TimePickerTestState extends ConsumerState<TimePickerTest> {
-  // Це функція відповідає за зміну мови на початку запуску додатка
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     final systemLocale = View.of(context).platformDispatcher.locale;
-  //     ref.read(localeProvider.notifier).state = systemLocale;
-  //   });
-  // }
+  void getTimeFromTimePicker(TimeOfDay time) {
+    print("---------TIME: $time");
+  }
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Colors.grey[400],
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SettingsWidget(),
             Container(
-              width: 350,
-              height: 195,
+              width: 326,
+              height: 200,
               padding: const EdgeInsets.all(cardPadding),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(bigBorderRadius),
                 color: Theme.of(context).cardColor
               ),
               child: NestedTimePicker(
-                title: S.of(context).selectNotificationTime,
-                initialDate: DateTime.now(),
-                getTime: (TimeOfDay? time) {
-                  if (time != null) {
-                    // print("Time: $time");
-                  }
-                },
-              ),
+                // title: S.of(context).selectNotificationTime,
+                format12TimePicker :Inner12HourFormatPicker(
+                  initialDate: DateTime.now(),
+                  callback: getTimeFromTimePicker
+                ),
+                // TODO: замінити на 24 годинний формат
+                format24TimePicker :Inner12HourFormatPicker(
+                  initialDate: DateTime.now(),
+                  callback: (TimeOfDay time) {},
+                ),
+              )
             ),
           ],
         ),

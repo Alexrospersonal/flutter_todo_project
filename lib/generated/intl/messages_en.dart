@@ -26,6 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Select notification time"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("En"),
+        "timePickerTempale1": MessageLookupByLibrary.simpleMessage("+ 5m"),
+        "timePickerTempale2": MessageLookupByLibrary.simpleMessage("+ 30m"),
+        "timePickerTempale3": MessageLookupByLibrary.simpleMessage("+ 1h"),
         "timePickerTittle": MessageLookupByLibrary.simpleMessage("Select time")
       };
 }

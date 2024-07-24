@@ -89,6 +89,36 @@ class S {
       args: [],
     );
   }
+
+  /// `+ 5m`
+  String get timePickerTempale1 {
+    return Intl.message(
+      '+ 5m',
+      name: 'timePickerTempale1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+ 30m`
+  String get timePickerTempale2 {
+    return Intl.message(
+      '+ 30m',
+      name: 'timePickerTempale2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+ 1h`
+  String get timePickerTempale3 {
+    return Intl.message(
+      '+ 1h',
+      name: 'timePickerTempale3',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

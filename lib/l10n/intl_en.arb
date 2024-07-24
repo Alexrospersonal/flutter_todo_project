@@ -3,5 +3,8 @@
   "timePickerTittle": "Select time",
   "selectNotificationTime": "Select notification time",
   "langName": "English",
-  "shorLangName": "En"
+  "shorLangName": "En",
+  "timePickerTempale1":"+ 5m",
+  "timePickerTempale2":"+ 30m",
+  "timePickerTempale3":"+ 1h"
 }

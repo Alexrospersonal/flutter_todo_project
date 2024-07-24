@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
 const Color primaryColor = Color.fromRGBO(47, 215, 184, 1);
 const Color onPrimaryColor = Colors.white;
@@ -15,7 +14,7 @@ const double smallBorderRadius = 4.0;
 
 const double baseBorderWidth = 2.0;
 
-const double cardPadding = 15.0;
+const double cardPadding = 25.0;
 
 final Color cancelBtnColor = Colors.red[400]!;
 final Color comfirmBtnColor = Colors.green[400]!;
@@ -24,40 +23,7 @@ const double amountOfColorDimming = 0.3;
 
 const double regularButtonWidth = 150.0;
 
-// final ThemeData lightTheme = ThemeData.light().copyWith(
-//   colorScheme: const ColorScheme(
-//     brightness: Brightness.light,
-//     primary: primaryColor,
-//     onPrimary: onPrimaryColor,
-//     secondary: Color.fromRGBO(47, 215, 184, 1),
-//     onSecondary: Colors.white,
-//     error: Colors.red,
-//     onError: Colors.white,
-//     // background: Colors.white,
-//     // onBackground: Color.fromRGBO(53, 53, 53, 1),
-//     surface: Color.fromRGBO(238, 240, 242, 1),
-//     onSurface: Color.fromRGBO(53, 53, 53, 1)
-//   ),
-//   iconTheme:const IconThemeData(
-//     color: Color.fromRGBO(60, 60, 60, 1)
-//   ),
-//   // filledButtonTheme: FilledButtonThemeData(
-//   //   style: comfirmButtonStyle
-//   // ),
-//   toggleButtonsTheme: ToggleButtonsThemeData(
-//     borderRadius: BorderRadius.circular(mediumBorderRadius),
-//     constraints: const BoxConstraints(
-//     ),
-//     selectedColor: inputBackgroundColor,
-//     fillColor: primaryColor,
-//     color: textColor,
-//     borderColor: Colors.transparent,
-//     borderWidth: 0
-//   ),
-// );
-
-
-final ThemeData lightTheme = ThemeData.light().copyWith(
+final ThemeData lightTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.light,
     primary: primaryColor,
@@ -66,15 +32,15 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
     onSecondary: Colors.white,
     error: Colors.red,
     onError: Colors.white,
-    // background: Colors.white,
-    // onBackground: Color.fromRGBO(53, 53, 53, 1),
-    surface: Color.fromRGBO(238, 240, 242, 1),
+    surface: Colors.white,
     onSurface: Color.fromRGBO(53, 53, 53, 1)
   ),
   iconTheme:const IconThemeData(
     color: Color.fromRGBO(60, 60, 60, 1)
   ),
-
+  cardColor: const Color.fromRGBO(238, 240, 242, 1),
+  scaffoldBackgroundColor: Colors.white,
+  fontFamily: 'Fixel',
   toggleButtonsTheme: ToggleButtonsThemeData(
     borderRadius: BorderRadius.circular(mediumBorderRadius),
     constraints: const BoxConstraints(
@@ -85,9 +51,24 @@ final ThemeData lightTheme = ThemeData.light().copyWith(
     borderColor: Colors.transparent,
     borderWidth: 0
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      shadowColor: WidgetStateColor.transparent,
+      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(smallBorderRadius)
+        )
+      ),
+      textStyle: const WidgetStatePropertyAll(
+        TextStyle(
+          fontSize: 16
+        )
+      )
+    )
+  )
 );
 
-final ThemeData darkTheme = ThemeData.dark().copyWith(
+final ThemeData darkTheme = ThemeData(
   colorScheme: const ColorScheme(
     brightness: Brightness.dark,
     primary: primaryColor,
@@ -104,7 +85,9 @@ final ThemeData darkTheme = ThemeData.dark().copyWith(
   iconTheme:const IconThemeData(
     color: Color.fromRGBO(60, 60, 60, 1)
   ),
-
+  cardColor: const Color.fromRGBO(70, 70, 70, 1),
+  scaffoldBackgroundColor: const Color.fromRGBO(49, 49, 49, 1),
+  fontFamily: 'Fixel',
   toggleButtonsTheme: ToggleButtonsThemeData(
     borderRadius: BorderRadius.circular(mediumBorderRadius),
     constraints: const BoxConstraints(
@@ -115,6 +98,21 @@ final ThemeData darkTheme = ThemeData.dark().copyWith(
     borderColor: Colors.transparent,
     borderWidth: 0
   ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      shadowColor: WidgetStateColor.transparent,
+      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(smallBorderRadius)
+        )
+      ),
+      textStyle: const WidgetStatePropertyAll(
+        TextStyle(
+          fontSize: 16
+        )
+      )
+    )
+  )
 );
 
 

@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/state/settings_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour%20format_picker.dart';
+import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour_format_picker.dart';
+import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_24_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/settings_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
@@ -100,16 +101,16 @@ class _TimePickerTestState extends ConsumerState<TimePickerTest> {
                 borderRadius: BorderRadius.circular(bigBorderRadius),
                 color: Theme.of(context).cardColor
               ),
+              // TODO: виправити шаблони не працюють з 12 годоню
               child: NestedTimePicker(
                 // title: S.of(context).selectNotificationTime,
                 format12TimePicker :Inner12HourFormatPicker(
                   initialDate: DateTime.now(),
                   callback: getTimeFromTimePicker
                 ),
-                // TODO: замінити на 24 годинний формат
-                format24TimePicker :Inner12HourFormatPicker(
+                format24TimePicker :Inner24HourFormatPicker(
                   initialDate: DateTime.now(),
-                  callback: (TimeOfDay time) {},
+                  callback: getTimeFromTimePicker,
                 ),
               )
             ),

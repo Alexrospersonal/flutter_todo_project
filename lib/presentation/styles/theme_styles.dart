@@ -36,7 +36,7 @@ final ThemeData lightTheme = ThemeData(
     onSurface: Color.fromRGBO(53, 53, 53, 1)
   ),
   iconTheme:const IconThemeData(
-    color: Color.fromRGBO(60, 60, 60, 1)
+    color: Color.fromRGBO(96, 96, 96, 1)
   ),
   cardColor: const Color.fromRGBO(238, 240, 242, 1),
   scaffoldBackgroundColor: Colors.white,
@@ -65,7 +65,11 @@ final ThemeData lightTheme = ThemeData(
         )
       )
     )
-  )
+  ),
+  bottomAppBarTheme: const BottomAppBarTheme(
+    color: backgroundCardColor,
+    padding: EdgeInsets.all(10),
+  ),
 );
 
 final ThemeData darkTheme = ThemeData(

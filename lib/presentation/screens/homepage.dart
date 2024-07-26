@@ -39,12 +39,6 @@ class _HomePageState extends ConsumerState<HomePage> {
       // body: HomePageWidget(),
       body: Container(
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/bg/bg1.jpg'),
-            fit: BoxFit.cover
-          )
-        ),
         child: PageView(
           controller: _pageController,
           onPageChanged: (index) {
@@ -52,7 +46,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               _selectedIndex = index;
             });
           },
-          children: const [Placeholder(), TasksScreen(), CalendarScreen(), Placeholder()],
+          children: const [TasksScreen(), CalendarScreen()],
         ),
       ),
       bottomNavigationBar: BottomNavigateMenu(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),

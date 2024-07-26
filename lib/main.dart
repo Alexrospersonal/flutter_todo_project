@@ -8,6 +8,7 @@ import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_pi
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_24_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/settings_widget.dart';
+import 'package:flutter_todo_project/presentation/screens/homepage.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,7 +53,7 @@ class MainApp extends ConsumerWidget {
 
       // home: const HomePage()
       // TODO: Testing timepicker
-      home: const TimePickerTest()
+      home: const HomePage()
       );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
@@ -81,7 +82,6 @@ class TimePickerTest extends ConsumerStatefulWidget {
 
 class _TimePickerTestState extends ConsumerState<TimePickerTest> {
   void getTimeFromTimePicker(TimeOfDay time) {
-    print("---------TIME: $time");
   }
 
   @override
@@ -101,7 +101,6 @@ class _TimePickerTestState extends ConsumerState<TimePickerTest> {
                 borderRadius: BorderRadius.circular(bigBorderRadius),
                 color: Theme.of(context).cardColor
               ),
-              // TODO: виправити шаблони не працюють з 12 годоню
               child: NestedTimePicker(
                 // title: S.of(context).selectNotificationTime,
                 format12TimePicker :Inner12HourFormatPicker(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/presentation/styles/icons_font.dart';
 
 class BottomNavigateMenu extends StatelessWidget {
   final int selectedIndex;
@@ -10,48 +11,25 @@ class BottomNavigateMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-        shape: const CircularNotchedRectangle(),
+      height: 56,
+        // shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
               onPressed: () {
                 onItemTapped(0);
-              },
-              icon: Icon(
-                Icons.menu,
-                color: selectedIndex == 0 ? Colors.blueAccent : Colors.black,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                onItemTapped(1);
-              },
-              icon: Icon(
-                Icons.home,
-                color: selectedIndex == 1 ? Colors.blueAccent : Colors.black,
-              ),
+              },             
+              icon: const Icon(IconsFont.homeIcon, size: 21),
             ),
             const SizedBox(
               width: 10,
             ),
             IconButton(
               onPressed: () {
-                onItemTapped(2);
+                onItemTapped(1);
               },
-              icon: Icon(
-                Icons.calendar_month,
-                color: selectedIndex == 2 ? Colors.blueAccent : Colors.black,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                onItemTapped(3);
-              },
-              icon: Icon(
-                Icons.account_circle,
-                color: selectedIndex == 3 ? Colors.blueAccent : Colors.black,
-              ),
+              icon: const Icon(IconsFont.calendarIcon, size: 21),
             ),
           ],
         ));

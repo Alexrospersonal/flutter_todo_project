@@ -1,0 +1,10 @@
+{
+    "@@locale": "uk",
+    "timePickerTittle": "Виберіть час",
+    "selectNotificationTime": "Виберіть час сповіщення",
+    "langName": "Українська",
+    "shorLangName": "Укр",
+    "timePickerTempale1":"+ 5хв",
+    "timePickerTempale2":"+ 30хв",
+    "timePickerTempale3":"+ 1год"
+  }

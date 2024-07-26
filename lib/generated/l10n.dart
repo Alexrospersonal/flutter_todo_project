@@ -49,6 +49,76 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `Select time`
+  String get timePickerTittle {
+    return Intl.message(
+      'Select time',
+      name: 'timePickerTittle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select notification time`
+  String get selectNotificationTime {
+    return Intl.message(
+      'Select notification time',
+      name: 'selectNotificationTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get langName {
+    return Intl.message(
+      'English',
+      name: 'langName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `En`
+  String get shorLangName {
+    return Intl.message(
+      'En',
+      name: 'shorLangName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+ 5m`
+  String get timePickerTempale1 {
+    return Intl.message(
+      '+ 5m',
+      name: 'timePickerTempale1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+ 30m`
+  String get timePickerTempale2 {
+    return Intl.message(
+      '+ 30m',
+      name: 'timePickerTempale2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `+ 1h`
+  String get timePickerTempale3 {
+    return Intl.message(
+      '+ 1h',
+      name: 'timePickerTempale3',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
@@ -57,6 +127,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'uk'),
     ];
   }
 

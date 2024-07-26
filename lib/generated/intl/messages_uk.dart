@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en locale. All the
+// This is a library that provides messages for a uk locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,17 +18,17 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en';
+  String get localeName => 'uk';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "langName": MessageLookupByLibrary.simpleMessage("English"),
+        "langName": MessageLookupByLibrary.simpleMessage("Українська"),
         "selectNotificationTime":
-            MessageLookupByLibrary.simpleMessage("Select notification time"),
-        "shorLangName": MessageLookupByLibrary.simpleMessage("En"),
-        "timePickerTempale1": MessageLookupByLibrary.simpleMessage("+ 5m"),
-        "timePickerTempale2": MessageLookupByLibrary.simpleMessage("+ 30m"),
-        "timePickerTempale3": MessageLookupByLibrary.simpleMessage("+ 1h"),
-        "timePickerTittle": MessageLookupByLibrary.simpleMessage("Select time")
+            MessageLookupByLibrary.simpleMessage("Виберіть час сповіщення"),
+        "shorLangName": MessageLookupByLibrary.simpleMessage("Укр"),
+        "timePickerTempale1": MessageLookupByLibrary.simpleMessage("+ 5хв"),
+        "timePickerTempale2": MessageLookupByLibrary.simpleMessage("+ 30хв"),
+        "timePickerTempale3": MessageLookupByLibrary.simpleMessage("+ 1год"),
+        "timePickerTittle": MessageLookupByLibrary.simpleMessage("Виберіть час")
       };
 }

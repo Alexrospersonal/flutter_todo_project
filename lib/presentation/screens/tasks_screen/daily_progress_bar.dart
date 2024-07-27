@@ -20,23 +20,33 @@ class DailyProgressBar extends StatelessWidget {
         ),
         Flexible(
           flex: 2,
-          child: DayliInfoBar()
+          child: DailyInfoBar()
           )
       ],
     );
   }
 }
-class DayliInfoBar extends StatelessWidget {
-  const DayliInfoBar({super.key});
+class DailyInfoBar extends StatelessWidget {
+  const DailyInfoBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "75%",
-          style: Theme.of(context).textTheme.titleSmall,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "75%",
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            Icon(
+              Icons.arrow_drop_down,
+              color: Theme.of(context).primaryColor,
+              size: 21,
+            )
+          ],
         ),
         const LinearProgressIndicator(
           value: 0.75,

@@ -55,7 +55,7 @@ class S {
     return Intl.message(
       'Select time',
       name: 'timePickerTittle',
-      desc: '',
+      desc: 'The title of the time picker dialog',
       args: [],
     );
   }
@@ -65,7 +65,7 @@ class S {
     return Intl.message(
       'Select notification time',
       name: 'selectNotificationTime',
-      desc: '',
+      desc: 'Text for selecting a notification time',
       args: [],
     );
   }
@@ -75,7 +75,7 @@ class S {
     return Intl.message(
       'English',
       name: 'langName',
-      desc: '',
+      desc: 'The name of the language',
       args: [],
     );
   }
@@ -85,7 +85,7 @@ class S {
     return Intl.message(
       'En',
       name: 'shorLangName',
-      desc: '',
+      desc: 'The short form of the language name',
       args: [],
     );
   }
@@ -95,7 +95,7 @@ class S {
     return Intl.message(
       '+ 5m',
       name: 'timePickerTempale1',
-      desc: '',
+      desc: 'Button label for adding 5 minutes',
       args: [],
     );
   }
@@ -105,7 +105,7 @@ class S {
     return Intl.message(
       '+ 30m',
       name: 'timePickerTempale2',
-      desc: '',
+      desc: 'Button label for adding 30 minutes',
       args: [],
     );
   }
@@ -115,7 +115,7 @@ class S {
     return Intl.message(
       '+ 1h',
       name: 'timePickerTempale3',
-      desc: '',
+      desc: 'Button label for adding 1 hour',
       args: [],
     );
   }
@@ -125,7 +125,27 @@ class S {
     return Intl.message(
       'Daily progress',
       name: 'dailyProgress',
-      desc: '',
+      desc: 'Label for daily progress',
+      args: [],
+    );
+  }
+
+  /// `tasks`
+  String get tasks {
+    return Intl.message(
+      'tasks',
+      name: 'tasks',
+      desc: 'Label for tasks',
+      args: [],
+    );
+  }
+
+  /// `Today`
+  String get today {
+    return Intl.message(
+      'Today',
+      name: 'today',
+      desc: 'Label for today',
       args: [],
     );
   }

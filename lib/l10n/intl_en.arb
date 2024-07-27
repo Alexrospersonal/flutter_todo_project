@@ -1,11 +1,55 @@
+
+
 {
   "@@locale": "en",
   "timePickerTittle": "Select time",
+  "@timePickerTittle": {
+    "description": "The title of the time picker dialog",
+    "placeholders": {}
+  },
   "selectNotificationTime": "Select notification time",
+  "@selectNotificationTime": {
+    "description": "Text for selecting a notification time",
+    "placeholders": {}
+  },
   "langName": "English",
+  "@langName": {
+    "description": "The name of the language",
+    "placeholders": {}
+  },
   "shorLangName": "En",
-  "timePickerTempale1":"+ 5m",
-  "timePickerTempale2":"+ 30m",
-  "timePickerTempale3":"+ 1h",
-  "dailyProgress": "Daily progress"
+  "@shorLangName": {
+    "description": "The short form of the language name",
+    "placeholders": {}
+  },
+  "timePickerTempale1": "+ 5m",
+  "@timePickerTempale1": {
+    "description": "Button label for adding 5 minutes",
+    "placeholders": {}
+  },
+  "timePickerTempale2": "+ 30m",
+  "@timePickerTempale2": {
+    "description": "Button label for adding 30 minutes",
+    "placeholders": {}
+  },
+  "timePickerTempale3": "+ 1h",
+  "@timePickerTempale3": {
+    "description": "Button label for adding 1 hour",
+    "placeholders": {}
+  },
+  "dailyProgress": "Daily progress",
+  "@dailyProgress": {
+    "description": "Label for daily progress",
+    "placeholders": {}
+  },
+  "tasks": "tasks",
+  "@tasks": {
+    "description": "Label for tasks",
+    "placeholders": {}
+  },
+  "today": "Today",
+  "@today": {
+    "description": "Label for today",
+    "placeholders": {}
+  }
 }

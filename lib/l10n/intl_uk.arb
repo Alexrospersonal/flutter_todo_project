@@ -1,11 +1,53 @@
 {
-    "@@locale": "uk",
-    "timePickerTittle": "Виберіть час",
-    "selectNotificationTime": "Виберіть час сповіщення",
-    "langName": "Українська",
-    "shorLangName": "Укр",
-    "timePickerTempale1":"+ 5хв",
-    "timePickerTempale2":"+ 30хв",
-    "timePickerTempale3":"+ 1год",
-    "dailyProgress": "Денний прогрес"
+  "@@locale": "uk",
+  "timePickerTittle": "Виберіть час",
+  "@timePickerTittle": {
+    "description": "The title of the time picker dialog",
+    "placeholders": {}
+  },
+  "selectNotificationTime": "Виберіть час сповіщення",
+  "@selectNotificationTime": {
+    "description": "Text for selecting a notification time",
+    "placeholders": {}
+  },
+  "langName": "Українська",
+  "@langName": {
+    "description": "The name of the language",
+    "placeholders": {}
+  },
+  "shorLangName": "Укр",
+  "@shorLangName": {
+    "description": "The short form of the language name",
+    "placeholders": {}
+  },
+  "timePickerTempale1": "+ 5хв",
+  "@timePickerTempale1": {
+    "description": "Button label for adding 5 minutes",
+    "placeholders": {}
+  },
+  "timePickerTempale2": "+ 30хв",
+  "@timePickerTempale2": {
+    "description": "Button label for adding 30 minutes",
+    "placeholders": {}
+  },
+  "timePickerTempale3": "+ 1год",
+  "@timePickerTempale3": {
+    "description": "Button label for adding 1 hour",
+    "placeholders": {}
+  },
+  "dailyProgress": "Денний прогрес",
+  "@dailyProgress": {
+    "description": "Label for daily progress",
+    "placeholders": {}
+  },
+  "tasks": "завдань",
+  "@tasks": {
+    "description": "Label for tasks",
+    "placeholders": {}
+  },
+  "today": "Сьогодні",
+  "@today": {
+    "description": "Label for today",
+    "placeholders": {}
   }
+}

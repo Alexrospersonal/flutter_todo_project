@@ -1,4 +1,5 @@
 final List<String> namesOfCaterories = [
+  "Today"
   "😍Несортоване",
   "😄Home",
   "😇GYM",

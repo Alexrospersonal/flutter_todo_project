@@ -51,8 +51,6 @@ class MainApp extends ConsumerWidget {
       darkTheme: darkTheme,
       themeMode: settings.isDarkTheme,
 
-      // home: const HomePage()
-      // TODO: Testing timepicker
       home: const HomePage()
       );
       },
@@ -65,10 +63,8 @@ class MainApp extends ConsumerWidget {
       },
     );
     
-    //   // home: const HomePage()
     //   // TODO: Testing timepicker
     //   home: TimePickerTest()
-    //   );
   }
 }
 

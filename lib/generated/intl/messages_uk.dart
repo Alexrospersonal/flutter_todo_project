@@ -27,9 +27,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Виберіть час сповіщення"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("Укр"),
+        "tasks": MessageLookupByLibrary.simpleMessage("завдань"),
         "timePickerTempale1": MessageLookupByLibrary.simpleMessage("+ 5хв"),
         "timePickerTempale2": MessageLookupByLibrary.simpleMessage("+ 30хв"),
         "timePickerTempale3": MessageLookupByLibrary.simpleMessage("+ 1год"),
-        "timePickerTittle": MessageLookupByLibrary.simpleMessage("Виберіть час")
+        "timePickerTittle":
+            MessageLookupByLibrary.simpleMessage("Виберіть час"),
+        "today": MessageLookupByLibrary.simpleMessage("Сьогодні")
       };
 }

@@ -60,7 +60,7 @@ class DateInformationTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DateTime today = DateTime.now();
-    List<String> fomatedDate = DateFormat('EEE, MMM').format(today).split(' ');
+    List<String> fomatedDate = DateFormat('EEE MMM').format(today).split(' ');
     String text = "${fomatedDate[0]} ${today.day} ${fomatedDate[1]}";
 
     return Text(

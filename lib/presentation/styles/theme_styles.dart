@@ -7,6 +7,7 @@ const Color backgroundCardColor = Color.fromRGBO(238, 240, 242, 1);
 const Color inputBackgroundColor = Colors.white;
 const Color textColor = Color.fromRGBO(53, 53, 53, 1);
 const Color greyTextColor = Color.fromRGBO(99, 99, 99, 1);
+const Color greyColor = Color.fromRGBO(191, 191, 191, 1);
 
 const double bigBorderRadius = 16.0;
 const double mediumBorderRadius = 8.0;
@@ -47,7 +48,7 @@ final ThemeData lightTheme = ThemeData(
       color: primaryColor
     ),
     labelSmall: TextStyle(
-      fontSize: 9,
+      fontSize: 10,
       fontWeight: FontWeight.w500,
       color: Color.fromRGBO(191, 191, 191, 1)
     )

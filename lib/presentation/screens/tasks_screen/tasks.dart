@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/category/category_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/daily_progress_bar.dart';
 
@@ -12,12 +13,13 @@ class TasksScreen extends StatelessWidget {
     return SafeArea(
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 16),
-        child: const Column(
+        child: Column(
           children: [
-            DailyProgressBar(),
-            SizedBox(
-              height: 50,
-              child: CategoryList(),
+            const DailyProgressBar(),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+              height: 125,
+              child: const CategoryList(),
             ),
           ],
         ),

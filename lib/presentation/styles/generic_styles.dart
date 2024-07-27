@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/domain/utils/generic.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 
 List<Color> taskColors = [
@@ -9,8 +8,6 @@ List<Color> taskColors = [
     const Color.fromARGB(255, 230, 201, 40),
     const Color.fromARGB(255, 40, 186, 230)
 ];
-
-
 
 final BoxDecoration outerCardStyle = BoxDecoration(
   borderRadius: BorderRadius.circular(bigBorderRadius),

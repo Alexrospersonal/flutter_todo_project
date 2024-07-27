@@ -51,5 +51,40 @@
   "@today": {
     "description": "Label for today",
     "placeholders": {}
+  },
+  "newest": "Newest",
+  "@newest": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "oldest": "Oldest",
+  "@oldest": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "isComing": "Is coming",
+  "@isComing": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "important": "Important",
+  "@important": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "withFiles": "With files",
+  "@withFiles": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "done": "Done",
+  "@done": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "overdue": "Overdue",
+  "@overdue": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
 }

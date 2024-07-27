@@ -49,5 +49,40 @@
   "@today": {
     "description": "Label for today",
     "placeholders": {}
+  },
+  "newest": "Найновіші",
+  "@newest": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "oldest": "Найстаріші",
+  "@oldest": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "isComing": "Майбутні",
+  "@isComing": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "important": "Важливі",
+  "@important": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "withFiles": "З файлами",
+  "@withFiles": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "done": "Завершені",
+  "@done": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "overdue": "Прострочені",
+  "@overdue": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
 }

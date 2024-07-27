@@ -23,7 +23,13 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),
+        "done": MessageLookupByLibrary.simpleMessage("Завершені"),
+        "important": MessageLookupByLibrary.simpleMessage("Важливі"),
+        "isComing": MessageLookupByLibrary.simpleMessage("Майбутні"),
         "langName": MessageLookupByLibrary.simpleMessage("Українська"),
+        "newest": MessageLookupByLibrary.simpleMessage("Найновіші"),
+        "oldest": MessageLookupByLibrary.simpleMessage("Найстаріші"),
+        "overdue": MessageLookupByLibrary.simpleMessage("Прострочені"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Виберіть час сповіщення"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("Укр"),
@@ -33,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "timePickerTempale3": MessageLookupByLibrary.simpleMessage("+ 1год"),
         "timePickerTittle":
             MessageLookupByLibrary.simpleMessage("Виберіть час"),
-        "today": MessageLookupByLibrary.simpleMessage("Сьогодні")
+        "today": MessageLookupByLibrary.simpleMessage("Сьогодні"),
+        "withFiles": MessageLookupByLibrary.simpleMessage("З файлами")
       };
 }

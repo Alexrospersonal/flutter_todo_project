@@ -149,6 +149,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Newest`
+  String get newest {
+    return Intl.message(
+      'Newest',
+      name: 'newest',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Oldest`
+  String get oldest {
+    return Intl.message(
+      'Oldest',
+      name: 'oldest',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Is coming`
+  String get isComing {
+    return Intl.message(
+      'Is coming',
+      name: 'isComing',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Important`
+  String get important {
+    return Intl.message(
+      'Important',
+      name: 'important',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `With files`
+  String get withFiles {
+    return Intl.message(
+      'With files',
+      name: 'withFiles',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get done {
+    return Intl.message(
+      'Done',
+      name: 'done',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Overdue`
+  String get overdue {
+    return Intl.message(
+      'Overdue',
+      name: 'overdue',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

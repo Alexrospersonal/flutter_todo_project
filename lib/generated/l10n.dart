@@ -119,6 +119,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Daily progress`
+  String get dailyProgress {
+    return Intl.message(
+      'Daily progress',
+      name: 'dailyProgress',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

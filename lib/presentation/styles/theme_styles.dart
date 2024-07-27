@@ -35,6 +35,23 @@ final ThemeData lightTheme = ThemeData(
     surface: Colors.white,
     onSurface: Color.fromRGBO(53, 53, 53, 1)
   ),
+  textTheme: const TextTheme(
+    headlineMedium: TextStyle(
+      fontSize: 36,
+      fontWeight: FontWeight.w900,
+      letterSpacing: 1.7
+    ),
+    titleSmall: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+      color: primaryColor
+    ),
+    labelSmall: TextStyle(
+      fontSize: 9,
+      fontWeight: FontWeight.w500,
+      color: Color.fromRGBO(191, 191, 191, 1)
+    )
+  ),
   iconTheme:const IconThemeData(
     color: Color.fromRGBO(96, 96, 96, 1)
   ),
@@ -66,9 +83,17 @@ final ThemeData lightTheme = ThemeData(
       )
     )
   ),
+  appBarTheme: const AppBarTheme(
+    backgroundColor:backgroundCardColor,
+    foregroundColor: Color.fromRGBO(96, 96, 96, 1)
+  ),
   bottomAppBarTheme: const BottomAppBarTheme(
     color: backgroundCardColor,
     padding: EdgeInsets.all(10),
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    elevation: 0,
+    shape: CircleBorder(),
   ),
 );
 

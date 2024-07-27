@@ -6,5 +6,6 @@
     "shorLangName": "Укр",
     "timePickerTempale1":"+ 5хв",
     "timePickerTempale2":"+ 30хв",
-    "timePickerTempale3":"+ 1год"
+    "timePickerTempale3":"+ 1год",
+    "dailyProgress": "Денний прогрес"
   }

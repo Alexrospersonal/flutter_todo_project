@@ -6,5 +6,6 @@
   "shorLangName": "En",
   "timePickerTempale1":"+ 5m",
   "timePickerTempale2":"+ 30m",
-  "timePickerTempale3":"+ 1h"
+  "timePickerTempale3":"+ 1h",
+  "dailyProgress": "Daily progress"
 }

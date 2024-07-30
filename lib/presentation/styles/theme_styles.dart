@@ -26,68 +26,46 @@ const double regularButtonWidth = 150.0;
 
 final ThemeData lightTheme = ThemeData(
   colorScheme: const ColorScheme(
-    brightness: Brightness.light,
-    primary: primaryColor,
-    onPrimary: onPrimaryColor,
-    secondary: Color.fromRGBO(47, 215, 184, 1),
-    onSecondary: Colors.white,
-    error: Colors.red,
-    onError: Colors.white,
-    surface: Colors.white,
-    onSurface: Color.fromRGBO(53, 53, 53, 1)
-  ),
+      brightness: Brightness.light,
+      primary: primaryColor,
+      onPrimary: onPrimaryColor,
+      secondary: Color.fromRGBO(47, 215, 184, 1),
+      onSecondary: Colors.white,
+      error: Colors.red,
+      onError: Colors.white,
+      surface: Colors.white,
+      onSurface: Color.fromRGBO(53, 53, 53, 1)),
   textTheme: const TextTheme(
-    headlineMedium: TextStyle(
-      fontSize: 36,
-      fontWeight: FontWeight.w900,
-      letterSpacing: 1.7
-    ),
-    titleSmall: TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.bold,
-      color: primaryColor
-    ),
-    labelSmall: TextStyle(
-      fontSize: 10,
-      fontWeight: FontWeight.w500,
-      color: Color.fromRGBO(191, 191, 191, 1)
-    )
-  ),
-  iconTheme:const IconThemeData(
-    color: Color.fromRGBO(96, 96, 96, 1)
-  ),
+      headlineMedium: TextStyle(
+          fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 1.7),
+      titleSmall: TextStyle(
+          fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor),
+      labelSmall: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.w500,
+          color: Color.fromRGBO(191, 191, 191, 1))),
+  iconTheme: const IconThemeData(color: Color.fromRGBO(96, 96, 96, 1)),
   cardColor: const Color.fromRGBO(238, 240, 242, 1),
   scaffoldBackgroundColor: Colors.white,
   fontFamily: 'Fixel',
   toggleButtonsTheme: ToggleButtonsThemeData(
-    borderRadius: BorderRadius.circular(mediumBorderRadius),
-    constraints: const BoxConstraints(
-    ),
-    selectedColor: inputBackgroundColor,
-    fillColor: primaryColor,
-    color: textColor,
-    borderColor: Colors.transparent,
-    borderWidth: 0
-  ),
+      borderRadius: BorderRadius.circular(mediumBorderRadius),
+      constraints: const BoxConstraints(),
+      selectedColor: inputBackgroundColor,
+      fillColor: primaryColor,
+      color: textColor,
+      borderColor: Colors.transparent,
+      borderWidth: 0),
   elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      shadowColor: WidgetStateColor.transparent,
-      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(smallBorderRadius)
-        )
-      ),
-      textStyle: const WidgetStatePropertyAll(
-        TextStyle(
-          fontSize: 16
-        )
-      )
-    )
-  ),
+      style: ButtonStyle(
+          shadowColor: WidgetStateColor.transparent,
+          shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(smallBorderRadius))),
+          textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 16)))),
   appBarTheme: const AppBarTheme(
-    backgroundColor:backgroundCardColor,
-    foregroundColor: Color.fromRGBO(96, 96, 96, 1)
-  ),
+      backgroundColor: backgroundCardColor,
+      foregroundColor: Color.fromRGBO(96, 96, 96, 1)),
   bottomAppBarTheme: const BottomAppBarTheme(
     color: backgroundCardColor,
     padding: EdgeInsets.all(10),
@@ -99,51 +77,37 @@ final ThemeData lightTheme = ThemeData(
 );
 
 final ThemeData darkTheme = ThemeData(
-  colorScheme: const ColorScheme(
-    brightness: Brightness.dark,
-    primary: primaryColor,
-    onPrimary: onPrimaryColor,
-    secondary: Color.fromRGBO(47, 215, 184, 1),
-    onSecondary: Colors.white,
-    error: Colors.red,
-    onError: Colors.white,
-    // background: Colors.white,
-    // onBackground: Color.fromRGBO(53, 53, 53, 1),
-    surface: Color.fromRGBO(49, 49, 49, 1),
-    onSurface: onPrimaryColor
-  ),
-  iconTheme:const IconThemeData(
-    color: Color.fromRGBO(60, 60, 60, 1)
-  ),
-  cardColor: const Color.fromRGBO(70, 70, 70, 1),
-  scaffoldBackgroundColor: const Color.fromRGBO(49, 49, 49, 1),
-  fontFamily: 'Fixel',
-  toggleButtonsTheme: ToggleButtonsThemeData(
-    borderRadius: BorderRadius.circular(mediumBorderRadius),
-    constraints: const BoxConstraints(
-    ),
-    selectedColor: inputBackgroundColor,
-    fillColor: primaryColor,
-    color: textColor,
-    borderColor: Colors.transparent,
-    borderWidth: 0
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      shadowColor: WidgetStateColor.transparent,
-      shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(smallBorderRadius)
-        )
-      ),
-      textStyle: const WidgetStatePropertyAll(
-        TextStyle(
-          fontSize: 16
-        )
-      )
-    )
-  )
-);
+    colorScheme: const ColorScheme(
+        brightness: Brightness.dark,
+        primary: primaryColor,
+        onPrimary: onPrimaryColor,
+        secondary: Color.fromRGBO(47, 215, 184, 1),
+        onSecondary: Colors.white,
+        error: Colors.red,
+        onError: Colors.white,
+        // background: Colors.white,
+        // onBackground: Color.fromRGBO(53, 53, 53, 1),
+        surface: Color.fromRGBO(49, 49, 49, 1),
+        onSurface: onPrimaryColor),
+    iconTheme: const IconThemeData(color: Color.fromRGBO(60, 60, 60, 1)),
+    cardColor: const Color.fromRGBO(70, 70, 70, 1),
+    scaffoldBackgroundColor: const Color.fromRGBO(49, 49, 49, 1),
+    fontFamily: 'Fixel',
+    toggleButtonsTheme: ToggleButtonsThemeData(
+        borderRadius: BorderRadius.circular(mediumBorderRadius),
+        constraints: const BoxConstraints(),
+        selectedColor: inputBackgroundColor,
+        fillColor: primaryColor,
+        color: textColor,
+        borderColor: Colors.transparent,
+        borderWidth: 0),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            shadowColor: WidgetStateColor.transparent,
+            shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(smallBorderRadius))),
+            textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 16)))));
 
 
 

@@ -16,57 +16,48 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DbService.initialize();
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  runApp(
-    ProviderScope(
-      child: MainApp(preferences: prefs)
-    )
-  );
+  runApp(ProviderScope(child: MainApp(preferences: prefs)));
 }
 
 class MainApp extends ConsumerWidget {
   final SharedPreferences preferences;
 
-  const MainApp({
-    super.key,
-    required this.preferences
-  });
+  const MainApp({super.key, required this.preferences});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {    
-    final settingsModeAsync  = ref.watch(settingsNotifierProvider);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final settingsModeAsync = ref.watch(settingsNotifierProvider);
 
     return settingsModeAsync.when(
       data: (settings) {
         return MaterialApp(
-      title: "Notifire",
-      localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      locale: settings.locale, // uk - Ukrainian lang
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: settings.isDarkTheme,
-
-      home: const HomePage()
-      );
+            title: "Notifire",
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            locale: settings.locale, // uk - Ukrainian lang
+            theme: lightTheme,
+            darkTheme: darkTheme,
+            themeMode: settings.isDarkTheme,
+            // home: TimePickerTest()
+            home: const HomePage());
       },
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, stackTrace) {
         return Scaffold(
-        body: Center(
+            body: Center(
           child: Text('Error: $error'),
         ));
       },
     );
-    
+
     //   home: TimePickerTest()
   }
 }
-
 
 class TimePickerTest extends ConsumerStatefulWidget {
   const TimePickerTest({super.key});
@@ -76,12 +67,10 @@ class TimePickerTest extends ConsumerStatefulWidget {
 }
 
 class _TimePickerTestState extends ConsumerState<TimePickerTest> {
-  void getTimeFromTimePicker(TimeOfDay time) {
-  }
+  void getTimeFromTimePicker(TimeOfDay time) {}
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -89,25 +78,22 @@ class _TimePickerTestState extends ConsumerState<TimePickerTest> {
           children: [
             const SettingsWidget(),
             Container(
-              width: 326,
-              height: 200,
-              padding: const EdgeInsets.all(cardPadding),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(bigBorderRadius),
-                color: Theme.of(context).cardColor
-              ),
-              child: NestedTimePicker(
-                // title: S.of(context).selectNotificationTime,
-                format12TimePicker :Inner12HourFormatPicker(
-                  initialDate: DateTime.now(),
-                  callback: getTimeFromTimePicker
-                ),
-                format24TimePicker :Inner24HourFormatPicker(
-                  initialDate: DateTime.now(),
-                  callback: getTimeFromTimePicker,
-                ),
-              )
-            ),
+                width: 326,
+                height: 200,
+                padding: const EdgeInsets.all(cardPadding),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(bigBorderRadius),
+                    color: Theme.of(context).cardColor),
+                child: NestedTimePicker(
+                  // title: S.of(context).selectNotificationTime,
+                  format12TimePicker: Inner12HourFormatPicker(
+                      initialDate: DateTime.now(),
+                      callback: getTimeFromTimePicker),
+                  format24TimePicker: Inner24HourFormatPicker(
+                    initialDate: DateTime.now(),
+                    callback: getTimeFromTimePicker,
+                  ),
+                )),
           ],
         ),
       ),

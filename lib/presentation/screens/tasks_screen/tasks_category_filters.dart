@@ -11,7 +11,6 @@ class TasksCategoryFilters extends StatefulWidget {
 }
 
 class _TasksCategoryFiltersState extends State<TasksCategoryFilters> {
-
   Filter currentFilter = Filter.newest;
 
   void setFilter(Filter filter) {
@@ -75,94 +74,57 @@ class _TasksCategoryFiltersState extends State<TasksCategoryFilters> {
 }
 
 class TaskCategoryFiltersItem extends StatelessWidget {
-  const TaskCategoryFiltersItem({
-    super.key,
-    required this.title,
-    required this.filter,
-    required this.currentFilter,
-    required this.callback
-  });
+  const TaskCategoryFiltersItem(
+      {super.key,
+      required this.title,
+      required this.filter,
+      required this.currentFilter,
+      required this.callback});
 
   final String title;
   final Filter filter;
   final Filter currentFilter;
   final void Function(Filter) callback;
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        callback(filter);
-      },
-      child: filter == currentFilter ? TaskFiltersItemEnabledContainer(title: title,) : TaskFiltersItemDisabledContainer(filter: filter,),
-    );
-  }
-}
-
-class TaskFiltersItemEnabledContainer extends StatelessWidget {
-  const TaskFiltersItemEnabledContainer({
-    super.key,
-    required this.title,
-  });
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 72,
-      height: 22,
-      decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor,
-        border: Border.all(
-          color: Theme.of(context).primaryColor,
-          width: 1,
-        ),
-        borderRadius: BorderRadius.circular(20)
-      ),
-      child: Center(
-        child: Text(
-          title,
-          style: TextStyle(
-            fontSize: 10,
+  BoxDecoration getDecoration(BuildContext context, bool isSelected) {
+    if (isSelected) {
+      return BoxDecoration(
+          color: Theme.of(context).canvasColor,
+          border: Border.all(
             color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w500,
-            height: 1
+            width: 1,
           ),
-        )
-      )
-    );
+          borderRadius: BorderRadius.circular(20));
+    }
+    return BoxDecoration(
+        color: greyColor, borderRadius: BorderRadius.circular(20));
   }
-}
-
-class TaskFiltersItemDisabledContainer extends StatelessWidget {
-  const TaskFiltersItemDisabledContainer({
-    super.key,
-    required this.filter,
-  });
-
-  final Filter filter;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 72,
-      height: 22,
-      decoration: BoxDecoration(
-        color: greyColor,
-        borderRadius: BorderRadius.circular(20)
-      ),
-      child: Center(
-        child: Text(
-          filter.name,
-          style: TextStyle(
-            fontSize: 10,
-            color: Theme.of(context).canvasColor,
-            fontWeight: FontWeight.w500,
-            height: 1
-          ),
-        )
-      )
-    );
+    bool isSelected = filter == currentFilter;
+    Color color = isSelected
+        ? Theme.of(context).primaryColor
+        : Theme.of(context).canvasColor;
+
+    BoxDecoration decoration = getDecoration(context, isSelected);
+
+    return GestureDetector(
+        onTap: () {
+          callback(filter);
+        },
+        child: Container(
+            width: 72,
+            height: 22,
+            decoration: decoration,
+            child: Center(
+                child: Text(
+              title,
+              style: TextStyle(
+                  fontSize: 10,
+                  color: color,
+                  fontWeight: FontWeight.w500,
+                  height: 1),
+            ))));
   }
 }

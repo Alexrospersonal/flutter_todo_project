@@ -55,17 +55,85 @@ class _DailyProgressBarState extends State<DailyProgressBar> {
   }
 }
 
-class ExpandedDiagramWeekDetails extends StatelessWidget {
+class ExpandedDiagramWeekDetails extends StatefulWidget {
   const ExpandedDiagramWeekDetails({super.key});
 
   @override
+  State<ExpandedDiagramWeekDetails> createState() => _ExpandedDiagramWeekDetailsState();
+}
+
+class _ExpandedDiagramWeekDetailsState extends State<ExpandedDiagramWeekDetails> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> animation1;
+  late Animation<double> animation2;
+  late Animation<double> animation3;
+  late Animation<double> animation4;
+  late Animation<double> animation5;
+  late Animation<double> animation6;
+  late Animation<double> animation7;
+
+  List<double> percentData = [0.75, 1, 0.23, 1, 0.56, 0.66, 0.89];
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
+
+    final curvedAnimation = CurvedAnimation(parent: controller, curve: Curves.easeInOutCubic);
+
+    animation1 = Tween<double>(begin: 0, end: percentData[0]).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    animation2 = Tween<double>(begin: 0, end: percentData[1]).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    animation3 = Tween<double>(begin: 0, end: percentData[2]).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    animation4 = Tween<double>(begin: 0, end: percentData[3]).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    animation5 = Tween<double>(begin: 0, end: percentData[4]).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    animation6 = Tween<double>(begin: 0, end: percentData[5]).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    animation7 = Tween<double>(begin: 0, end: percentData[6]).animate(curvedAnimation)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    controller.forward();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 180,
       height: 140,
-      decoration: BoxDecoration(border: Border.all(color: Colors.red)),
       child: CustomPaint(
-        painter: AnimatedWeekProgressDiagramm(progressInWeek: [0.75, 1, 0.23, 1, 0.56, 0.66, 0.89]),
+        painter: AnimatedWeekProgressDiagramm(progressInWeek: [
+          animation1.value,
+          animation2.value,
+          animation3.value,
+          animation4.value,
+          animation5.value,
+          animation6.value,
+          animation7.value
+        ]),
       ),
     );
   }
@@ -138,15 +206,15 @@ class AnimatedWeekProgressDiagramm extends CustomPainter {
 
     Rect rect = const Rect.fromLTRB(0, 0, 180, 140);
 
-    final Gradient gradient = LinearGradient(
+    Gradient gradient = const LinearGradient(
       begin: Alignment.bottomCenter,
       end: Alignment.topCenter,
-      colors: const [
+      colors: [
         onPrimaryColor,
         primaryColorWithOpacity,
         primaryColor,
       ],
-      stops: const [0.2, 0.6, 1],
+      stops: [0.2, 0.6, 1],
     );
 
     diagramLine.shader = gradient.createShader(rect);

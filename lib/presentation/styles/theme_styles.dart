@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 const Color primaryColor = Color.fromRGBO(47, 215, 184, 1);
+const Color primaryColorWithOpacity = Color.fromRGBO(69, 255, 221, 1);
 const Color onPrimaryColor = Colors.white;
 
 const Color backgroundCardColor = Color.fromRGBO(238, 240, 242, 1);
@@ -8,6 +9,7 @@ const Color inputBackgroundColor = Colors.white;
 const Color textColor = Color.fromRGBO(53, 53, 53, 1);
 const Color greyTextColor = Color.fromRGBO(99, 99, 99, 1);
 const Color greyColor = Color.fromRGBO(191, 191, 191, 1);
+const Color greyColorWithOpacity = Color.fromRGBO(245, 245, 245, 1);
 
 const double bigBorderRadius = 16.0;
 const double mediumBorderRadius = 8.0;
@@ -37,7 +39,10 @@ final ThemeData lightTheme = ThemeData(
       onSurface: Color.fromRGBO(53, 53, 53, 1)),
   textTheme: const TextTheme(
       headlineMedium: TextStyle(
-          fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 1.7),
+          fontSize: 36,
+          fontWeight: FontWeight.w900,
+          letterSpacing: 1.7,
+          height: 1),
       titleSmall: TextStyle(
           fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor),
       labelSmall: TextStyle(

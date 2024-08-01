@@ -32,11 +32,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "monthProgress":
             MessageLookupByLibrary.simpleMessage("Прогрес за місяць"),
         "newest": MessageLookupByLibrary.simpleMessage("Найновіші"),
+        "none": MessageLookupByLibrary.simpleMessage("Нема"),
         "oldest": MessageLookupByLibrary.simpleMessage("Найстаріші"),
         "overdue": MessageLookupByLibrary.simpleMessage("Прострочені"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Виберіть час сповіщення"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("Укр"),
+        "shortDay": MessageLookupByLibrary.simpleMessage("д"),
+        "shortHour": MessageLookupByLibrary.simpleMessage("год"),
+        "shortMinute": MessageLookupByLibrary.simpleMessage("хв"),
+        "startIn": MessageLookupByLibrary.simpleMessage("Починається"),
         "statusTitle1":
             MessageLookupByLibrary.simpleMessage("Легкість та продуктивність"),
         "tasks": MessageLookupByLibrary.simpleMessage("завдань"),

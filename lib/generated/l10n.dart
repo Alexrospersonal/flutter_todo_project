@@ -259,6 +259,56 @@ class S {
       args: [],
     );
   }
+
+  /// `None`
+  String get none {
+    return Intl.message(
+      'None',
+      name: 'none',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Start in`
+  String get startIn {
+    return Intl.message(
+      'Start in',
+      name: 'startIn',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `d`
+  String get shortDay {
+    return Intl.message(
+      'd',
+      name: 'shortDay',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `h`
+  String get shortHour {
+    return Intl.message(
+      'h',
+      name: 'shortHour',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `m`
+  String get shortMinute {
+    return Intl.message(
+      'm',
+      name: 'shortMinute',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

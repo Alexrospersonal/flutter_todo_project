@@ -104,5 +104,31 @@
   "@determinatedTasks": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "none": "Нема",
+  "@none": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "startIn": "Починається",
+  "@startIn": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "shortDay": "д",
+  "@shortDay": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "shortHour": "год",
+  "@shortHour": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "shortMinute": "хв",
+  "@shortMinute": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
+  
 }

@@ -31,11 +31,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "langName": MessageLookupByLibrary.simpleMessage("English"),
         "monthProgress": MessageLookupByLibrary.simpleMessage("Month progress"),
         "newest": MessageLookupByLibrary.simpleMessage("Newest"),
+        "none": MessageLookupByLibrary.simpleMessage("None"),
         "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
         "overdue": MessageLookupByLibrary.simpleMessage("Overdue"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Select notification time"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("En"),
+        "shortDay": MessageLookupByLibrary.simpleMessage("d"),
+        "shortHour": MessageLookupByLibrary.simpleMessage("h"),
+        "shortMinute": MessageLookupByLibrary.simpleMessage("m"),
+        "startIn": MessageLookupByLibrary.simpleMessage("Start in"),
         "statusTitle1":
             MessageLookupByLibrary.simpleMessage("Easy and productive"),
         "tasks": MessageLookupByLibrary.simpleMessage("tasks"),

@@ -106,5 +106,30 @@
   "@determinatedTasks": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "none": "None",
+  "@none": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "startIn": "Start in",
+  "@startIn": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "shortDay": "d",
+  "@shortDay": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "shortHour": "h",
+  "@shortHour": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "shortMinute": "m",
+  "@shortMinute": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
 }

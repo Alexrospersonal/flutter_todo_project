@@ -10,6 +10,7 @@ const Color textColor = Color.fromRGBO(53, 53, 53, 1);
 const Color greyTextColor = Color.fromRGBO(99, 99, 99, 1);
 const Color greyColor = Color.fromRGBO(191, 191, 191, 1);
 const Color greyColorWithOpacity = Color.fromRGBO(245, 245, 245, 1);
+const Color starColor = Color.fromRGBO(255, 193, 33, 1);
 
 const double bigBorderRadius = 16.0;
 const double mediumBorderRadius = 8.0;
@@ -40,11 +41,13 @@ final ThemeData lightTheme = ThemeData(
   textTheme: const TextTheme(
       headlineMedium: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 1.7, height: 1),
       titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor),
-      labelSmall: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: Color.fromRGBO(191, 191, 191, 1)),
+      titleMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: textColor, height: 1),
+      labelSmall: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: Color.fromRGBO(191, 191, 191, 1), height: 1),
       bodySmall: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), height: 1),
-      labelLarge: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), fontWeight: FontWeight.bold, height: 1)),
+      labelLarge: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), fontWeight: FontWeight.bold, height: 1),
+      labelMedium: TextStyle(fontSize: 12, color: Color.fromRGBO(191, 191, 191, 1), fontWeight: FontWeight.bold, height: 1)),
   iconTheme: const IconThemeData(color: Color.fromRGBO(96, 96, 96, 1)),
-  cardColor: const Color.fromRGBO(238, 240, 242, 1),
+  cardColor: Color.fromARGB(255, 245, 245, 245),
   scaffoldBackgroundColor: Colors.white,
   fontFamily: 'Fixel',
   toggleButtonsTheme: ToggleButtonsThemeData(

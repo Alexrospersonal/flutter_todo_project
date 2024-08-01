@@ -23,16 +23,22 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),
+        "determinatedTasks":
+            MessageLookupByLibrary.simpleMessage("Прострочені\nзавдання:"),
         "done": MessageLookupByLibrary.simpleMessage("Завершені"),
         "important": MessageLookupByLibrary.simpleMessage("Важливі"),
         "isComing": MessageLookupByLibrary.simpleMessage("Майбутні"),
         "langName": MessageLookupByLibrary.simpleMessage("Українська"),
+        "monthProgress":
+            MessageLookupByLibrary.simpleMessage("Прогрес за місяць"),
         "newest": MessageLookupByLibrary.simpleMessage("Найновіші"),
         "oldest": MessageLookupByLibrary.simpleMessage("Найстаріші"),
         "overdue": MessageLookupByLibrary.simpleMessage("Прострочені"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Виберіть час сповіщення"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("Укр"),
+        "statusTitle1":
+            MessageLookupByLibrary.simpleMessage("Легкість та продуктивність"),
         "tasks": MessageLookupByLibrary.simpleMessage("завдань"),
         "timePickerTempale1": MessageLookupByLibrary.simpleMessage("+ 5хв"),
         "timePickerTempale2": MessageLookupByLibrary.simpleMessage("+ 30хв"),
@@ -40,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "timePickerTittle":
             MessageLookupByLibrary.simpleMessage("Виберіть час"),
         "today": MessageLookupByLibrary.simpleMessage("Сьогодні"),
-        "withFiles": MessageLookupByLibrary.simpleMessage("З файлами")
+        "withFiles": MessageLookupByLibrary.simpleMessage("З файлами"),
+        "yourStatus": MessageLookupByLibrary.simpleMessage("Твій статус")
       };
 }

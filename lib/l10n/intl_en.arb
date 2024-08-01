@@ -86,5 +86,25 @@
   "@overdue": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "monthProgress": "Month progress",
+  "@monthProgress": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "yourStatus": "Your status",
+  "@yourStatus": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "statusTitle1": "Easy and productive",
+  "@statusTitle1": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "determinatedTasks": "Determinated\ntasks:",
+  "@determinatedTasks": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
 }

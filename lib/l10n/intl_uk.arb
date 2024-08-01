@@ -84,5 +84,25 @@
   "@overdue": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "monthProgress": "Прогрес за місяць",
+  "@monthProgress": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "yourStatus": "Твій статус",
+  "@yourStatus": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "statusTitle1": "Легкість та продуктивність",
+  "@statusTitle1": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "determinatedTasks": "Прострочені\nзавдання:",
+  "@determinatedTasks": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
 }

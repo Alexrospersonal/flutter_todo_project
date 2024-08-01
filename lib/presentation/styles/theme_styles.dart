@@ -38,17 +38,11 @@ final ThemeData lightTheme = ThemeData(
       surface: Colors.white,
       onSurface: Color.fromRGBO(53, 53, 53, 1)),
   textTheme: const TextTheme(
-      headlineMedium: TextStyle(
-          fontSize: 36,
-          fontWeight: FontWeight.w900,
-          letterSpacing: 1.7,
-          height: 1),
-      titleSmall: TextStyle(
-          fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor),
-      labelSmall: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w500,
-          color: Color.fromRGBO(191, 191, 191, 1))),
+      headlineMedium: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 1.7, height: 1),
+      titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor),
+      labelSmall: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: Color.fromRGBO(191, 191, 191, 1)),
+      bodySmall: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), height: 1),
+      labelLarge: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), fontWeight: FontWeight.bold, height: 1)),
   iconTheme: const IconThemeData(color: Color.fromRGBO(96, 96, 96, 1)),
   cardColor: const Color.fromRGBO(238, 240, 242, 1),
   scaffoldBackgroundColor: Colors.white,
@@ -65,12 +59,9 @@ final ThemeData lightTheme = ThemeData(
       style: ButtonStyle(
           shadowColor: WidgetStateColor.transparent,
           shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(smallBorderRadius))),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(smallBorderRadius))),
           textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 16)))),
-  appBarTheme: const AppBarTheme(
-      backgroundColor: backgroundCardColor,
-      foregroundColor: Color.fromRGBO(96, 96, 96, 1)),
+  appBarTheme: const AppBarTheme(backgroundColor: backgroundCardColor, foregroundColor: Color.fromRGBO(96, 96, 96, 1)),
   bottomAppBarTheme: const BottomAppBarTheme(
     color: backgroundCardColor,
     padding: EdgeInsets.all(10),
@@ -110,8 +101,7 @@ final ThemeData darkTheme = ThemeData(
         style: ButtonStyle(
             shadowColor: WidgetStateColor.transparent,
             shape: WidgetStatePropertyAll<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(smallBorderRadius))),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(smallBorderRadius))),
             textStyle: const WidgetStatePropertyAll(TextStyle(fontSize: 16)))));
 
 

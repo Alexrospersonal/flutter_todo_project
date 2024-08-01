@@ -23,22 +23,28 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Daily progress"),
+        "determinatedTasks":
+            MessageLookupByLibrary.simpleMessage("Determinated\ntasks:"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "important": MessageLookupByLibrary.simpleMessage("Important"),
         "isComing": MessageLookupByLibrary.simpleMessage("Is coming"),
         "langName": MessageLookupByLibrary.simpleMessage("English"),
+        "monthProgress": MessageLookupByLibrary.simpleMessage("Month progress"),
         "newest": MessageLookupByLibrary.simpleMessage("Newest"),
         "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
         "overdue": MessageLookupByLibrary.simpleMessage("Overdue"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Select notification time"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("En"),
+        "statusTitle1":
+            MessageLookupByLibrary.simpleMessage("Easy and productive"),
         "tasks": MessageLookupByLibrary.simpleMessage("tasks"),
         "timePickerTempale1": MessageLookupByLibrary.simpleMessage("+ 5m"),
         "timePickerTempale2": MessageLookupByLibrary.simpleMessage("+ 30m"),
         "timePickerTempale3": MessageLookupByLibrary.simpleMessage("+ 1h"),
         "timePickerTittle": MessageLookupByLibrary.simpleMessage("Select time"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
-        "withFiles": MessageLookupByLibrary.simpleMessage("With files")
+        "withFiles": MessageLookupByLibrary.simpleMessage("With files"),
+        "yourStatus": MessageLookupByLibrary.simpleMessage("Your status")
       };
 }

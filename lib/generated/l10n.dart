@@ -219,6 +219,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Month progress`
+  String get monthProgress {
+    return Intl.message(
+      'Month progress',
+      name: 'monthProgress',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Your status`
+  String get yourStatus {
+    return Intl.message(
+      'Your status',
+      name: 'yourStatus',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Easy and productive`
+  String get statusTitle1 {
+    return Intl.message(
+      'Easy and productive',
+      name: 'statusTitle1',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Determinated\ntasks:`
+  String get determinatedTasks {
+    return Intl.message(
+      'Determinated\ntasks:',
+      name: 'determinatedTasks',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

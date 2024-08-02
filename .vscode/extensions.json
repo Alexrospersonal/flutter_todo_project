@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "dart-code.flutter",
+        "localizely.flutter-intl",
+        "wayou.vscode-todo-highlight",
+        "dart-code.dart-code",
+        "google.arb-editor",
+        "nash.awesome-flutter-snippets",
+        "pkief.material-icon-theme"
+    ]
+}

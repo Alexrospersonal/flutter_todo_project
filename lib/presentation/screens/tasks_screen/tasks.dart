@@ -24,7 +24,7 @@ class TasksScreen extends StatelessWidget {
               child: const CategoryList(),
             ),
             const TasksCategoryFilters(),
-            const TaskListWidget(),
+            Expanded(child: const TaskListWidget()),
           ],
         ),
       ),

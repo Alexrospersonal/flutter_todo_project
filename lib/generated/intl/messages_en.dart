@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "timePickerTempale3": MessageLookupByLibrary.simpleMessage("+ 1h"),
         "timePickerTittle": MessageLookupByLibrary.simpleMessage("Select time"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
+        "week": MessageLookupByLibrary.simpleMessage("All week"),
         "withFiles": MessageLookupByLibrary.simpleMessage("With files"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "yourStatus": MessageLookupByLibrary.simpleMessage("Your status")

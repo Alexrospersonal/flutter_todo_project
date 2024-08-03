@@ -151,6 +151,10 @@
   "@no": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "week": "All week",
+  "@week": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
-
 }

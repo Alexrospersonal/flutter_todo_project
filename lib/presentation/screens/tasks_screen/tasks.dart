@@ -14,7 +14,7 @@ class TasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 0),
+        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Column(
           children: [
             Container(margin: const EdgeInsets.symmetric(horizontal: 20), child: const DailyProgressBar()),
@@ -24,7 +24,7 @@ class TasksScreen extends StatelessWidget {
               child: const CategoryList(),
             ),
             const TasksCategoryFilters(),
-            Expanded(child: const TaskListWidget()),
+            const Expanded(child: TaskListWidget()),
           ],
         ),
       ),

@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
 class TaskListItemData {
-    int id;
+  int id;
   String name;
+  Color? color;
 
   bool important = false;
   String? category;
@@ -19,6 +22,10 @@ class TaskListItemData {
 
   void addCategory(String category) {
     this.category = category;
+  }
+
+  void addColor(Color color) {
+    this.color = color;
   }
 
   void addDate(DateTime date) {
@@ -37,7 +44,7 @@ class TaskListItemData {
     reminders = newReminders;
   }
 
-  List<String>? get repeatlyDaysAsStrings {
+  List<String>? repeatlyDaysAsStrings(S s) {
     final dateFormat = DateFormat('EEE');
 
     final List<String> formattedDates = repetlyDates != null
@@ -49,6 +56,10 @@ class TaskListItemData {
           })
           .toList() // Перетворюємо результат в список
       : [];
+
+    if (formattedDates.length == 7) {
+      return [s.week];
+    }
 
     return formattedDates.isNotEmpty ? formattedDates : null;
   }
@@ -94,12 +105,17 @@ class TaskListItemData {
   }
 }
 
-TaskListItemData buildTask() {
-  var task1 = TaskListItemData(id: 1, name: "Filling my soul with butter and cider");
-  task1.important = true;
+TaskListItemData buildTask(String taskName, List<bool> repeatlyDays, bool important, Color? color) {
+  var task1 = TaskListItemData(id: 1, name: taskName);
+  if (important) {
+    task1.important = true;
+  }
+  if (color != null) {
+    task1.color = color;
+  }
   task1.addCategory("Home");
   task1.addDate(DateTime(2024, 9, 12, 17, 33));
-  task1.addrepetlyDate([true, true, true, false, false, false, true]);
+  task1.addrepetlyDate(repeatlyDays);
   task1.addDuration(const Duration(hours: 7));
   task1.addRemiders([DateTime(2024, 8, 12, 17, 33)]);
 

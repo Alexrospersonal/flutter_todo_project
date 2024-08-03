@@ -54,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "timePickerTittle":
             MessageLookupByLibrary.simpleMessage("Виберіть час"),
         "today": MessageLookupByLibrary.simpleMessage("Сьогодні"),
+        "week": MessageLookupByLibrary.simpleMessage("Цілий тиждень"),
         "withFiles": MessageLookupByLibrary.simpleMessage("З файлами"),
         "yes": MessageLookupByLibrary.simpleMessage("Так"),
         "yourStatus": MessageLookupByLibrary.simpleMessage("Твій статус")

@@ -14,9 +14,13 @@ class TaskListWidget extends StatefulWidget {
 class _TaskListWidgetState extends State<TaskListWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   List<TaskListItemData> tasks = [
-    buildTask(),
-    buildTask(),
-    buildTask(),
+    buildTask("Піти до качалочки", [true, true, true, true, true, true, false], true, null),
+    buildTask("Постірати труси після присідання", [false, true, true, true, true, true, true], true, Colors.amber),
+    buildTask("Урок з англійської", [true, true, true, true, true, true, true], false, null),
+    buildTask("Купити пончик", [false, false, true, true, false, true, false], false, Colors.blueAccent),
+    buildTask("Звільнити бродягу", [false, true, false, false, false, true, false], true, Colors.greenAccent),
+    buildTask("Подзвонити мамі", [false, true, true, false, true, true, false], true, Colors.redAccent),
+    buildTask("Пограти з Олегом", [false, false, false, false, false, true, false], false, null),
   ];
   TaskListItemData? _recentlyRemovedItem;
   int? _recentlyRemovedItemIndex;
@@ -63,7 +67,7 @@ class _TaskListWidgetState extends State<TaskListWidget> {
       _recentlyRemovedItemIndex = null;
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(

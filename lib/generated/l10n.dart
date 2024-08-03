@@ -349,6 +349,16 @@ class S {
       args: [],
     );
   }
+
+  /// `All week`
+  String get week {
+    return Intl.message(
+      'All week',
+      name: 'week',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

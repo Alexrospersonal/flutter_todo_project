@@ -2,15 +2,20 @@ import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
 class TaskListItemData {
+    int id;
+  String name;
+
   bool important = false;
   String? category;
-  String name;
   DateTime? date;
   List<bool>? repetlyDates;
   Duration? duration;
   List<DateTime>? reminders;
 
-  TaskListItemData({required this.name});
+  TaskListItemData({
+    required this.id,
+    required this.name
+    });
 
   void addCategory(String category) {
     this.category = category;
@@ -35,15 +40,17 @@ class TaskListItemData {
   List<String>? get repeatlyDaysAsStrings {
     final dateFormat = DateFormat('EEE');
 
-    if (repetlyDates != null) {
-      List<String> shortWeekdays = List.generate(7, (index) {
-        final date = DateTime.utc(2024, 1, 1).add(Duration(days: index));
-        return dateFormat.format(date);
-      });
+    final List<String> formattedDates = repetlyDates != null
+      ? repetlyDates!.asMap().entries
+          .where((entry) => entry.value) // Фільтруємо записи, де значення true
+          .map((entry) {
+            final date = DateTime.utc(2024, 1, 1).add(Duration(days: entry.key));
+            return dateFormat.format(date); // Форматуємо дату
+          })
+          .toList() // Перетворюємо результат в список
+      : [];
 
-      return shortWeekdays.reversed.toList();
-    }
-    return null;
+    return formattedDates.isNotEmpty ? formattedDates : null;
   }
 
   Duration? get startIn {
@@ -51,6 +58,14 @@ class TaskListItemData {
       DateTime now = DateTime.now();
 
       return date!.difference(now);
+    }
+    return null;
+  }
+
+  String? getFomatedDate() {
+    DateFormat dateFormat = DateFormat("HH:mm dd/MM/yyyy");
+    if (date != null) {
+      return dateFormat.format(date!);
     }
     return null;
   }
@@ -73,10 +88,14 @@ class TaskListItemData {
     }
     return s.none;
   }
+
+  bool isRemidresExists() {
+    return reminders != null ? true : false;
+  }
 }
 
 TaskListItemData buildTask() {
-  var task1 = TaskListItemData(name: "Filling my soul with butter and beer");
+  var task1 = TaskListItemData(id: 1, name: "Filling my soul with butter and cider");
   task1.important = true;
   task1.addCategory("Home");
   task1.addDate(DateTime(2024, 9, 12, 17, 33));

@@ -26,15 +26,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Прострочені\nзавдання:"),
         "done": MessageLookupByLibrary.simpleMessage("Завершені"),
+        "hours": MessageLookupByLibrary.simpleMessage("годин"),
         "important": MessageLookupByLibrary.simpleMessage("Важливі"),
         "isComing": MessageLookupByLibrary.simpleMessage("Майбутні"),
         "langName": MessageLookupByLibrary.simpleMessage("Українська"),
         "monthProgress":
             MessageLookupByLibrary.simpleMessage("Прогрес за місяць"),
         "newest": MessageLookupByLibrary.simpleMessage("Найновіші"),
+        "no": MessageLookupByLibrary.simpleMessage("Ні"),
         "none": MessageLookupByLibrary.simpleMessage("Нема"),
         "oldest": MessageLookupByLibrary.simpleMessage("Найстаріші"),
         "overdue": MessageLookupByLibrary.simpleMessage("Прострочені"),
+        "remind": MessageLookupByLibrary.simpleMessage("Нагадування"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Виберіть час сповіщення"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("Укр"),
@@ -52,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Виберіть час"),
         "today": MessageLookupByLibrary.simpleMessage("Сьогодні"),
         "withFiles": MessageLookupByLibrary.simpleMessage("З файлами"),
+        "yes": MessageLookupByLibrary.simpleMessage("Так"),
         "yourStatus": MessageLookupByLibrary.simpleMessage("Твій статус")
       };
 }

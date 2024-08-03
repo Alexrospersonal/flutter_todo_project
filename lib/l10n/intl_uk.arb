@@ -129,6 +129,26 @@
   "@shortMinute": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "hours": "годин",
+  "@hours": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "remind": "Нагадування",
+  "@remind": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "yes": "Так",
+  "@yes": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "no": "Ні",
+  "@no": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
   
 }

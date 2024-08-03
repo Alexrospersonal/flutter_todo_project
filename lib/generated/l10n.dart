@@ -309,6 +309,46 @@ class S {
       args: [],
     );
   }
+
+  /// `hours`
+  String get hours {
+    return Intl.message(
+      'hours',
+      name: 'hours',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Remind`
+  String get remind {
+    return Intl.message(
+      'Remind',
+      name: 'remind',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

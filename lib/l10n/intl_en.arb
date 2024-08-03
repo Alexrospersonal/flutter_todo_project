@@ -131,5 +131,26 @@
   "@shortMinute": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "hours": "hours",
+  "@hours": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "remind": "Remind",
+  "@remind": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "no": "No",
+  "@no": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
+
 }

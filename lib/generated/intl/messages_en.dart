@@ -26,14 +26,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Determinated\ntasks:"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
+        "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "important": MessageLookupByLibrary.simpleMessage("Important"),
         "isComing": MessageLookupByLibrary.simpleMessage("Is coming"),
         "langName": MessageLookupByLibrary.simpleMessage("English"),
         "monthProgress": MessageLookupByLibrary.simpleMessage("Month progress"),
         "newest": MessageLookupByLibrary.simpleMessage("Newest"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "none": MessageLookupByLibrary.simpleMessage("None"),
         "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
         "overdue": MessageLookupByLibrary.simpleMessage("Overdue"),
+        "remind": MessageLookupByLibrary.simpleMessage("Remind"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Select notification time"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("En"),
@@ -50,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "timePickerTittle": MessageLookupByLibrary.simpleMessage("Select time"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
         "withFiles": MessageLookupByLibrary.simpleMessage("With files"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "yourStatus": MessageLookupByLibrary.simpleMessage("Your status")
       };
 }

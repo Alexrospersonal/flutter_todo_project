@@ -42,16 +42,12 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+    // TODO: розбіратись як працює анімований список та для чого цей метод.
     _listKey.currentState?.removeItem(
       index,
       (context, animation) => SizeTransition(
         sizeFactor: animation,
-        child: TaskListItem(
-          id: index,
-          taskData: removedItem,
-          onDismissed: () {},
-        ),
+        child: SizedBox.shrink()
       ),
     );
   }

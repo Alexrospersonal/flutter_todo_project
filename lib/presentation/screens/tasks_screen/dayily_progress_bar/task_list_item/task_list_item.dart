@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/dismissible_background.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item_container.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item_data.dart';
+import 'package:vibration/vibration.dart';
 
 class TaskListItem extends StatefulWidget {
   final int id;
@@ -22,6 +24,7 @@ class TaskListItem extends StatefulWidget {
 class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
+
     return Dismissible(
       key: ValueKey<int>(widget.id),
       // direction: DismissDirection.startToEnd,
@@ -36,6 +39,13 @@ class _TaskListItemState extends State<TaskListItem> {
         aligment: Alignment.centerRight,
       ),
       onDismissed: (direction) {
+        // TODO: відпрацювати відпрацію
+        if(direction == DismissDirection.startToEnd) {
+          Vibration.vibrate(duration: 50, amplitude: 1);
+        } else {
+          Vibration.vibrate(duration: 100, amplitude: 32);
+        }
+        // Vibration.vibrate(pattern: [50,100,50], intensities: [1, 64]);
         widget.onDismissed();
       },
       child: TaskListItemContainer(

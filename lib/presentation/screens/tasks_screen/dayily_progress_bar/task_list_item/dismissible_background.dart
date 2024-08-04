@@ -18,8 +18,11 @@ class DismissedBackground extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(smallBorderRadius), color: color),
       alignment: aligment,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Icon(icon, color: Colors.white),
+      margin: EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Icon(icon, color: Colors.white),
+      ),
     );
   }
 }

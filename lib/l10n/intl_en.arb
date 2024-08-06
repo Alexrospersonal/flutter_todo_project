@@ -156,5 +156,15 @@
   "@week": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "cancel": "Undo",
+  "@cancel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "UndoLastAction": "Undo the last action",
+  "@UndoLastAction": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
 }

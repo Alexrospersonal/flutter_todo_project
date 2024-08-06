@@ -27,60 +27,54 @@ class TaskListItemContainer extends StatelessWidget {
         if (data.important) const TaskListImportantStar(),
         if (data.color != null) TaskListItemColor(color: data.color!),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              flex: 5,
-              child: Container(
-                constraints: const BoxConstraints.expand(width: 230),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      data.category != null ? data.category! : S.of(context).none,
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    Text(
-                      data.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    Text(
-                      "$startIn: ${data.getFormatedStartIn(data.startIn, S.of(context))}",
-                      style: Theme.of(context).textTheme.labelSmall,
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Flexible(
-              flex: 3,
+            Container(
+              constraints: const BoxConstraints.expand(width: 230),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // TODO: дописати цей елемент
-                  // додато вибір кольору в TaskListItemData і сюди
                   Text(
-                    date,
-                    style: Theme.of(context).textTheme.labelSmall,
+                    data.category != null ? data.category! : S.of(context).none,
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                   Text(
-                    weekDays,
-                    // "Mon, Tue, Sat, Wen, But, Ass",
-                    style: Theme.of(context).textTheme.labelSmall,
+                    data.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
-                    duration,
+                    "$startIn: ${data.getFormatedStartIn(data.startIn, S.of(context))}",
                     style: Theme.of(context).textTheme.labelSmall,
-                  ),
-                  Text(
-                    reminds,
-                    style: Theme.of(context).textTheme.labelSmall,
-                  ),
+                  )
                 ],
               ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // TODO: дописати цей елемент
+                // додато вибір кольору в TaskListItemData і сюди
+                Text(
+                  date,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                Text(
+                  weekDays,
+                  // "Mon, Tue, Sat, Wen, But, Ass",
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                Text(
+                  duration,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+                Text(
+                  reminds,
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
+              ],
             )
           ],
         )

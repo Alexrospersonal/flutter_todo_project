@@ -1,4 +1,7 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item_data.dart';
 
@@ -9,10 +12,11 @@ class TaskListWidget extends StatefulWidget {
   State<TaskListWidget> createState() => _TaskListWidgetState();
 }
 
-// TODO: Доробити видалення і підтвреджеття. Тобто свайп в ліво це одне а свайп в право інша дія.
 // TODO: детально розібратись з SnackBar та AnimatedList
 class _TaskListWidgetState extends State<TaskListWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final Queue<SnackItemData> queue = Queue<SnackItemData>();
+
   List<TaskListItemData> tasks = [
     buildTask("Піти до качалочки", [true, true, true, true, true, true, false], true, null),
     buildTask("Постірати труси після присідання", [false, true, true, true, true, true, true], true, Colors.amber),
@@ -22,23 +26,21 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     buildTask("Подзвонити мамі", [false, true, true, false, true, true, false], true, Colors.redAccent),
     buildTask("Пограти з Олегом", [false, false, false, false, false, true, false], false, null),
   ];
-  TaskListItemData? _recentlyRemovedItem;
-  int? _recentlyRemovedItemIndex;
 
   void removeIndex(int index) {
     final removedItem = tasks[index];
     setState(() {
-      _recentlyRemovedItem = removedItem;
-      _recentlyRemovedItemIndex = index;
+      queue.addLast(SnackItemData(id: index, isFinished:false, task:removedItem));
       tasks.removeAt(index);
     });
 
     final snackBar = SnackBar(
-      content: Text('Item removed'),
+      content: Text(S.of(context).UndoLastAction),
       action: SnackBarAction(
-        label: 'UNDO',
+        label: S.of(context).cancel,
         onPressed: () => _undoRemove(),
       ),
+      behavior: SnackBarBehavior.floating,
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -47,21 +49,18 @@ class _TaskListWidgetState extends State<TaskListWidget> {
       index,
       (context, animation) => SizeTransition(
         sizeFactor: animation,
-        child: SizedBox.shrink()
+        child: const SizedBox.shrink()
       ),
     );
   }
 
   void _undoRemove() {
-    if (_recentlyRemovedItem != null && _recentlyRemovedItemIndex != null) {
-      setState(() {
-        tasks.insert(_recentlyRemovedItemIndex!, _recentlyRemovedItem!);
-        _listKey.currentState?.insertItem(_recentlyRemovedItemIndex!);
-      });
+    SnackItemData removedTask =  queue.removeLast();
 
-      _recentlyRemovedItem = null;
-      _recentlyRemovedItemIndex = null;
-    }
+    setState(() {
+        tasks.insert(removedTask.id, removedTask.task);
+        _listKey.currentState?.insertItem(removedTask.id);
+    });
   }
 
   @override
@@ -81,4 +80,16 @@ class _TaskListWidgetState extends State<TaskListWidget> {
         // child: TaskListItem(id:0, taskData: buildTask()),
         );
   }
+}
+
+class SnackItemData {
+  final int id;
+  final bool isFinished;
+  final TaskListItemData task;
+
+  const SnackItemData({
+    required this.id,
+    required this.isFinished,
+    required this.task
+  });
 }

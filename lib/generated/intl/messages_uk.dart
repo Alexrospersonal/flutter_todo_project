@@ -22,6 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "UndoLastAction":
+            MessageLookupByLibrary.simpleMessage("Відмінити останню дію"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Відмінити"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Прострочені\nзавдання:"),

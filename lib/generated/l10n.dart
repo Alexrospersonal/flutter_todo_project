@@ -359,6 +359,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Undo`
+  String get cancel {
+    return Intl.message(
+      'Undo',
+      name: 'cancel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Undo the last action`
+  String get UndoLastAction {
+    return Intl.message(
+      'Undo the last action',
+      name: 'UndoLastAction',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

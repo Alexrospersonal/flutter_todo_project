@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "UndoLastAction":
             MessageLookupByLibrary.simpleMessage("Undo the last action"),
         "cancel": MessageLookupByLibrary.simpleMessage("Undo"),
+        "createTask": MessageLookupByLibrary.simpleMessage("Create task"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Daily progress"),
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Determinated\ntasks:"),

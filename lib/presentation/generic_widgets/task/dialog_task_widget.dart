@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
+import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:provider/provider.dart';
 
 /// Create the dialog which contains form for createing a new task
@@ -22,9 +23,9 @@ class NewTaskDialogWidget extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Dialog(
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
-          insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          backgroundColor: Theme.of(context).cardColor.withOpacity(0.76),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(bigBorderRadius)),
+          insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           child: const TaskForm()
         ),
       ),

@@ -25,6 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "UndoLastAction":
             MessageLookupByLibrary.simpleMessage("Відмінити останню дію"),
         "cancel": MessageLookupByLibrary.simpleMessage("Відмінити"),
+        "createTask": MessageLookupByLibrary.simpleMessage("Створити завдання"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Прострочені\nзавдання:"),

@@ -164,6 +164,11 @@
   "@UndoLastAction": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "createTask": "Створити завдання",
+  "@createTask": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
   
 }

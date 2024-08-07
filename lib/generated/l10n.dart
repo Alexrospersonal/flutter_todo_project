@@ -379,6 +379,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Create task`
+  String get createTask {
+    return Intl.message(
+      'Create task',
+      name: 'createTask',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

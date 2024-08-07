@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/category/category_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/color_picker_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/priority_button_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/date_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/task_form_style.dart';
+import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:provider/provider.dart';
 
 
@@ -48,8 +50,12 @@ class _TaskFormState extends State<TaskForm> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  const TaskFormTitleWidget(title: "створити завдання"),
-                  const SizedBox(height: 30),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 20, 14, 0),
+                    child: TaskFormTitleWidget(title: S.of(context).createTask),
+                  ),
+                  Divider(color: greyColor,),
+                  // const SizedBox(height: 30),
                   TaskNameField(
                     titleController: _titleController,
                     invalidValidationText: "Enter a title name",
@@ -163,16 +169,15 @@ class TaskFormTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.center, children: [
       Text(
-        title.toUpperCase(),
-        style: const TextStyle(fontSize: 21.0, fontWeight: FontWeight.w500, fontFamily: 'Montserrat'),
+        title,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       InkWell(
         onTap: () => Navigator.of(context).pop(),
-        child: Container(
-          width: 20.0,
-          height: 26.0,
-          alignment: Alignment.centerRight,
-          child: const Icon(Icons.close, size: 28.0),
+        child: const SizedBox(
+          width: 12.0,
+          height: 12.0,
+          child: const Center(child: Icon(Icons.close, size: 16.0)),
         ),
       ),
     ]);

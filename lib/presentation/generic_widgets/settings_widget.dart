@@ -14,6 +14,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ElevatedButton(
           onPressed: () async {
@@ -29,6 +30,7 @@ class _SettingsWidgetState extends ConsumerState<SettingsWidget> {
           },
           child: const Text("Theme color")
         ),
+        
       ]
     );
   }

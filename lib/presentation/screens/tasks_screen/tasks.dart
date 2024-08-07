@@ -14,7 +14,7 @@ class TasksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+        margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: Column(
           children: [
             Container(margin: const EdgeInsets.symmetric(horizontal: 20), child: const DailyProgressBar()),

@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/settings.dart';
 
+final selectedCategoryIndex = StateProvider<int>((ref) => 0);
+
 class ListCategoriesNotifier extends Notifier<List<Category>> {
   final List<Category> baseList = List.generate(
     namesOfCaterories.length, (index) => Category(id: index, name: namesOfCaterories[index])
@@ -22,6 +24,7 @@ class ListCategoriesNotifier extends Notifier<List<Category>> {
   }
 
   Category getCategoryById(int id) {
+    ref.read(selectedCategoryIndex.notifier).state = id;
     return state[id];
   }
 

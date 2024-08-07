@@ -13,7 +13,7 @@ class CategoryList extends ConsumerStatefulWidget {
 }
 
 class _CategoryListState extends ConsumerState<CategoryList> {
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
   final emojiRegex = RegExp(r'^\p{Emoji}', unicode: true);
 
   bool checkIfEmojiExists(String text) {
@@ -30,6 +30,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
 
   @override
   Widget build(BuildContext context) {
+    int selectedIndex = ref.watch(selectedCategoryIndex);
     var listOfCategories = ref.watch(listCategoryNotifierProvider.notifier).getCategories();
     String tasksName = S.of(context).tasks;
     String today = S.of(context).today;
@@ -39,7 +40,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
       itemCount: listOfCategories.length + 1,
       separatorBuilder: (context, index) => const SizedBox(width: 16),
       itemBuilder: (context, index) {
-        bool isSelected = _selectedIndex == index;
+        bool isSelected = selectedIndex == index;
         String categoryText = index < listOfCategories.length ? "${listOfCategories[index]}": "";
         String emoji = "";
 
@@ -55,7 +56,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                _selectedIndex = index;
+                // _selectedIndex = index;
                 var selectedCategory = ref.read(listCategoryNotifierProvider.notifier).getCategoryById(index);
                 ref.read(selectedCategoryNotifierProvider.notifier).selectCategory(selectedCategory);
               });

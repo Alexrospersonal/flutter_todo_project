@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/selected_filter_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:flutter_todo_project/settings.dart';
 
-class TasksCategoryFilters extends StatefulWidget {
+class TasksCategoryFilters extends ConsumerStatefulWidget {
   const TasksCategoryFilters({super.key});
 
   @override
-  State<TasksCategoryFilters> createState() => _TasksCategoryFiltersState();
+  ConsumerState<TasksCategoryFilters> createState() => _TasksCategoryFiltersState();
 }
 
-class _TasksCategoryFiltersState extends State<TasksCategoryFilters> {
-  Filter currentFilter = Filter.newest;
+class _TasksCategoryFiltersState extends ConsumerState<TasksCategoryFilters> {
 
   void setFilter(Filter filter) {
-    setState(() {
-      currentFilter = filter;
-    });
+    ref.read(selectedFilterIndexProvider.notifier).state = filter;
   }
 
   @override
   Widget build(BuildContext context) {
+    Filter currentFilter = ref.watch(selectedFilterIndexProvider);
+
     return Wrap(
       alignment: WrapAlignment.center,
       runSpacing: 7,

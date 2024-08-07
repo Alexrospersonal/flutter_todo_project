@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/home_page_index_state.dart';
 import 'package:flutter_todo_project/presentation/screens/bottom_navigation_menu/action_bottom_btn.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_page.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/settings_drawer.dart';
@@ -8,20 +9,24 @@ import 'package:flutter_todo_project/presentation/screens/tasks_screen/tasks.dar
 import 'package:flutter_todo_project/presentation/screens/bottom_navigation_menu/bottom_navigation_menu.dart';
 
 class HomePage extends ConsumerStatefulWidget {
-  const HomePage({super.key});
+  final int initialIndex;
+
+  const HomePage({super.key, this.initialIndex = 0});
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  int _selectedIndex = 0;
-  final PageController _pageController = PageController();
+  late int _selectedIndex;
+  late final PageController _pageController;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    // ref.read(initialIndexProvider.notifier).state = index;
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
@@ -36,7 +41,20 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+    // _selectedIndex = ref.read(initialIndexProvider);
+   _pageController = PageController(initialPage: _selectedIndex);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // final initialIndex = ref.watch(initialIndexProvider);
+    // if (initialIndex != _selectedIndex) {
+    //   _onItemTapped(initialIndex);
+    // }
+
     return Scaffold(
       appBar: const TaskAppBar(),
       drawer: const SettingsDrawer(),
@@ -45,9 +63,13 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: PageView(
           controller: _pageController,
           onPageChanged: (index) {
-            setState(() {
+                        setState(() {
               _selectedIndex = index;
             });
+
+            // setState(() {
+            //   ref.read(initialIndexProvider.notifier).state = index;
+            // });
           },
           children: const [TasksScreen(), CalendarScreen()],
         ),

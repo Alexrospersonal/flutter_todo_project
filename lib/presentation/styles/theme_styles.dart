@@ -42,6 +42,7 @@ final ThemeData lightTheme = ThemeData(
       headlineMedium: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, letterSpacing: 1.7, height: 1),
       titleSmall: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: primaryColor),
       titleMedium: TextStyle(fontSize: 18, fontWeight: FontWeight.normal, color: textColor, height: 1),
+      titleLarge: TextStyle(fontSize: 20, fontWeight: FontWeight.normal, color: textColor, height: 1),
       labelSmall: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: Color.fromRGBO(191, 191, 191, 1), height: 1),
       bodySmall: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), height: 1),
       labelLarge: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), fontWeight: FontWeight.bold, height: 1),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:provider/provider.dart';
 
 class PriorityButton extends StatelessWidget {
@@ -16,12 +17,14 @@ class PriorityButton extends StatelessWidget {
             context.read<TaskState>().setImportant();
           },
           child: Container(
-            padding: const EdgeInsets.all(6),
+            width: 31,
+            height: 31,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.7),
-              borderRadius: BorderRadius.circular(35),
+              shape: BoxShape.circle,
+              color: Theme.of(context).canvasColor,
+              // borderRadius: BorderRadius.circular(35),
             ),
-            child: Icon(Icons.star_sharp, color: isImportant ? Colors.amber : Colors.grey),
+            child: Icon(Icons.star_rounded, color: isImportant ? starColor : greyColor, size: 24,),
           ),
         );
       },

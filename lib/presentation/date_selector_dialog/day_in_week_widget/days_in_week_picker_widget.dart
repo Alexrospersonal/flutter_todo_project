@@ -3,10 +3,10 @@ import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/custom_alert_dialog.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/switch_with_label.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/date_selector_widget.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/date_selector_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/day_in_week_widget/days_in_week_label.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/day_in_week_widget/set_end_dialog_button.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/day_in_week_widget/days_in_week_label.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/day_in_week_widget/set_end_dialog_button.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

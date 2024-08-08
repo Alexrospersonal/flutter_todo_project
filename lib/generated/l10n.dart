@@ -389,6 +389,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Add name`
+  String get addTaskName {
+    return Intl.message(
+      'Add name',
+      name: 'addTaskName',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `New list`
+  String get addNewList {
+    return Intl.message(
+      'New list',
+      name: 'addNewList',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Additional settings`
+  String get additionalSettingLabel {
+    return Intl.message(
+      'Additional settings',
+      name: 'additionalSettingLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get additionalDateLabel {
+    return Intl.message(
+      'Date',
+      name: 'additionalDateLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get additionalTimeLabel {
+    return Intl.message(
+      'Time',
+      name: 'additionalTimeLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Duration`
+  String get additionalDurationLabel {
+    return Intl.message(
+      'Duration',
+      name: 'additionalDurationLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Notification`
+  String get additionalNotificationLabel {
+    return Intl.message(
+      'Notification',
+      name: 'additionalNotificationLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Repeat`
+  String get additionalRepeatLabel {
+    return Intl.message(
+      'Repeat',
+      name: 'additionalRepeatLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

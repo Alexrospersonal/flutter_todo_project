@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/category/category_widget.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/category/category_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/daily_progress_bar.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/task_list.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/tasks_category_filters.dart';

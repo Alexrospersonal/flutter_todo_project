@@ -108,12 +108,14 @@ class _ColorPickerState extends State<ColorPicker> {
               );
             },
             child: Container(
-              padding: const EdgeInsets.all(6),
+              // padding: const EdgeInsets.all(6),
+              width: 31,
+              height: 31,
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.7),
                 borderRadius: BorderRadius.circular(35),
               ),
-              child: Icon(Icons.circle, color: color),
+              child: Icon(Icons.circle, color: color, size: 18,),
             ),
           ),
         );

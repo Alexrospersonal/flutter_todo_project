@@ -169,6 +169,47 @@
   "@createTask": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "addTaskName": "Додати назву",
+  "@addTaskName": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "addNewList": "Новий список",
+  "@addNewList": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalSettingLabel": "Додаткові налаштування",
+  "@additionalSettingLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalDateLabel": "Дата",
+  "@additionalDateLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalTimeLabel": "Час",
+  "@additionalTimeLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalDurationLabel": "Тривалість",
+  "@additionalDurationLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalNotificationLabel": "Сповіщення",
+  "@additionalNotificationLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalRepeatLabel": "Повтор",
+  "@additionalRepeatLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
+  
   
 }

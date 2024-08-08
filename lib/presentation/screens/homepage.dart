@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/state/home_page_index_state.dart';
-import 'package:flutter_todo_project/presentation/screens/bottom_navigation_menu/action_bottom_btn.dart';
+import 'package:flutter_todo_project/presentation/bottom_navigation_menu/action_bottom_btn.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_page.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/settings_drawer.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/task_app_bar.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/tasks.dart';
-import 'package:flutter_todo_project/presentation/screens/bottom_navigation_menu/bottom_navigation_menu.dart';
+import 'package:flutter_todo_project/presentation/bottom_navigation_menu/bottom_navigation_menu.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   final int initialIndex;

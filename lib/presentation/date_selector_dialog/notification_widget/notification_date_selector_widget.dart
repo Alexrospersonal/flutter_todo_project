@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_list_item_container.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_list_item_container.dart';
 
 class NotificationSelectorWidget extends StatefulWidget {
   const NotificationSelectorWidget({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/double_dot_time_divider.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/time_picker_widget/double_dot_time_divider.dart';
 
 class TimePickerInputsContainerWidget extends StatelessWidget {
   final Widget hourInput;

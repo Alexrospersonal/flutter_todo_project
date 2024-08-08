@@ -24,6 +24,17 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "UndoLastAction":
             MessageLookupByLibrary.simpleMessage("Undo the last action"),
+        "addNewList": MessageLookupByLibrary.simpleMessage("New list"),
+        "addTaskName": MessageLookupByLibrary.simpleMessage("Add name"),
+        "additionalDateLabel": MessageLookupByLibrary.simpleMessage("Date"),
+        "additionalDurationLabel":
+            MessageLookupByLibrary.simpleMessage("Duration"),
+        "additionalNotificationLabel":
+            MessageLookupByLibrary.simpleMessage("Notification"),
+        "additionalRepeatLabel": MessageLookupByLibrary.simpleMessage("Repeat"),
+        "additionalSettingLabel":
+            MessageLookupByLibrary.simpleMessage("Additional settings"),
+        "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Time"),
         "cancel": MessageLookupByLibrary.simpleMessage("Undo"),
         "createTask": MessageLookupByLibrary.simpleMessage("Create task"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Daily progress"),

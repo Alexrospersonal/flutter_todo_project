@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/am_pm_toggle_container.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/clock_container.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/clock_number_input.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/time_picker_widget/am_pm_toggle_container.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/time_picker_widget/clock_container.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/time_picker_widget/clock_number_input.dart';
 
 class NotificationClockWidget extends StatefulWidget {
   const NotificationClockWidget({

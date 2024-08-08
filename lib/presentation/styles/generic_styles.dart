@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 
 List<Color> taskColors = [
-    Colors.white,
+    greyColor,
     Colors.deepPurple,
     const Color.fromARGB(255, 199, 228, 35),
     const Color.fromARGB(255, 230, 201, 40),

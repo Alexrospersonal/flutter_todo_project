@@ -171,5 +171,46 @@
   "@createTask": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "addTaskName": "Add name",
+  "@addTaskName": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "addNewList": "New list",
+  "@addNewList": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalSettingLabel": "Additional settings",
+  "@additionalSettingLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalDateLabel": "Date",
+  "@additionalDateLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalTimeLabel": "Time",
+  "@additionalTimeLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalDurationLabel": "Duration",
+  "@additionalDurationLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalNotificationLabel": "Notification",
+  "@additionalNotificationLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "additionalRepeatLabel": "Repeat",
+  "@additionalRepeatLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
+  
 }

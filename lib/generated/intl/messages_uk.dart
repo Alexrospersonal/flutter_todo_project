@@ -24,6 +24,17 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "UndoLastAction":
             MessageLookupByLibrary.simpleMessage("Відмінити останню дію"),
+        "addNewList": MessageLookupByLibrary.simpleMessage("Новий список"),
+        "addTaskName": MessageLookupByLibrary.simpleMessage("Додати назву"),
+        "additionalDateLabel": MessageLookupByLibrary.simpleMessage("Дата"),
+        "additionalDurationLabel":
+            MessageLookupByLibrary.simpleMessage("Тривалість"),
+        "additionalNotificationLabel":
+            MessageLookupByLibrary.simpleMessage("Сповіщення"),
+        "additionalRepeatLabel": MessageLookupByLibrary.simpleMessage("Повтор"),
+        "additionalSettingLabel":
+            MessageLookupByLibrary.simpleMessage("Додаткові налаштування"),
+        "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Час"),
         "cancel": MessageLookupByLibrary.simpleMessage("Відмінити"),
         "createTask": MessageLookupByLibrary.simpleMessage("Створити завдання"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),

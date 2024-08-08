@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/cards/calendar_card.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/cards/date_done_button_card.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/cards/date_selector_card.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/cards/date_title_card.dart'; 
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/date_settings_widget.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/wide_done_button.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/cards/calendar_card.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/cards/date_done_button_card.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/cards/date_selector_card.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/cards/date_title_card.dart'; 
+import 'package:flutter_todo_project/presentation/date_selector_dialog/date_settings_widget.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/wide_done_button.dart';
 import 'package:provider/provider.dart';
 
 class DateSelectorWidget extends StatefulWidget {

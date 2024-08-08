@@ -3,8 +3,8 @@ import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/custom_alert_dialog.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/custom_time_picker_widget.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/switch_with_label.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/time_template_container.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/time_picker_widget/time_template_item.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/time_picker_widget/time_template_container.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/time_picker_widget/time_template_item.dart';
 import 'package:provider/provider.dart';
 
 class TaskTimePickerWidget extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_clock.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_date_selector_dialog.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_list_button.dart';
-import 'package:flutter_todo_project/presentation/screens/date_selector_dialog/notification_widget/notification_text_container.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_clock.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_date_selector_dialog.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_list_button.dart';
+import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_text_container.dart';
 
 class NotifiactionListItemContainer extends StatefulWidget {
   const NotifiactionListItemContainer({super.key});

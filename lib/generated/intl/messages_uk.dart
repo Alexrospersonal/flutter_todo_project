@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "additionalDateLabel": MessageLookupByLibrary.simpleMessage("Дата"),
         "additionalDurationLabel":
             MessageLookupByLibrary.simpleMessage("Тривалість"),
+        "additionalInfoLabel":
+            MessageLookupByLibrary.simpleMessage("Інформація"),
         "additionalNotificationLabel":
             MessageLookupByLibrary.simpleMessage("Сповіщення"),
         "additionalRepeatLabel": MessageLookupByLibrary.simpleMessage("Повтор"),
@@ -36,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Додаткові налаштування"),
         "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Час"),
         "cancel": MessageLookupByLibrary.simpleMessage("Відмінити"),
+        "confirmVuttonLabel": MessageLookupByLibrary.simpleMessage("СТВОРИТИ"),
         "createTask": MessageLookupByLibrary.simpleMessage("Створити завдання"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),
         "determinatedTasks":

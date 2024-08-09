@@ -469,6 +469,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Info`
+  String get additionalInfoLabel {
+    return Intl.message(
+      'Info',
+      name: 'additionalInfoLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `CREATE`
+  String get confirmVuttonLabel {
+    return Intl.message(
+      'CREATE',
+      name: 'confirmVuttonLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

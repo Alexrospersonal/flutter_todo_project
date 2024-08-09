@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 
@@ -16,10 +18,14 @@ class AddFileToTaskButton extends StatelessWidget {
           color: Theme.of(context).canvasColor,
           // borderRadius: BorderRadius.circular(35),
         ),
-        child: const Icon(
-          Icons.attach_file_rounded,
-          color: greyColor,
-          size: 22,
+        child: Transform.rotate(
+          angle: pi / 7,
+          child:const Icon(
+            Icons.attach_file,
+            weight: 1,
+            color: greyColor,
+            size: 22,
+          ),
         ),
       ),
     );

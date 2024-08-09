@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings/additional_settings_button.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings/additional_settings_container.dart';
 
-class AdditionalTaskSetting extends StatefulWidget {
+class AdditionalTaskSetting extends ConsumerStatefulWidget {
   const AdditionalTaskSetting({
     super.key,
   });
 
   @override
-  State<AdditionalTaskSetting> createState() => _AdditionalTaskSettingState();
+  ConsumerState<AdditionalTaskSetting> createState() => _AdditionalTaskSettingState();
 }
 
-class _AdditionalTaskSettingState extends State<AdditionalTaskSetting> {
-  bool isExpanded = false;
+class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
 
-  void switchExpanded() {
-    setState(() {
-      isExpanded = !isExpanded;
-    });
+  void switchExpanded(bool isExpanded) {
+    ref.read(initialTaskDialogExpandedProvider.notifier).state = !isExpanded;
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isExpanded = ref.watch(initialTaskDialogExpandedProvider);
+
     List<Widget> additionalParams = [
       AdditionalSettingInput(
         buttonLabel: S.of(context).additionalDateLabel,
@@ -52,12 +53,12 @@ class _AdditionalTaskSettingState extends State<AdditionalTaskSetting> {
     ];
 
     return AnimatedSize(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
       child: isExpanded
           ? AdditionalSettingsContainer(
-              callback: switchExpanded, children: additionalParams)
-          : AdditionalSettingsButton(callback: switchExpanded),
+              callback: () => switchExpanded(isExpanded), children: additionalParams)
+          : AdditionalSettingsButton(callback: () => switchExpanded(isExpanded)),
     );
   }
 }

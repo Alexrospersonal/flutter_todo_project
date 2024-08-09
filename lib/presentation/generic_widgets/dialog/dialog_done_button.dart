@@ -1,30 +1,34 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/generated/l10n.dart';
 
 class DoneButton extends StatelessWidget {
-
   final bool Function() action;
 
   const DoneButton({super.key, required this.action});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton.filled(
-      onPressed: () {
-        bool res = action();
-        if (res) {
-          Navigator.of(context).pop();
-        }
-      },
-      color: const Color.fromARGB(255, 31, 31, 31),
-      iconSize: 36.0,
-      icon: const Icon(Icons.done),
-      // padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
-      style: IconButton.styleFrom(
-        backgroundColor: const Color.fromRGBO(118, 253, 172, 1),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))
-        )
+    return SizedBox(
+      width: 102,
+      height: 32,
+      child: ElevatedButton(
+        onPressed: () {
+          bool res = action();
+          if (res) {
+            Navigator.of(context).pop();
+          }
+        },
+        style: IconButton.styleFrom(
+            backgroundColor: Theme.of(context).primaryColor,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(16)))),
+        child: Text(
+          S.of(context).confirmVuttonLabel,
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall!
+              .copyWith(color: Theme.of(context).canvasColor, fontWeight: FontWeight.w500),
+        ),
       ),
     );
   }

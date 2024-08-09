@@ -209,7 +209,16 @@
   "@additionalRepeatLabel": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "additionalInfoLabel": "Інформація",
+  "@additionalInfoLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "confirmVuttonLabel": "СТВОРИТИ",
+  "@confirmVuttonLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
-  
   
 }

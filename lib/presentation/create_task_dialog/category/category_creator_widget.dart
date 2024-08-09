@@ -91,6 +91,7 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
                           Flexible (
                             flex: 10,
                             child: TaskNameField(
+                              callback: () {},
                               titleController: categoryNameController,
                               invalidValidationText: "Enter a category name",
                             )

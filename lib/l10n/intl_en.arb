@@ -211,6 +211,16 @@
   "@additionalRepeatLabel": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "additionalInfoLabel": "Info",
+  "@additionalInfoLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "confirmVuttonLabel": "CREATE",
+  "@confirmVuttonLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
   
 }

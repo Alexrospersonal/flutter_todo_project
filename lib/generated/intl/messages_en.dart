@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "additionalDateLabel": MessageLookupByLibrary.simpleMessage("Date"),
         "additionalDurationLabel":
             MessageLookupByLibrary.simpleMessage("Duration"),
+        "additionalInfoLabel": MessageLookupByLibrary.simpleMessage("Info"),
         "additionalNotificationLabel":
             MessageLookupByLibrary.simpleMessage("Notification"),
         "additionalRepeatLabel": MessageLookupByLibrary.simpleMessage("Repeat"),
@@ -36,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Additional settings"),
         "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Time"),
         "cancel": MessageLookupByLibrary.simpleMessage("Undo"),
+        "confirmVuttonLabel": MessageLookupByLibrary.simpleMessage("CREATE"),
         "createTask": MessageLookupByLibrary.simpleMessage("Create task"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Daily progress"),
         "determinatedTasks":

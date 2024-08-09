@@ -82,7 +82,7 @@ class _CategorySelectorWidgetState
                 },
               );
             },
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               Text(
                 S.of(context).addNewList,
                 style: Theme.of(context).textTheme.bodyMedium,

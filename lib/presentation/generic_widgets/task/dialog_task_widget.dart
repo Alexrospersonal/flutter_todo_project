@@ -9,11 +9,8 @@ import 'package:provider/provider.dart';
 class NewTaskDialogWidget extends StatelessWidget {
   final Category category;
 
-  const NewTaskDialogWidget({
-    super.key,
-    required this.category
-  });
-  
+  const NewTaskDialogWidget({super.key, required this.category});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -23,13 +20,46 @@ class NewTaskDialogWidget extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Dialog(
-          backgroundColor: Theme.of(context).cardColor.withOpacity(0.76),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(bigBorderRadius)),
-          insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-          child: const TaskForm()
-        ),
+            backgroundColor: Theme.of(context).cardColor.withOpacity(0.76),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(bigBorderRadius)),
+            insetPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            child: const TaskForm()),
       ),
     );
   }
 }
 
+class PageDialogTest extends StatefulWidget {
+  const PageDialogTest({super.key});
+
+  @override
+  State<PageDialogTest> createState() => _PageDialogTestState();
+}
+
+class _PageDialogTestState extends State<PageDialogTest> {
+  @override
+  Widget build(BuildContext context) {
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      width: 300,
+      height: 500,
+      color: Colors.grey,
+      child: PageView(
+        children: [
+          Center(
+            child: Text('First Page', style: textTheme.titleLarge),
+          ),
+          Center(
+            child: Text('Second Page', style: textTheme.titleLarge),
+          ),
+          Center(
+            child: Text('Third Page', style: textTheme.titleLarge),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -50,7 +50,7 @@ final ThemeData lightTheme = ThemeData(
       labelLarge: TextStyle(fontSize: 14, color: Color.fromRGBO(191, 191, 191, 1), fontWeight: FontWeight.bold, height: 1),
       labelMedium: TextStyle(fontSize: 12, color: Color.fromRGBO(191, 191, 191, 1), fontWeight: FontWeight.bold, height: 1)),
   iconTheme: const IconThemeData(color: Color.fromRGBO(96, 96, 96, 1)),
-  cardColor: Color.fromARGB(255, 245, 245, 245),
+  cardColor: const Color.fromARGB(255, 245, 245, 245),
   scaffoldBackgroundColor: Colors.white,
   fontFamily: 'Fixel',
   toggleButtonsTheme: ToggleButtonsThemeData(

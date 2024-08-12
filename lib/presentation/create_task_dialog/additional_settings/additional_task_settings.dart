@@ -52,13 +52,16 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
       )
     ];
 
-    return AnimatedSize(
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-      child: isExpanded
-          ? AdditionalSettingsContainer(
-              callback: () => switchExpanded(isExpanded), children: additionalParams)
-          : AdditionalSettingsButton(callback: () => switchExpanded(isExpanded)),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        child: isExpanded
+            ? AdditionalSettingsContainer(
+                callback: () => switchExpanded(isExpanded), children: additionalParams)
+            : AdditionalSettingsButton(callback: () => switchExpanded(isExpanded)),
+      ),
     );
   }
 }

@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
+import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
 
 class NotifiacationDateSelectorDialog extends StatefulWidget {
   final List<Widget> children;

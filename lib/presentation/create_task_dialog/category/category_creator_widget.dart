@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/dialog/dialog_done_button.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_name_field.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
+import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/settings.dart';
 import 'package:provider/provider.dart';
@@ -91,9 +93,9 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
                           Flexible (
                             flex: 10,
                             child: TaskNameField(
-                              callback: () {},
                               titleController: categoryNameController,
                               invalidValidationText: "Enter a category name",
+                              formKey: _formKey,
                             )
                           ),
                         ]),

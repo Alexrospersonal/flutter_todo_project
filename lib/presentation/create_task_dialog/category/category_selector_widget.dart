@@ -31,31 +31,34 @@ class _CategorySelectorWidgetState
       Selector<TaskState, Category>(
         selector: (context, taskState) => taskState.category,
         builder: (context, category, child) {
-          return Container(
-            height: 32,
-            width: 128,
-            padding: const EdgeInsets.fromLTRB(10, 1.5, 10, 1.5),
-            decoration: BoxDecoration(
-              color: Theme.of(context).canvasColor,
-              borderRadius: BorderRadius.circular(smallBorderRadius),
-            ),
-            child: DropdownButtonHideUnderline(
-              child: DropdownButton(
-                  isExpanded: true,
-                  hint: const Text("Choose category"),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  value: category,
-                  items: categoryList.map<DropdownMenuItem<Category>>((cat) {
-                    return DropdownMenuItem(
-                        value: cat,
-                        child: SizedBox(
-                            width: 80,
-                            child: Text(cat.name,
-                                overflow: TextOverflow.ellipsis)));
-                  }).toList(),
-                  onChanged: (newCategory) {
-                    context.read<TaskState>().setCategory(newCategory!);
-                  }),
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: Container(
+              height: 32,
+              width: 160,
+              padding: const EdgeInsets.fromLTRB(10, 1.5, 10, 1.5),
+              decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor,
+                borderRadius: BorderRadius.circular(smallBorderRadius),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                    isExpanded: true,
+                    hint: const Text("Choose category"),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    value: category,
+                    items: categoryList.map<DropdownMenuItem<Category>>((cat) {
+                      return DropdownMenuItem(
+                          value: cat,
+                          child: SizedBox(
+                              width: 120,
+                              child: Text(cat.name,
+                                  overflow: TextOverflow.ellipsis)));
+                    }).toList(),
+                    onChanged: (newCategory) {
+                      context.read<TaskState>().setCategory(newCategory!);
+                    }),
+              ),
             ),
           );
         },

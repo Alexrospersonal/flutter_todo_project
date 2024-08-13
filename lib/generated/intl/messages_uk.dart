@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "UndoLastAction":
             MessageLookupByLibrary.simpleMessage("Відмінити останню дію"),
         "addNewList": MessageLookupByLibrary.simpleMessage("Новий список"),
-        "addTaskName": MessageLookupByLibrary.simpleMessage("Додати назву"),
+        "addTaskName": MessageLookupByLibrary.simpleMessage("Назва"),
         "additionalDateLabel": MessageLookupByLibrary.simpleMessage("Дата"),
         "additionalDurationLabel":
             MessageLookupByLibrary.simpleMessage("Тривалість"),
@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newest": MessageLookupByLibrary.simpleMessage("Найновіші"),
         "no": MessageLookupByLibrary.simpleMessage("Ні"),
         "none": MessageLookupByLibrary.simpleMessage("Нема"),
+        "notes": MessageLookupByLibrary.simpleMessage("Замітки"),
         "oldest": MessageLookupByLibrary.simpleMessage("Найстаріші"),
         "overdue": MessageLookupByLibrary.simpleMessage("Прострочені"),
         "remind": MessageLookupByLibrary.simpleMessage("Нагадування"),

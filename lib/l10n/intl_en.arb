@@ -172,7 +172,7 @@
     "description": "Label for newest filter",
     "placeholders": {}
   },
-  "addTaskName": "Add name",
+  "addTaskName": "Name",
   "@addTaskName": {
     "description": "Label for newest filter",
     "placeholders": {}
@@ -219,6 +219,11 @@
   },
   "confirmVuttonLabel": "CREATE",
   "@confirmVuttonLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "notes": "Notes",
+  "@notes": {
     "description": "Label for newest filter",
     "placeholders": {}
   }

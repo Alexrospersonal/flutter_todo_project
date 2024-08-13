@@ -390,10 +390,10 @@ class S {
     );
   }
 
-  /// `Add name`
+  /// `Name`
   String get addTaskName {
     return Intl.message(
-      'Add name',
+      'Name',
       name: 'addTaskName',
       desc: 'Label for newest filter',
       args: [],
@@ -485,6 +485,16 @@ class S {
     return Intl.message(
       'CREATE',
       name: 'confirmVuttonLabel',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message(
+      'Notes',
+      name: 'notes',
       desc: 'Label for newest filter',
       args: [],
     );

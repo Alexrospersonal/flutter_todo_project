@@ -18,10 +18,12 @@ class TaskForm extends ConsumerStatefulWidget {
 
 class _TaskFormState extends ConsumerState<TaskForm> {
   final _titleController = TextEditingController();
+  final _descriptionController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   final _pageController = PageController();
   int _selectedIndex = 0;
   bool isError = false;
+  bool isExpandedNotes = false;
 
   bool validateTaskData() {
     if (_formKey.currentState!.validate()) {
@@ -44,13 +46,39 @@ class _TaskFormState extends ConsumerState<TaskForm> {
     });
   }
 
+  void updateExpandStatusForNotes(bool status) {
+    setState(() {
+      isExpandedNotes = status;
+    });
+  }
+
+  double buildSmallerTakHeight() {
+    if (isExpandedNotes) {
+      return 340;
+    }
+
+    return 290;
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isExpanded = ref.watch(initialTaskDialogExpandedProvider);
+
+    double height = isExpanded ? 590 : buildSmallerTakHeight();
+
     List<Widget> pages = [
       TaskDialogMainPage(
         formKey: _formKey,
         titleController: _titleController,
+        descriptionController: _descriptionController,
+        callback: updateExpandStatusForNotes,
       ),
       Container(
         color: Colors.red,
@@ -62,7 +90,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
-      height: isExpanded ? 590 : 280,
+      height: height,
       child: Stack(
         alignment: Alignment.topCenter,
         clipBehavior: Clip.none,
@@ -84,6 +112,8 @@ class _TaskFormState extends ConsumerState<TaskForm> {
               topPadding: 45,
               formKey: _formKey,
               titleController: _titleController,
+              descriptionController: _descriptionController,
+              callback: updateExpandStatusForNotes,
             ),
           if (isExpanded)
             TaskPageNavigation(
@@ -105,72 +135,6 @@ class _TaskFormState extends ConsumerState<TaskForm> {
           )
         ],
       ),
-    );
-  }
-}
-
-class TaskDescriptionField extends StatefulWidget {
-  const TaskDescriptionField({
-    super.key,
-    required TextEditingController descriptionController,
-  }) : _descriptionController = descriptionController;
-
-  final TextEditingController _descriptionController;
-
-  @override
-  State<TaskDescriptionField> createState() => _TaskDescriptionFieldState();
-}
-
-class _TaskDescriptionFieldState extends State<TaskDescriptionField> {
-  final FocusNode _focusNode = FocusNode();
-  bool _isFocused = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(() {
-      setState(() {
-        _isFocused = _focusNode.hasFocus;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      style: const TextStyle(
-          fontSize: 21.0,
-          fontWeight: FontWeight.w400,
-          fontFamily: 'Montserrat'),
-      controller: widget._descriptionController,
-      focusNode: _focusNode,
-      autofocus: false,
-      maxLines: _isFocused ? 5 : 1,
-      keyboardType: TextInputType.multiline,
-      textInputAction: TextInputAction.newline,
-      decoration: InputDecoration(
-          hintText: 'Нотатки',
-          hintStyle: const TextStyle(color: Colors.grey),
-          isDense: true,
-          contentPadding: const EdgeInsets.only(bottom: 7, top: 7, left: 10),
-          border: InputBorder.none,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            borderSide: const BorderSide(color: Colors.transparent, width: 1.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            borderSide: const BorderSide(
-                color: Color.fromRGBO(118, 253, 172, 1), width: 2.0),
-          ),
-          filled: true,
-          fillColor: Colors.white30),
     );
   }
 }

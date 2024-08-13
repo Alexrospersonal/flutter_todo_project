@@ -170,7 +170,7 @@
     "description": "Label for newest filter",
     "placeholders": {}
   },
-  "addTaskName": "Додати назву",
+  "addTaskName": "Назва",
   "@addTaskName": {
     "description": "Label for newest filter",
     "placeholders": {}
@@ -217,6 +217,11 @@
   },
   "confirmVuttonLabel": "СТВОРИТИ",
   "@confirmVuttonLabel": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "notes": "Замітки",
+  "@notes": {
     "description": "Label for newest filter",
     "placeholders": {}
   }

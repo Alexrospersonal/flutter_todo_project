@@ -25,7 +25,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "UndoLastAction":
             MessageLookupByLibrary.simpleMessage("Undo the last action"),
         "addNewList": MessageLookupByLibrary.simpleMessage("New list"),
-        "addTaskName": MessageLookupByLibrary.simpleMessage("Add name"),
+        "addTaskName": MessageLookupByLibrary.simpleMessage("Name"),
         "additionalDateLabel": MessageLookupByLibrary.simpleMessage("Date"),
         "additionalDurationLabel":
             MessageLookupByLibrary.simpleMessage("Duration"),
@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "newest": MessageLookupByLibrary.simpleMessage("Newest"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "none": MessageLookupByLibrary.simpleMessage("None"),
+        "notes": MessageLookupByLibrary.simpleMessage("Notes"),
         "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
         "overdue": MessageLookupByLibrary.simpleMessage("Overdue"),
         "remind": MessageLookupByLibrary.simpleMessage("Remind"),

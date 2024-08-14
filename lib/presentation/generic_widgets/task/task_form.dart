@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/date/date_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_dialog_main_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/page_view_container.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
@@ -80,9 +81,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
         descriptionController: _descriptionController,
         callback: updateExpandStatusForNotes,
       ),
-      Container(
-        color: Colors.red,
-      ),
+      TaskDateSelectorPage(),
       Placeholder(),
       Placeholder()
     ];

@@ -21,7 +21,6 @@ class _ColorPickerState extends State<ColorPicker> {
     context.read<TaskState>().setColor(taskColors[idx]);
     _overlayController.hide();
     setState(() {
-      
       _overlayController.hide();
     });
   }
@@ -47,65 +46,61 @@ class _ColorPickerState extends State<ColorPicker> {
 
   @override
   Widget build(BuildContext context) {
-    Size parrentSize = MediaQuery.of(context).size;
-    double outerWidth = parrentSize.width;
-    double outerHeight = parrentSize.height;
+    Offset overlayPosition = Offset.zero;
 
     return Selector<TaskState, Color>(
-      selector:(context, taskState) => taskState.color,
-      builder:(context, color, child) {
+      selector: (context, taskState) => taskState.color,
+      builder: (context, color, child) {
         return GestureDetector(
           onTap: () {
             _overlayController.toggle();
             _overlayFocusNode.requestFocus();
           },
+          onTapDown: (details) {
+            overlayPosition = details.globalPosition - details.localPosition;
+          },
           child: OverlayPortal(
             controller: _overlayController,
             overlayChildBuilder: (context) {
               return Positioned(
-                top: outerHeight * 0.54,
-                right: (outerWidth - 45) * 0.12,
-                child: Container(
-                  alignment: const Alignment(0, 0),
-                  width: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.shade500,
-                        spreadRadius: 2,
-                        blurRadius: 3,
-                        offset: const Offset(0, 3),
-                      ),
-                    ]
-                  ),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      children: List.generate(
-                        taskColors.length,
-                        (index) => ListTile(
-                          focusNode: _overlayFocusNode,
-                          dense: true,
-                          visualDensity: VisualDensity.compact,
-                          contentPadding: EdgeInsets.zero,
-                          title: Container(
-                            // padding: const EdgeInsets.all(5),
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color.fromARGB(255, 214, 214, 214)
+                  top: overlayPosition.dy,
+                  left: overlayPosition.dx - 7,
+                  child: Container(
+                      alignment: const Alignment(0, 0),
+                      width: 45,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.shade500,
+                              spreadRadius: 2,
+                              blurRadius: 3,
+                              offset: const Offset(0, 3),
                             ),
-                            child: Icon(Icons.circle, color: taskColors[index])
-                            ),
-                          onTap: () {
-                            changeActiveColor(context,index);
-                          },
-                        )
-                      )
-                    ),
-                  )
-                )
-              );
+                          ]),
+                      child: IntrinsicHeight(
+                        child: Column(
+                            children: List.generate(
+                                taskColors.length,
+                                (index) => ListTile(
+                                      focusNode: _overlayFocusNode,
+                                      dense: true,
+                                      visualDensity: VisualDensity.compact,
+                                      contentPadding: EdgeInsets.zero,
+                                      title: Container(
+                                          // padding: const EdgeInsets.all(5),
+                                          decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Color.fromARGB(
+                                                  255, 214, 214, 214)),
+                                          child: Icon(Icons.circle,
+                                              color: taskColors[index])),
+                                      onTap: () {
+                                        changeActiveColor(context, index);
+                                      },
+                                    ))),
+                      )));
             },
             child: Container(
               // padding: const EdgeInsets.all(6),
@@ -115,14 +110,15 @@ class _ColorPickerState extends State<ColorPicker> {
                 color: Colors.white.withOpacity(0.7),
                 borderRadius: BorderRadius.circular(35),
               ),
-              child: Icon(Icons.circle, color: color, size: 18,),
+              child: Icon(
+                Icons.circle,
+                color: color,
+                size: 18,
+              ),
             ),
           ),
         );
       },
     );
-
-
-    
   }
 }

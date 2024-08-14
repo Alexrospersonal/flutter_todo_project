@@ -8,8 +8,8 @@ class IconButtonsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: const Row(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
           PriorityButton(),

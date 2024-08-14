@@ -67,6 +67,9 @@ class _TaskDescriptionFieldState extends ConsumerState<TaskDescriptionField> {
         onTap: () {
           ref.read(initialTaskDialogExpandedProvider.notifier).state = false;
         },
+        onTapOutside: (event) {
+          FocusScope.of(context).unfocus();
+        },
         decoration: InputDecoration(
           filled: true,
           fillColor: Theme.of(context).canvasColor,

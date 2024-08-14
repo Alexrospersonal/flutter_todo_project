@@ -16,11 +16,14 @@ class Inner12HourFormatPicker extends StatefulWidget
   @override
   final void Function(TimeOfDay time) callback;
 
-  const Inner12HourFormatPicker({
-    super.key,
-    required this.initialDate,
-    required this.callback,
-  });
+  @override
+  final bool enabled;
+
+  const Inner12HourFormatPicker(
+      {super.key,
+      required this.initialDate,
+      required this.callback,
+      required this.enabled});
 
   @override
   State<Inner12HourFormatPicker> createState() =>
@@ -57,7 +60,7 @@ class _Inner12HourFormatPickerState extends State<Inner12HourFormatPicker> {
   }
 
   int get12HourFormat(String formattedTime) {
-    return int.parse(formattedTime.split(" ")[0][0]);
+    return int.parse(formattedTime.split(" ")[0].split(":")[0]);
   }
 
   int getAmPm(String formattedTime) {
@@ -94,13 +97,15 @@ class _Inner12HourFormatPickerState extends State<Inner12HourFormatPicker> {
               flex: 1,
               inputType: TimePickerInputType.hour,
               initialTime: timeFromInput.hour,
-              callback: getTime),
+              callback: getTime,
+              enabled: widget.enabled),
           const TimePickerInputSeparator(),
           NestedTimePickerInput(
               flex: 1,
               inputType: TimePickerInputType.minute,
               initialTime: timeFromInput.minute,
-              callback: getTime),
+              callback: getTime,
+              enabled: widget.enabled),
           NestedAmPmToggle(
             flex: 0,
             initialValue: timeFromInput.amPm,

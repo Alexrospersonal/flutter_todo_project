@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
-import 'package:flutter_todo_project/presentation/create_task_dialog/date/date_page.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/date_selector_page/date_selector_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_dialog_main_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/page_view_container.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_page_navigation.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/time_selector_page/time_selector_page.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 
@@ -81,7 +82,8 @@ class _TaskFormState extends ConsumerState<TaskForm> {
         descriptionController: _descriptionController,
         callback: updateExpandStatusForNotes,
       ),
-      TaskDateSelectorPage(),
+      const TaskDateSelectorPage(),
+      const TimeSelectorPage(),
       Placeholder(),
       Placeholder()
     ];

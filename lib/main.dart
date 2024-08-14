@@ -87,11 +87,14 @@ class _TimePickerTestState extends ConsumerState<TimePickerTest> {
                 child: NestedTimePicker(
                   // title: S.of(context).selectNotificationTime,
                   format12TimePicker: Inner12HourFormatPicker(
-                      initialDate: DateTime.now(),
-                      callback: getTimeFromTimePicker),
+                    initialDate: DateTime.now(),
+                    callback: getTimeFromTimePicker,
+                    enabled: false,
+                  ),
                   format24TimePicker: Inner24HourFormatPicker(
                     initialDate: DateTime.now(),
                     callback: getTimeFromTimePicker,
+                    enabled: false,
                   ),
                 )),
           ],

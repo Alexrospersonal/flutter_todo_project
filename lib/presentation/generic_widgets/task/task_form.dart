@@ -5,6 +5,7 @@ import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/date_selector_page/date_selector_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_dialog_main_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/page_view_container.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_selector_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_page_navigation.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/time_selector_page/time_selector_page.dart';
@@ -84,6 +85,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
       ),
       const TaskDateSelectorPage(),
       const TimeSelectorPage(),
+      const RepeatSelectorPage(),
       Placeholder(),
       Placeholder()
     ];

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo_project/domain/state/home_page_index_state.dart';
 import 'package:flutter_todo_project/presentation/bottom_navigation_menu/action_bottom_btn.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_page.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/settings_drawer.dart';
@@ -27,11 +26,8 @@ class _HomePageState extends ConsumerState<HomePage> {
     });
 
     // ref.read(initialIndexProvider.notifier).state = index;
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut
-    );
+    _pageController.animateToPage(index,
+        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
   }
 
   @override
@@ -45,7 +41,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     super.initState();
     _selectedIndex = widget.initialIndex;
     // _selectedIndex = ref.read(initialIndexProvider);
-   _pageController = PageController(initialPage: _selectedIndex);
+    _pageController = PageController(initialPage: _selectedIndex);
   }
 
   @override
@@ -63,7 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         child: PageView(
           controller: _pageController,
           onPageChanged: (index) {
-                        setState(() {
+            setState(() {
               _selectedIndex = index;
             });
 
@@ -74,7 +70,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           children: const [TasksScreen(), CalendarScreen()],
         ),
       ),
-      bottomNavigationBar: BottomNavigateMenu(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
+      bottomNavigationBar: BottomNavigateMenu(
+          selectedIndex: _selectedIndex, onItemTapped: _onItemTapped),
       floatingActionButton: const CreateTaskBottomButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

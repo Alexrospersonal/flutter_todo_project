@@ -11,6 +11,7 @@ class NewTaskDialogWidget extends StatelessWidget {
 
   const NewTaskDialogWidget({super.key, required this.category});
 
+  // TODO: в батька теж є SafeArea. Виправити це. Або тут або там.
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(

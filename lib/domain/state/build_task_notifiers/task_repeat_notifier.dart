@@ -80,9 +80,16 @@ class RepeatInTimeNotifier extends ChangeNotifier implements UpdatedNotifier {
 
   List<DateTime?> times = List.generate(4, (idx) => null);
 
+  void resetTimes(bool state) {
+    if (!state) {
+      times = List.generate(4, (idx) => null);
+    }
+  }
+
   void setRepeatInTime(bool state) {
     if (canEnabled) {
       isEnabled = state;
+      resetTimes(state);
       notifyListeners();
     }
   }
@@ -100,6 +107,7 @@ class RepeatInTimeNotifier extends ChangeNotifier implements UpdatedNotifier {
     canEnabled = state.isEnabled;
     if (state.isEnabled == false) {
       isEnabled = false;
+      resetTimes(state.isEnabled);
       notifyListeners();
     }
   }

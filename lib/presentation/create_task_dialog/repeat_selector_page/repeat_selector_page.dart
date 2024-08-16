@@ -1,7 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/domain/state/build_task_notifiers/repeatly_notifier.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/last_day_of_repeat.dart';
@@ -13,9 +11,7 @@ import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_pi
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_24_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:vibration/vibration.dart';
 
 class RepeatSelectorPage extends StatefulWidget {
   const RepeatSelectorPage({super.key});
@@ -41,94 +37,17 @@ class _RepeatSelectorPageState extends State<RepeatSelectorPage> {
               context.read<RepeatlyNotifier>().setIsRepeatOfDays(state);
             },
           ),
-          const SizedBox(height: 10),
           const WeekdaysList(),
-          // TODO: виправити наступні елементи, забрати з них selector.
-          const SizedBox(height: 10),
           const LastDayOfRepeat(),
           const RepeatInTimesSelector(),
-          const SizedBox(height: 10),
           const RepeatInTimesList(),
-          const SizedBox(height: 15),
         ],
       ),
     );
   }
 }
 
-class AddRepeatInTimeButton extends StatefulWidget {
-  final void Function(DateTime? time, int idx) callback;
-  final DateTime? time;
-  final int index;
-
-  const AddRepeatInTimeButton(
-      {super.key,
-      required this.index,
-      required this.time,
-      required this.callback});
-
-  @override
-  State<AddRepeatInTimeButton> createState() => _AddRepeatInTimeButtonState();
-}
-
-class _AddRepeatInTimeButtonState extends State<AddRepeatInTimeButton> {
-  String formatTime(DateTime time) {
-    final bool is24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
-    if (is24HourFormat) {
-      return "${time.hour}:${time.minute}";
-    }
-    return DateFormat("hh:mm a", "en_US").format(time);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Color bgColor = widget.time != null
-        ? Theme.of(context).primaryColor
-        : Theme.of(context).canvasColor;
-
-    Widget child = widget.time != null
-        ? Text(
-            formatTime(widget.time!),
-            style: TextStyle(color: Theme.of(context).canvasColor),
-          )
-        : const Icon(Icons.add);
-
-    return GestureDetector(
-      onLongPress: () {
-        Vibration.vibrate(duration: 50, amplitude: 1);
-        widget.callback(null, widget.index);
-      },
-      onTap: () {
-        showGeneralDialog(
-          context: context,
-          barrierDismissible: false,
-          barrierLabel: "Add Task",
-          barrierColor: Colors.white.withOpacity(0.5),
-          pageBuilder: (context, anim1, anim2) {
-            return BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
-                child: PickerDialog(
-                  callback: (time) {
-                    widget.callback(time, widget.index);
-                  },
-                ));
-          },
-          transitionDuration: const Duration(milliseconds: 100),
-        );
-        // TODO: calling diaglog with time picker
-      },
-      child: Container(
-        width: 70,
-        height: 32,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(smallBorderRadius),
-            color: bgColor),
-        child: Center(child: child),
-      ),
-    );
-  }
-}
-
+// TODO: рефактор коду. Можливо dialog та контент окремо
 class PickerDialog extends StatefulWidget {
   final void Function(DateTime time) callback;
   const PickerDialog({super.key, required this.callback});
@@ -183,6 +102,40 @@ class _PickerDialogState extends State<PickerDialog> {
               )
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class TimePickerForTimeRepeat extends StatefulWidget {
+  const TimePickerForTimeRepeat({super.key});
+
+  @override
+  State<TimePickerForTimeRepeat> createState() =>
+      _TimePickerForTimeRepeatState();
+}
+
+class _TimePickerForTimeRepeatState extends State<TimePickerForTimeRepeat> {
+  var currentTime = DateTime.now();
+  void getTime(TimeOfDay time) {
+    currentTime = currentTime.copyWith(hour: time.hour, minute: time.minute);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(25),
+      child: NestedTimePicker(
+        format12TimePicker: Inner12HourFormatPicker(
+          initialDate: currentTime,
+          callback: getTime,
+          enabled: true,
+        ),
+        format24TimePicker: Inner24HourFormatPicker(
+          initialDate: currentTime,
+          callback: getTime,
+          enabled: true,
         ),
       ),
     );

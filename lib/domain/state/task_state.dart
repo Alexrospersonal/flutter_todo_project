@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
-import 'package:flutter_todo_project/domain/state/build_task_notifiers/repeatly_notifier.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
 abstract class CalendarState implements UpdatedNotifier {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
-import 'package:flutter_todo_project/domain/state/build_task_notifiers/repeatly_notifier.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';

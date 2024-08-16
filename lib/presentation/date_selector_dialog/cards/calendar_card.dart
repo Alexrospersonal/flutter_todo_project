@@ -32,7 +32,7 @@ class CalendarCardWidget extends StatelessWidget {
     DateTime? date = context.watch<TaskState>().taskDateTime;
 
     return Selector<TaskState, bool>(
-      selector: (context, state) => state.hasDate,
+      selector: (context, state) => state.canEnabled,
       builder: (context, hasDate, child) {
         return Column(
           children: [

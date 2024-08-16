@@ -224,6 +224,21 @@
   "@notes": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "repeatOfdays": "Повторення днів",
+  "@repeatOfdays": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "lastDayOfRepeat": "Додати кінцеву дату",
+  "@lastDayOfRepeat": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "repeatInTime": "Повторення в години",
+  "@repeatInTime": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
   
 }

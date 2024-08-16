@@ -499,6 +499,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Repeat of days`
+  String get repeatOfdays {
+    return Intl.message(
+      'Repeat of days',
+      name: 'repeatOfdays',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Add last day of repeat`
+  String get lastDayOfRepeat {
+    return Intl.message(
+      'Add last day of repeat',
+      name: 'lastDayOfRepeat',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Repeat in time`
+  String get repeatInTime {
+    return Intl.message(
+      'Repeat in time',
+      name: 'repeatInTime',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

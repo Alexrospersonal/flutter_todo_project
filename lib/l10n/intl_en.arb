@@ -226,6 +226,20 @@
   "@notes": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "repeatOfdays": "Repeat of days",
+  "@repeatOfdays": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "lastDayOfRepeat": "Add last day of repeat",
+  "@lastDayOfRepeat": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "repeatInTime": "Repeat in time",
+  "@repeatInTime": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
-  
 }

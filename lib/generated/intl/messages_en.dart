@@ -47,6 +47,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "important": MessageLookupByLibrary.simpleMessage("Important"),
         "isComing": MessageLookupByLibrary.simpleMessage("Is coming"),
         "langName": MessageLookupByLibrary.simpleMessage("English"),
+        "lastDayOfRepeat":
+            MessageLookupByLibrary.simpleMessage("Add last day of repeat"),
         "monthProgress": MessageLookupByLibrary.simpleMessage("Month progress"),
         "newest": MessageLookupByLibrary.simpleMessage("Newest"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
@@ -55,6 +57,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
         "overdue": MessageLookupByLibrary.simpleMessage("Overdue"),
         "remind": MessageLookupByLibrary.simpleMessage("Remind"),
+        "repeatInTime": MessageLookupByLibrary.simpleMessage("Repeat in time"),
+        "repeatOfdays": MessageLookupByLibrary.simpleMessage("Repeat of days"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Select notification time"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("En"),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/repeatly_notifier.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
-abstract class CalendarState {
+abstract class CalendarState implements UpdatedNotifier {
   DateTime? taskDateTime;
 
   void setDate(DateTime newDate);
@@ -15,7 +16,11 @@ class TaskState extends ChangeNotifier implements CalendarState {
   Color color = taskColors[0];
   bool important = false;
 
-  bool hasDate = false;
+  @override
+  bool isEnabled = false;
+
+  @override
+  bool canEnabled = false;
   bool hasTime = false;
 
   @override
@@ -42,7 +47,7 @@ class TaskState extends ChangeNotifier implements CalendarState {
 
       DateTime now = DateTime.now();
       taskDuration = DateTime(now.year, now.month, now.day, 0, 0);
-      
+
       notifyListeners();
       return true;
     }
@@ -77,7 +82,7 @@ class TaskState extends ChangeNotifier implements CalendarState {
   }
 
   bool setIsRecurring(bool state) {
-    if (hasDate) {
+    if (canEnabled) {
       isRecurring = state;
       if (!state) {
         recurringDays = List.generate(7, (index) => false);
@@ -116,14 +121,15 @@ class TaskState extends ChangeNotifier implements CalendarState {
   @override
   void setDate(DateTime newDate) {
     taskDateTime = newDate;
-    hasDate = true;
+    canEnabled = true;
     notifyListeners();
   }
 
   void setTime(int hour, int minutes) {
     if (taskDateTime != null) {
       hasTime = true;
-      taskDateTime = DateTime(taskDateTime!.year, taskDateTime!.month, taskDateTime!.day, hour, minutes);
+      taskDateTime = DateTime(taskDateTime!.year, taskDateTime!.month,
+          taskDateTime!.day, hour, minutes);
       notifyListeners();
     }
   }
@@ -140,7 +146,8 @@ class TaskState extends ChangeNotifier implements CalendarState {
   }
 
   void setMinute(int minutes) {
-    taskDateTime = DateTime(taskDateTime!.year, taskDateTime!.month, taskDateTime!.day, taskDateTime!.hour, minutes);
+    taskDateTime = DateTime(taskDateTime!.year, taskDateTime!.month,
+        taskDateTime!.day, taskDateTime!.hour, minutes);
     notifyListeners();
   }
 
@@ -168,7 +175,8 @@ class TaskState extends ChangeNotifier implements CalendarState {
 
   void setHasDate(bool newState) {
     if (newState == false) {
-      taskDateTime = null; // або DateTime.now() або інше значення за замовчуванням
+      taskDateTime =
+          null; // або DateTime.now() або інше значення за замовчуванням
       taskDuration = null;
       hasTime = false;
       isRecurring = false;
@@ -178,12 +186,12 @@ class TaskState extends ChangeNotifier implements CalendarState {
       taskDateTime = DateTime.now();
     }
 
-    hasDate = newState;
+    canEnabled = newState;
     notifyListeners();
   }
 
   bool setHasTime(bool newState) {
-    if (hasDate) {
+    if (canEnabled) {
       hasTime = newState;
       if (!newState) {
         taskDuration = null;
@@ -197,5 +205,10 @@ class TaskState extends ChangeNotifier implements CalendarState {
 
   void resetRecurringDays() {
     recurringDays = List.generate(7, (index) => false);
+  }
+
+  @override
+  void update<T extends UpdatedNotifier>(T state) {
+    // TODO: implement update
   }
 }

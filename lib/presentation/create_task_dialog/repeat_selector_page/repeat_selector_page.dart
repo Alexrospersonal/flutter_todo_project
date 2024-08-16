@@ -1,14 +1,20 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/repeatly_notifier.dart';
+import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
-import 'package:flutter_todo_project/presentation/date_selector_dialog/day_in_week_widget/days_in_week_label.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/last_day_of_repeat.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_in_times_list.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_in_times_selector.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/weekdays_list.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_24_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 
 class RepeatSelectorPage extends StatefulWidget {
@@ -19,105 +25,31 @@ class RepeatSelectorPage extends StatefulWidget {
 }
 
 class _RepeatSelectorPageState extends State<RepeatSelectorPage> {
-  final List<bool> selectedWeekdays = List.generate(7, (int dayIdx) => false);
-  final List<DateTime?> repeatTimes = [null, DateTime.now(), null, null];
-  bool isRepeatOfDays = false;
-  bool isLastDayOfRepeat = false;
-  bool isRepeatInTime = false;
-
-  List<String> repeatlyDaysAsStrings() {
-    final dateFormat = DateFormat('E');
-
-    final DateTime now = DateTime.now();
-
-    final DateTime startOfWeek = now.subtract(Duration(days: now.weekday % 7));
-
-    return List.generate(7, (index) {
-      final DateTime day = startOfWeek.add(Duration(days: index));
-      return dateFormat.format(day)[0].toUpperCase();
-    });
-  }
-
-  void setRepeatTime(DateTime? time, int idx) {
-    setState(() {
-      repeatTimes[idx] = time;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final List<String> weekDays = repeatlyDaysAsStrings();
+    bool isRepeatOfDays = context.watch<RepeatlyNotifier>().isEnabled;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 10),
       child: Column(
         children: [
           AdditionalSettingsPageHeader(
-            text: "Repeat of days",
+            text: S.of(context).repeatOfdays,
             iconData: Icons.timer,
             state: isRepeatOfDays,
             callback: (bool state) {
-              setState(() {
-                isRepeatOfDays = !isRepeatOfDays;
-              });
+              context.read<RepeatlyNotifier>().setIsRepeatOfDays(state);
             },
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(weekDays.length, (index) {
-                return DayInWeekLableWidget(
-                  dayName: weekDays[index],
-                  index: index,
-                  selectedDay: selectedWeekdays[index],
-                  callback: (int day) {
-                    setState(() {
-                      selectedWeekdays[index] = !selectedWeekdays[index];
-                    });
-                  },
-                );
-              })),
-          const SizedBox(
-            height: 10,
-          ),
-          AdditionalSettingsPageHeader(
-            text: "Add Last day of repeat",
-            iconData: Icons.add,
-            state: isLastDayOfRepeat,
-            callback: (bool state) {
-              setState(() {
-                isLastDayOfRepeat = !isLastDayOfRepeat;
-              });
-            },
-          ),
-          AdditionalSettingsPageHeader(
-            text: "Repeat in time",
-            iconData: Icons.repeat,
-            state: isRepeatInTime,
-            callback: (bool state) {
-              setState(() {
-                isRepeatInTime = !isRepeatInTime;
-              });
-            },
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  4,
-                  (int idx) => AddRepeatInTimeButton(
-                        index: idx,
-                        time: repeatTimes[idx],
-                        callback: setRepeatTime,
-                      ))),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 10),
+          const WeekdaysList(),
+          // TODO: виправити наступні елементи, забрати з них selector.
+          const SizedBox(height: 10),
+          const LastDayOfRepeat(),
+          const RepeatInTimesSelector(),
+          const SizedBox(height: 10),
+          const RepeatInTimesList(),
+          const SizedBox(height: 15),
         ],
       ),
     );

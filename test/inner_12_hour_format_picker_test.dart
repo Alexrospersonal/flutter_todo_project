@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_todo_project/domain/utils/generic.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker_input.dart';
 
-
 void main() {
   testWidgets('Test NestedTimePickerInput', (WidgetTester tester) async {
     int? time;
@@ -27,6 +26,7 @@ void main() {
                   inputType: TimePickerInputType.hour,
                   initialTime: 21,
                   callback: testFunc,
+                  enabled: true,
                 ),
               ],
             ),

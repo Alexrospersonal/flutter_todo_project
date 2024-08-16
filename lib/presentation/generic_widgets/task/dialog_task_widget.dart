@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/repeatly_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
@@ -14,8 +15,26 @@ class NewTaskDialogWidget extends StatelessWidget {
   // TODO: в батька теж є SafeArea. Виправити це. Або тут або там.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TaskState(category: category),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) => TaskState(category: category)),
+        ChangeNotifierProxyProvider<TaskState, RepeatlyNotifier>(
+          create: (context) => RepeatlyNotifier(),
+          update: (context, taskState, repeatlyNotifier) =>
+              repeatlyNotifier!..update(taskState),
+        ),
+        ChangeNotifierProxyProvider<RepeatlyNotifier, LastDayOfRepeatNotifier>(
+          create: (context) => LastDayOfRepeatNotifier(),
+          update: (context, repeatlyNotifier, lastDayOfRepeatlyNotifier) =>
+              lastDayOfRepeatlyNotifier!..update(repeatlyNotifier),
+        ),
+        ChangeNotifierProxyProvider<RepeatlyNotifier, RepeatInTimeNotifier>(
+          create: (context) => RepeatInTimeNotifier(),
+          update: (context, repeatlyNotifier, repeatInTimeNotifier) =>
+              repeatInTimeNotifier!..update(repeatlyNotifier),
+        ),
+      ],
       child: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();

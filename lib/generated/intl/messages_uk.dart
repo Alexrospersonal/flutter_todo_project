@@ -48,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "important": MessageLookupByLibrary.simpleMessage("Важливі"),
         "isComing": MessageLookupByLibrary.simpleMessage("Майбутні"),
         "langName": MessageLookupByLibrary.simpleMessage("Українська"),
+        "lastDayOfRepeat":
+            MessageLookupByLibrary.simpleMessage("Додати кінцеву дату"),
         "monthProgress":
             MessageLookupByLibrary.simpleMessage("Прогрес за місяць"),
         "newest": MessageLookupByLibrary.simpleMessage("Найновіші"),
@@ -57,6 +59,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "oldest": MessageLookupByLibrary.simpleMessage("Найстаріші"),
         "overdue": MessageLookupByLibrary.simpleMessage("Прострочені"),
         "remind": MessageLookupByLibrary.simpleMessage("Нагадування"),
+        "repeatInTime":
+            MessageLookupByLibrary.simpleMessage("Повторення в години"),
+        "repeatOfdays": MessageLookupByLibrary.simpleMessage("Повторення днів"),
         "selectNotificationTime":
             MessageLookupByLibrary.simpleMessage("Виберіть час сповіщення"),
         "shorLangName": MessageLookupByLibrary.simpleMessage("Укр"),

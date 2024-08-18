@@ -67,35 +67,38 @@ class _CategorySelectorWidgetState
         width: 10,
       ),
       // Invoke a new category dialog window.
-      SizedBox(
-        height: 32,
-        width: 140,
-        child: ElevatedButton(
-            style: const ButtonStyle(
-                padding: WidgetStatePropertyAll(EdgeInsets.zero)),
-            onPressed: () {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                barrierColor: Colors.white.withOpacity(0.5),
-                builder: (BuildContext context) {
-                  return BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                      child: CategoryCreatorWidget(context: providerContext));
-                },
-              );
-            },
-            child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              Text(
-                S.of(context).addNewList,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              Icon(
-                Icons.add,
-                size: 12,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ])),
+      Expanded(
+        child: SizedBox(
+          height: 32,
+          child: ElevatedButton(
+              style: const ButtonStyle(
+                  padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  barrierColor: Colors.white.withOpacity(0.5),
+                  builder: (BuildContext context) {
+                    return BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: CategoryCreatorWidget(context: providerContext));
+                  },
+                );
+              },
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(
+                      S.of(context).addNewList,
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    Icon(
+                      Icons.add,
+                      size: 12,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ])),
+        ),
       ),
     ]);
   }

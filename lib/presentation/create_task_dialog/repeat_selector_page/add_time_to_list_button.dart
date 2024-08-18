@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_selector_page.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/pick_time_dialog.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:intl/intl.dart';
 import 'package:vibration/vibration.dart';
@@ -30,6 +30,25 @@ class _AddTimeToListButtonState extends State<AddTimeToListButton> {
     return DateFormat("hh:mm a", "en_US").format(time);
   }
 
+  void callShowGeneralDialog() {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false,
+      barrierLabel: "Add Task",
+      barrierColor: Colors.white.withOpacity(0.5),
+      pageBuilder: (context, anim1, anim2) {
+        return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
+            child: PickTimeDialog(
+              callback: (time) {
+                widget.callback(time, widget.index);
+              },
+            ));
+      },
+      transitionDuration: const Duration(milliseconds: 100),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Color bgColor = widget.time != null
@@ -43,36 +62,25 @@ class _AddTimeToListButtonState extends State<AddTimeToListButton> {
           )
         : const Icon(Icons.add);
 
-    return GestureDetector(
-      onLongPress: () {
-        Vibration.vibrate(duration: 50, amplitude: 1);
-        widget.callback(null, widget.index);
-      },
-      onTap: () {
-        showGeneralDialog(
-          context: context,
-          barrierDismissible: false,
-          barrierLabel: "Add Task",
-          barrierColor: Colors.white.withOpacity(0.5),
-          pageBuilder: (context, anim1, anim2) {
-            return BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
-                child: PickerDialog(
-                  callback: (time) {
-                    widget.callback(time, widget.index);
-                  },
-                ));
-          },
-          transitionDuration: const Duration(milliseconds: 100),
-        );
-      },
-      child: Container(
-        width: 70,
-        height: 32,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(smallBorderRadius),
-            color: bgColor),
-        child: Center(child: child),
+    return Flexible(
+      flex: 1,
+      child: GestureDetector(
+        onLongPress: () {
+          Vibration.vibrate(duration: 50, amplitude: 1);
+          widget.callback(null, widget.index);
+        },
+        onTap: () {
+          callShowGeneralDialog();
+        },
+        child: Container(
+          // width: 70,
+          margin: const EdgeInsets.symmetric(horizontal: 5),
+          height: 32,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(smallBorderRadius),
+              color: bgColor),
+          child: Center(child: child),
+        ),
       ),
     );
   }

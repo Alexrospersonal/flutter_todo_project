@@ -12,9 +12,9 @@ class TaskPageNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 510, 0, 0),
+      padding: const EdgeInsets.fromLTRB(25, 510, 25, 0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           TaskDialogDisplaySwitch(
             index: 0,

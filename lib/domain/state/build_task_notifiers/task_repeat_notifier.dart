@@ -61,6 +61,11 @@ class LastDayOfRepeatNotifier extends ChangeNotifier
     }
   }
 
+  void setLastDate(DateTime selectedDay) {
+    lastDate = selectedDay;
+    notifyListeners();
+  }
+
   @override
   void update<T extends UpdatedNotifier>(T state) {
     canEnabled = state.isEnabled;

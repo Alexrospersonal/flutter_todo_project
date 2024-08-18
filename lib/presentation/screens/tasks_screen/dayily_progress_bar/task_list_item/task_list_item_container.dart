@@ -25,8 +25,7 @@ class TaskListItemContainer extends StatelessWidget {
         if (data.color != null) TaskListItemColor(color: data.color!),
         Row(
           children: [
-            Container(
-              constraints: const BoxConstraints.expand(width: 230),
+            Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +46,10 @@ class TaskListItemContainer extends StatelessWidget {
                 ],
               ),
             ),
-            TaskListItemDatesInfo(data: data,textStyle: Theme.of(context).textTheme.labelSmall!,)
+            TaskListItemDatesInfo(
+              data: data,
+              textStyle: Theme.of(context).textTheme.labelSmall!,
+            )
           ],
         )
       ]),
@@ -59,7 +61,8 @@ class TaskListItemDatesInfo extends StatelessWidget {
   final TaskListItemData data;
   final TextStyle textStyle;
 
-  const TaskListItemDatesInfo({super.key, required this.data, required this.textStyle});
+  const TaskListItemDatesInfo(
+      {super.key, required this.data, required this.textStyle});
 
   @override
   Widget build(BuildContext context) {

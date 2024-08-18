@@ -9,11 +9,11 @@ class DoneButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: 155 - 30,
-      right: 155 - 30,
+      left: 110,
+      right: 110,
       bottom: -8,
       child: SizedBox(
-        width: 102,
+        width: 100,
         height: 32,
         child: ElevatedButton(
           onPressed: () {

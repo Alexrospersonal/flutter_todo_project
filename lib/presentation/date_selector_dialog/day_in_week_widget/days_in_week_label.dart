@@ -29,8 +29,9 @@ class DayInWeekLableWidget extends StatelessWidget {
           callback(index);
         },
         child: Container(
-          width: 38,
+          // width: 38,
           height: 60,
+          margin: const EdgeInsets.symmetric(horizontal: 2.5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(mediumBorderRadius),
               color: labelColor),

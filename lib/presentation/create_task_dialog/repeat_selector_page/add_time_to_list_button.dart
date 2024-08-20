@@ -86,6 +86,7 @@ class _AddTimeToListButtonState extends State<AddTimeToListButton> {
           style: ButtonStyle(
               backgroundColor: WidgetStatePropertyAll(bgColor),
               overlayColor: WidgetStatePropertyAll(splashColor),
+              foregroundColor: const WidgetStatePropertyAll(greyColor),
               splashFactory: InkSplash.splashFactory,
               padding: const WidgetStatePropertyAll(
                   EdgeInsets.symmetric(horizontal: 8))),

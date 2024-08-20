@@ -5,20 +5,17 @@ import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_name_field.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/settings.dart';
 import 'package:provider/provider.dart';
 
 class CategoryCreatorWidget extends ConsumerStatefulWidget {
   final BuildContext context;
 
-  const CategoryCreatorWidget({
-    super.key,
-    required this.context
-  });
+  const CategoryCreatorWidget({super.key, required this.context});
 
   @override
-  ConsumerState<CategoryCreatorWidget> createState() => _CategoryCreatorWidgetState();
+  ConsumerState<CategoryCreatorWidget> createState() =>
+      _CategoryCreatorWidgetState();
 }
 
 class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
@@ -30,9 +27,11 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
   bool addNewCategory() {
     if (_formKey.currentState!.validate()) {
       String categoryName = emojiController.text + categoryNameController.text;
-  
-      var newCategory = ref.read(listCategoryNotifierProvider.notifier).addCategory(categoryName);
-      widget.context.read<TaskState>().setCategory(newCategory);  
+
+      var newCategory = ref
+          .read(listCategoryNotifierProvider.notifier)
+          .addCategory(categoryName);
+      widget.context.read<TaskState>().setCategory(newCategory);
 
       categoryNameController.clear();
 
@@ -62,69 +61,63 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
         FocusScope.of(context).unfocus();
       },
       child: SimpleDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
-        backgroundColor: Colors.white,
-        shadowColor: Colors.black,
-        insetPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children:[
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(34)),
+          backgroundColor: Colors.white,
+          shadowColor: Colors.black,
+          insetPadding:
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          children: [
+            Stack(clipBehavior: Clip.none, children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                child:
-                  Form(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                  child: Form(
                     key: _formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TaskFormTitleWidget(title: "створити список",),
-                        const SizedBox(height: 20),
-                        Row(children: [
-                          Flexible(
-                            flex: 1,
-                            child: Text(
-                              emojiController.text,
-                              style: const TextStyle(
-                                fontSize: 21
-                              ),
-                              ),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const TaskFormTitleWidget(
+                            title: "створити список",
                           ),
-                          Flexible (
-                            flex: 10,
-                            child: TaskNameField(
-                              titleController: categoryNameController,
-                              invalidValidationText: "Enter a category name",
-                              formKey: _formKey,
-                            )
+                          const SizedBox(height: 20),
+                          Row(children: [
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                emojiController.text,
+                                style: const TextStyle(fontSize: 21),
+                              ),
+                            ),
+                            Flexible(
+                                flex: 10,
+                                child: TaskNameField(
+                                  titleController: categoryNameController,
+                                  invalidValidationText:
+                                      "Enter a category name",
+                                  formKey: _formKey,
+                                )),
+                          ]),
+                          const SizedBox(height: 20),
+                          Text(
+                            "додати іконку".toUpperCase(),
+                            style: const TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Montserrat'),
                           ),
+                          const SizedBox(height: 5),
+                          EmojiSelector(callback: addEmoji),
+                          const SizedBox(height: 20)
                         ]),
-                        const SizedBox(height: 20),
-                        Text(
-                          "додати іконку".toUpperCase(),
-                          style: const TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Montserrat'
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        EmojiSelector(callback: addEmoji),
-                        const SizedBox(height: 20)
-                      ]
-                    ),
-                  )
-              ),
+                  )),
               Positioned(
-                left: 155-30,
-                right: 155-30,
-                bottom: -25,
-                child: DoneButton(action: () => addNewCategory())
-              )
-            ]
-          )
-        ]
-      ),
+                  left: 155 - 30,
+                  right: 155 - 30,
+                  bottom: -25,
+                  child: DoneButton(action: () => addNewCategory()))
+            ])
+          ]),
     );
   }
 }
@@ -132,17 +125,13 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
 class EmojiSelector extends StatefulWidget {
   final void Function(String) callback;
 
-  const EmojiSelector({
-    super.key,
-    required this.callback
-  });
+  const EmojiSelector({super.key, required this.callback});
 
   @override
   State<EmojiSelector> createState() => _EmojiSelectorState();
 }
 
 class _EmojiSelectorState extends State<EmojiSelector> {
-
   int _selectedEmojiIndex = -1;
 
   @override
@@ -162,19 +151,20 @@ class _EmojiSelectorState extends State<EmojiSelector> {
             onTap: () {
               setState(() {
                 _selectedEmojiIndex = _selectedEmojiIndex == index ? -1 : index;
-                String emoji = _selectedEmojiIndex >= 0 ? emojis[_selectedEmojiIndex] : "";
+                String emoji =
+                    _selectedEmojiIndex >= 0 ? emojis[_selectedEmojiIndex] : "";
                 widget.callback(emoji);
               });
             },
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                border: Border.all(
-                  color: _selectedEmojiIndex == index ? Colors.blue : Colors.transparent,
-                  width: 2
-                ),
-                borderRadius: BorderRadius.circular(8)
-              ),
+                  border: Border.all(
+                      color: _selectedEmojiIndex == index
+                          ? Colors.blue
+                          : Colors.transparent,
+                      width: 2),
+                  borderRadius: BorderRadius.circular(8)),
               child: Text(
                 emoji,
                 style: const TextStyle(fontSize: 24),
@@ -185,5 +175,4 @@ class _EmojiSelectorState extends State<EmojiSelector> {
       ),
     );
   }
-
 }

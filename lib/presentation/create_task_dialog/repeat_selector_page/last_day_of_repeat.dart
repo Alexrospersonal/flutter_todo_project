@@ -5,9 +5,7 @@ import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repe
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
-import 'package:flutter_todo_project/presentation/create_task_dialog/generic_picker_dialog.dart';
-import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
-import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/pick_end_of_date_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -95,43 +93,6 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
           callShowGeneralDialog(context);
         }
       },
-    );
-  }
-}
-
-class PickEndOfDateDialog extends StatefulWidget {
-  const PickEndOfDateDialog({super.key});
-
-  @override
-  State<PickEndOfDateDialog> createState() => _PickEndOfDateDialogState();
-}
-
-class _PickEndOfDateDialogState extends State<PickEndOfDateDialog> {
-  @override
-  Widget build(BuildContext context) {
-    return GenericPickerDialog(
-      height: 400,
-      callback: () {},
-      children: [
-        Container(
-          // height: 500,
-          padding: const EdgeInsets.fromLTRB(15, 0, 15, 25),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(mediumBorderRadius),
-            color: Theme.of(context).canvasColor,
-          ),
-          child: CalendarWidget<TaskState>(
-              weekdays: context.read<RepeatlyNotifier>().repeatOfDays,
-              focusedDay: context.watch<LastDayOfRepeatNotifier>().lastDate,
-              recurringEndDate:
-                  context.watch<LastDayOfRepeatNotifier>().lastDate,
-              changeDate: (DateTime selectedDay) {
-                context
-                    .read<LastDayOfRepeatNotifier>()
-                    .setLastDate(selectedDay);
-              }),
-        )
-      ],
     );
   }
 }

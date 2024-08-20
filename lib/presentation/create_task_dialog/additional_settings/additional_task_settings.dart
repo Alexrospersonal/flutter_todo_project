@@ -11,11 +11,11 @@ class AdditionalTaskSetting extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<AdditionalTaskSetting> createState() => _AdditionalTaskSettingState();
+  ConsumerState<AdditionalTaskSetting> createState() =>
+      _AdditionalTaskSettingState();
 }
 
 class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
-
   void switchExpanded(bool isExpanded) {
     ref.read(initialTaskDialogExpandedProvider.notifier).state = !isExpanded;
   }
@@ -35,7 +35,7 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
         icon: Icons.schedule_rounded,
         callback: () {},
       ),
-            AdditionalSettingInput(
+      AdditionalSettingInput(
         buttonLabel: S.of(context).additionalDurationLabel,
         icon: Icons.timer,
         callback: () {},
@@ -55,12 +55,14 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: AnimatedSize(
-        duration: const Duration(milliseconds: 200),
+        duration: const Duration(milliseconds: 150),
         curve: Curves.easeInOut,
         child: isExpanded
             ? AdditionalSettingsContainer(
-                callback: () => switchExpanded(isExpanded), children: additionalParams)
-            : AdditionalSettingsButton(callback: () => switchExpanded(isExpanded)),
+                callback: () => switchExpanded(isExpanded),
+                children: additionalParams)
+            : AdditionalSettingsButton(
+                callback: () => switchExpanded(isExpanded)),
       ),
     );
   }

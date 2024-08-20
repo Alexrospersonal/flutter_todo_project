@@ -1,4 +1,3 @@
-// TODO: Розібратись з фокусом і клавіатуро. Чому фокус вертається до текстового поля.??
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';

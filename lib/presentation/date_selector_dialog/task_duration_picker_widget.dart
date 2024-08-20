@@ -12,7 +12,8 @@ class TaskDurationPickerWidget extends StatefulWidget {
   });
 
   @override
-  State<TaskDurationPickerWidget> createState() => _TaskDurationPickerWidgetState();
+  State<TaskDurationPickerWidget> createState() =>
+      _TaskDurationPickerWidgetState();
 }
 
 class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
@@ -26,7 +27,6 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
   DateTime startDate = DateTime.now();
   DateTime? endDate;
 
-
   String getStartDurationDate(bool hasTime, DateTime? time) {
     if (hasTime) {
       return DateFormat('dd/MM/yyyy HH:mm').format(time!);
@@ -35,10 +35,12 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
     }
   }
 
-    String getEndDurationDate(bool hasTime, DateTime? time) {
+  String getEndDurationDate(bool hasTime, DateTime? time) {
     if (hasTime) {
-      DateTime startDate = Provider.of<TaskState>(context, listen: false).taskDateTime!;
-      DateTime endDate = startDate.add(Duration(hours: time!.hour, minutes: time.minute));
+      DateTime startDate =
+          Provider.of<TaskState>(context, listen: false).taskDateTime!;
+      DateTime endDate =
+          startDate.add(Duration(hours: time!.hour, minutes: time.minute));
       return DateFormat('dd/MM/yyyy HH:mm').format(endDate);
     } else {
       return "Немає";
@@ -54,7 +56,6 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
     }
   }
 
-  // TODO: Написати окремий віджет з полями які працюють з Duration замість Custom Time Picker
   @override
   Widget build(BuildContext context) {
     TaskState state = context.read<TaskState>();
@@ -69,12 +70,10 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
         // Header Row
         const Row(
           children: [
-            Text("Твивалість завдання",
+            Text(
+              "Твивалість завдання",
               style: TextStyle(
-                fontSize: 18,
-                height: 1,
-                fontWeight: FontWeight.normal
-              ),
+                  fontSize: 18, height: 1, fontWeight: FontWeight.normal),
             ),
           ],
         ),
@@ -86,30 +85,33 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
             Selector<TaskState, bool>(
               selector: (context, state) => state.hasDuration,
               builder: (context, hasDuration, child) => SwitchWithLabel(
-                state: hasDuration,
-                label: hasDuration ? "Вимкнути\nтривалість" : "Увімкнути\nтривалість",
-                callback: (bool state) {
-                  bool res = switchIsActiveStatus(state);
-                  
-                  if (!res) {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: true,
-                      builder: (context) {
-                        return const CustomAlerDialog(errorMessage: 'Виберіть спочатку година',);
-                      },
-                    );
-                  }
-                }
-              ),
+                  state: hasDuration,
+                  label: hasDuration
+                      ? "Вимкнути\nтривалість"
+                      : "Увімкнути\nтривалість",
+                  callback: (bool state) {
+                    bool res = switchIsActiveStatus(state);
+
+                    if (!res) {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (context) {
+                          return const CustomAlerDialog(
+                            errorMessage: 'Виберіть спочатку година',
+                          );
+                        },
+                      );
+                    }
+                  }),
             ),
             Selector<TaskState, bool>(
               selector: (context, state) => state.notifyAboutTheEndOfTheTask,
-              builder: (context, notifyAboutTheEndOfTheTask, child) => SwitchWithLabel(
-                state: notifyAboutTheEndOfTheTask,
-                label: "Сповіщати\nпро кінець",
-                callback: swithEndOfNotication
-              ),
+              builder: (context, notifyAboutTheEndOfTheTask, child) =>
+                  SwitchWithLabel(
+                      state: notifyAboutTheEndOfTheTask,
+                      label: "Сповіщати\nпро кінець",
+                      callback: swithEndOfNotication),
             ),
           ],
         ),
@@ -163,14 +165,11 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
               selector: (context, state) => state.taskDateTime,
               builder: (context, taskDateTime, child) => Text(
                 "Початок:\n${getStartDurationDate(state.hasTime, taskDateTime)}",
-                style: const TextStyle(
-                  height: 1,
-                  fontSize: 16
-                ),
+                style: const TextStyle(height: 1, fontSize: 16),
               ),
             ),
             Selector<TaskState, DateTime?>(
-              selector:(context, state) => state.taskDuration,
+              selector: (context, state) => state.taskDuration,
               builder: (context, taskDuration, child) => Text(
                 "Кінець:\n${getEndDurationDate(state.hasDuration, taskDuration)}",
                 textAlign: TextAlign.end,

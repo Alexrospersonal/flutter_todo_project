@@ -86,8 +86,9 @@ class _CalendarWidgetState<T extends CalendarState>
                 margin: const EdgeInsets.all(4.0),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 190, 121, 16),
-                  borderRadius: BorderRadius.circular(8.0),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: Theme.of(context).primaryColor, width: 2),
                 ),
                 child: Text(
                   '${day.day}',
@@ -95,17 +96,29 @@ class _CalendarWidgetState<T extends CalendarState>
                 ),
               );
             } else if (isHighlighted(day)) {
-              return Container(
-                margin: const EdgeInsets.all(4.0),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 200, 118),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Text(
-                  '${day.day}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
+              return Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Positioned(
+                    right: 10,
+                    top: 15,
+                    child: Container(
+                        height: 6,
+                        width: 6,
+                        // margin: const EdgeInsets.all(3.0),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).primaryColor,
+                        )),
+                  ),
+                  Center(
+                    child: Text(
+                      '${day.day}',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  ),
+                ],
               );
             }
             return Container(

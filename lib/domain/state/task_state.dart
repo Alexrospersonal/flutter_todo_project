@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
-import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/enabled_notifier_interface.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
-abstract class CalendarState implements UpdatedNotifier {
+abstract class CalendarState implements IsEnabledNotifier {
   DateTime? taskDateTime;
 
   void setDate(DateTime newDate);
@@ -32,7 +32,6 @@ class TaskState extends ChangeNotifier implements CalendarState {
   bool endOfRecurring = false;
   DateTime? recurringEndDate;
 
-  // TODO: можливо замінити DateTime на Duration
   bool hasDuration = false;
   DateTime? taskDuration;
   bool notifyAboutTheEndOfTheTask = false;
@@ -208,7 +207,5 @@ class TaskState extends ChangeNotifier implements CalendarState {
   }
 
   @override
-  void update<T extends UpdatedNotifier>(T state) {
-    // TODO: implement update
-  }
+  void update<T extends IsEnabledNotifier>(T state) {}
 }

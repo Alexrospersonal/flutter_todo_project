@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/date_selector_dialog/date_selector_widget.dart';
@@ -27,15 +26,15 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
                   builder: (context) =>
                       DateSelectorWidget(taskState: taskState)));
         },
-        style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size(0, 0)),
-          padding: MaterialStateProperty.all(
-              const EdgeInsets.symmetric(vertical: 6, horizontal: 10)),
-          foregroundColor: MaterialStateProperty.all(Colors.black),
-          backgroundColor:
-              MaterialStateProperty.all(Colors.white.withOpacity(0.7)),
-          elevation: MaterialStateProperty.all(0),
-        ),
+        // style: ButtonStyle(
+        //   minimumSize: MaterialStateProperty.all(const Size(0, 0)),
+        //   padding: MaterialStateProperty.all(
+        //       const EdgeInsets.symmetric(vertical: 6, horizontal: 10)),
+        //   foregroundColor: MaterialStateProperty.all(Colors.black),
+        //   backgroundColor:
+        //       MaterialStateProperty.all(Colors.white.withOpacity(0.7)),
+        //   elevation: MaterialStateProperty.all(0),
+        // ),
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           const Icon(Icons.calendar_month),
           const SizedBox(width: 3),

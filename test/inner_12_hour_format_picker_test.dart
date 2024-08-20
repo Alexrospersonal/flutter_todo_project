@@ -16,7 +16,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Container(
+          child: SizedBox(
             width: 400,
             height: 100,
             child: Column(

@@ -12,25 +12,35 @@ class TaskListWidget extends StatefulWidget {
   State<TaskListWidget> createState() => _TaskListWidgetState();
 }
 
-// TODO: детально розібратись з SnackBar та AnimatedList
 class _TaskListWidgetState extends State<TaskListWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final Queue<SnackItemData> queue = Queue<SnackItemData>();
 
   List<TaskListItemData> tasks = [
-    buildTask("Піти до качалочки", [true, true, true, true, true, true, false], true, null),
-    buildTask("Постірати труси після присідання", [false, true, true, true, true, true, true], true, Colors.amber),
-    buildTask("Урок з англійської", [true, true, true, true, true, true, true], false, null),
-    buildTask("Купити пончик", [false, false, true, true, false, true, false], false, Colors.blueAccent),
-    buildTask("Звільнити бродягу", [false, true, false, false, false, true, false], true, Colors.greenAccent),
-    buildTask("Подзвонити мамі", [false, true, true, false, true, true, false], true, Colors.redAccent),
-    buildTask("Пограти з Олегом", [false, false, false, false, false, true, false], false, null),
+    buildTask("Піти до качалочки", [true, true, true, true, true, true, false],
+        true, null),
+    buildTask("Постірати труси після присідання",
+        [false, true, true, true, true, true, true], true, Colors.amber),
+    buildTask("Урок з англійської", [true, true, true, true, true, true, true],
+        false, null),
+    buildTask("Купити пончик", [false, false, true, true, false, true, false],
+        false, Colors.blueAccent),
+    buildTask(
+        "Звільнити бродягу",
+        [false, true, false, false, false, true, false],
+        true,
+        Colors.greenAccent),
+    buildTask("Подзвонити мамі", [false, true, true, false, true, true, false],
+        true, Colors.redAccent),
+    buildTask("Пограти з Олегом",
+        [false, false, false, false, false, true, false], false, null),
   ];
 
   void removeIndex(int index) {
     final removedItem = tasks[index];
     setState(() {
-      queue.addLast(SnackItemData(id: index, isFinished:false, task:removedItem));
+      queue.addLast(
+          SnackItemData(id: index, isFinished: false, task: removedItem));
       tasks.removeAt(index);
     });
 
@@ -44,18 +54,16 @@ class _TaskListWidgetState extends State<TaskListWidget> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    _listKey.currentState?.removeItem(
-      index,
-      (context, animation) => const SizedBox.shrink()
-    );
+    _listKey.currentState
+        ?.removeItem(index, (context, animation) => const SizedBox.shrink());
   }
 
   void _undoRemove() {
-    SnackItemData removedTask =  queue.removeLast();
+    SnackItemData removedTask = queue.removeLast();
 
     setState(() {
-        tasks.insert(removedTask.id, removedTask.task);
-        _listKey.currentState?.insertItem(removedTask.id);
+      tasks.insert(removedTask.id, removedTask.task);
+      _listKey.currentState?.insertItem(removedTask.id);
     });
   }
 
@@ -83,9 +91,6 @@ class SnackItemData {
   final bool isFinished;
   final TaskListItemData task;
 
-  const SnackItemData({
-    required this.id,
-    required this.isFinished,
-    required this.task
-  });
+  const SnackItemData(
+      {required this.id, required this.isFinished, required this.task});
 }

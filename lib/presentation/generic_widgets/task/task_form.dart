@@ -86,8 +86,8 @@ class _TaskFormState extends ConsumerState<TaskForm> {
       const TaskDateSelectorPage(),
       const TimeSelectorPage(),
       const RepeatSelectorPage(),
-      Placeholder(),
-      Placeholder()
+      const Placeholder(),
+      const Placeholder()
     ];
 
     return AnimatedContainer(

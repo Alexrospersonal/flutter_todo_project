@@ -84,7 +84,6 @@ class _Inner24HourFormatPickerState extends State<Inner24HourFormatPicker> {
       const SizedBox(
         height: 15,
       ),
-      // TODO: написати щоб воно нормально працбвало з 24 годинами
       NestedTimeTemplates(
           currentTime: Time24Controller(
               hour: timeFromInput.hour, minute: timeFromInput.minute),

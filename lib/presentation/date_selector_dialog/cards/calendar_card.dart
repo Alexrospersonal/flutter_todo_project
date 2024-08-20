@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
@@ -60,9 +61,9 @@ class CalendarCardWidget extends StatelessWidget {
                 child: IgnorePointer(
                     ignoring: hasDate ? false : true,
                     child: CalendarWidget<TaskState>(
-                        weekdays: context.watch<TaskState>().recurringDays,
+                        weekdays: context.read<RepeatlyNotifier>().repeatOfDays,
                         recurringEndDate:
-                            context.watch<TaskState>().recurringEndDate,
+                            context.watch<LastDayOfRepeatNotifier>().lastDate,
                         changeDate: (DateTime selectedDay) {
                           context.read<TaskState>().setDate(selectedDay);
                         })),

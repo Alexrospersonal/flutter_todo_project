@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/enabled_notifier_interface.dart';
 
-abstract interface class UpdatedNotifier {
-  bool canEnabled = false;
-  bool isEnabled = false;
-  void update<T extends UpdatedNotifier>(T state);
-}
-
-class RepeatlyNotifier extends ChangeNotifier implements UpdatedNotifier {
+class RepeatlyNotifier extends ChangeNotifier implements IsEnabledNotifier {
   @override
   bool canEnabled = false;
   @override
@@ -36,7 +31,7 @@ class RepeatlyNotifier extends ChangeNotifier implements UpdatedNotifier {
   }
 
   @override
-  void update<T extends UpdatedNotifier>(T state) {
+  void update<T extends IsEnabledNotifier>(T state) {
     canEnabled = state.canEnabled;
     if (state.canEnabled == false) {
       isEnabled = false;
@@ -47,7 +42,7 @@ class RepeatlyNotifier extends ChangeNotifier implements UpdatedNotifier {
 }
 
 class LastDayOfRepeatNotifier extends ChangeNotifier
-    implements UpdatedNotifier {
+    implements IsEnabledNotifier {
   @override
   bool canEnabled = false;
   @override
@@ -81,7 +76,7 @@ class LastDayOfRepeatNotifier extends ChangeNotifier
   }
 
   @override
-  void update<T extends UpdatedNotifier>(T state) {
+  void update<T extends IsEnabledNotifier>(T state) {
     canEnabled = state.isEnabled;
     if (state.isEnabled == false) {
       isEnabled = false;
@@ -91,7 +86,7 @@ class LastDayOfRepeatNotifier extends ChangeNotifier
   }
 }
 
-class RepeatInTimeNotifier extends ChangeNotifier implements UpdatedNotifier {
+class RepeatInTimeNotifier extends ChangeNotifier implements IsEnabledNotifier {
   @override
   bool canEnabled = false;
 
@@ -123,7 +118,7 @@ class RepeatInTimeNotifier extends ChangeNotifier implements UpdatedNotifier {
   }
 
   @override
-  void update<T extends UpdatedNotifier>(T state) {
+  void update<T extends IsEnabledNotifier>(T state) {
     canEnabled = state.isEnabled;
     if (state.isEnabled == false) {
       isEnabled = false;

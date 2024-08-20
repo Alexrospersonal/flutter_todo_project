@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo_project/domain/state/home_page_index_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/bottom_navigation_menu/action_bottom_btn.dart';
 import 'package:flutter_todo_project/presentation/bottom_navigation_menu/bottom_navigation_menu.dart';
-import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_page.dart';
 import 'package:flutter_todo_project/presentation/screens/homepage.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item_container.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item_data.dart';
@@ -31,7 +29,7 @@ class _TaskDetailsState extends ConsumerState<TaskDetails> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomePage(
+          builder: (context) => const HomePage(
             initialIndex: 1,
           ),
         ),

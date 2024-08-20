@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
-import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_clock.dart';
 import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_date_selector_dialog.dart';
 import 'package:flutter_todo_project/presentation/date_selector_dialog/notification_widget/notification_list_button.dart';
@@ -10,10 +9,12 @@ class NotifiactionListItemContainer extends StatefulWidget {
   const NotifiactionListItemContainer({super.key});
 
   @override
-  State<NotifiactionListItemContainer> createState() => _NotifiactionListItemContainerState();
+  State<NotifiactionListItemContainer> createState() =>
+      _NotifiactionListItemContainerState();
 }
 
-class _NotifiactionListItemContainerState extends State<NotifiactionListItemContainer> {
+class _NotifiactionListItemContainerState
+    extends State<NotifiactionListItemContainer> {
   bool notificationButtonsState = false;
 
   void deleteNotification() {
@@ -32,7 +33,7 @@ class _NotifiactionListItemContainerState extends State<NotifiactionListItemCont
         context: context,
         barrierDismissible: false,
         barrierColor: Colors.white.withOpacity(0.5),
-        builder:(context) {
+        builder: (context) {
           return NotifiacationDateSelectorDialog(
             children: const [
               TaskFormTitleWidget(title: "Дата нагадування"),

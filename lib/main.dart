@@ -63,10 +63,10 @@ class TimePickerTest extends ConsumerStatefulWidget {
   const TimePickerTest({super.key});
 
   @override
-  _TimePickerTestState createState() => _TimePickerTestState();
+  TimePickerTestState createState() => TimePickerTestState();
 }
 
-class _TimePickerTestState extends ConsumerState<TimePickerTest> {
+class TimePickerTestState extends ConsumerState<TimePickerTest> {
   void getTimeFromTimePicker(TimeOfDay time) {}
 
   @override

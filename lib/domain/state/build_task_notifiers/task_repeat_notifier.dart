@@ -54,16 +54,30 @@ class LastDayOfRepeatNotifier extends ChangeNotifier
   bool isEnabled = false;
   DateTime? lastDate;
 
-  void setIsLastDayOfRepeat(bool state) {
+  bool setIsLastDayOfRepeat(bool state) {
     if (canEnabled) {
       isEnabled = state;
+      if (!state) {
+        resetDate();
+      }
       notifyListeners();
+      return true;
     }
+
+    return false;
   }
 
   void setLastDate(DateTime selectedDay) {
-    lastDate = selectedDay;
+    if (lastDate == null) {
+      lastDate = selectedDay;
+    } else {
+      resetDate();
+    }
     notifyListeners();
+  }
+
+  void resetDate() {
+    lastDate = null;
   }
 
   @override
@@ -71,6 +85,7 @@ class LastDayOfRepeatNotifier extends ChangeNotifier
     canEnabled = state.isEnabled;
     if (state.isEnabled == false) {
       isEnabled = false;
+      resetDate();
       notifyListeners();
     }
   }

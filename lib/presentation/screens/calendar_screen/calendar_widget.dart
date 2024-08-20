@@ -7,11 +7,13 @@ import 'package:table_calendar/table_calendar.dart';
 class CalendarWidget<T extends CalendarState> extends StatefulWidget {
   final void Function(DateTime)? changeDate;
   final DateTime? recurringEndDate;
+  final DateTime? focusedDay;
   final List<bool> weekdays;
 
   const CalendarWidget({
     super.key,
     required this.weekdays,
+    this.focusedDay,
     this.changeDate,
     this.recurringEndDate,
   });
@@ -38,20 +40,27 @@ class _CalendarWidgetState<T extends CalendarState>
     return widget.weekdays[day.weekday - 1];
   }
 
+  DateTime getFocusedTime(DateTime? startDate) {
+    if (widget.focusedDay == null) {
+      return startDate ?? DateTime.now();
+    }
+    return widget.focusedDay!;
+  }
+
   @override
   Widget build(BuildContext context) {
-    var value = context.watch<T>().taskDateTime;
+    var startDate = context.watch<T>().taskDateTime;
 
-    if (value == null) {
+    if (startDate == null) {
       _selectedDay = DateTime.now();
     } else {
-      _selectedDay = value;
+      _selectedDay = startDate;
     }
     return TableCalendar(
         shouldFillViewport: true,
         firstDay: DateTime.utc(2010, 10, 16),
         lastDay: DateTime.utc(2030, 3, 14),
-        focusedDay: value ?? DateTime.now(),
+        focusedDay: getFocusedTime(startDate),
         rowHeight: 36,
         selectedDayPredicate: (day) {
           return isSameDay(_selectedDay, day);

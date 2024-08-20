@@ -30,15 +30,20 @@ class WeekdaysList extends StatelessWidget {
       child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(repeatOfDays.length, (index) {
-            return DayInWeekLableWidget(
-              dayName: weekDays[index],
-              index: index,
-              selectedDay: repeatOfDays[index],
-              callback: (int day) {
-                context.read<RepeatlyNotifier>().setRepeatOfDays(day);
-              },
-            );
+          children: List.generate(repeatOfDays.length * 2 - 1, (index) {
+            if (index.isEven) {
+              int itemIndex = index ~/ 2;
+              return DayInWeekLableWidget(
+                dayName: weekDays[itemIndex],
+                index: itemIndex,
+                selectedDay: repeatOfDays[itemIndex],
+                callback: (int day) {
+                  context.read<RepeatlyNotifier>().setRepeatOfDays(day);
+                },
+              );
+            } else {
+              return const Spacer(flex: 1);
+            }
           })),
     );
   }

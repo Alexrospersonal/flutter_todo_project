@@ -5,6 +5,7 @@ class AdditionalSettingsPageHeader extends StatelessWidget {
   final String text;
   final IconData iconData;
   final Function(bool) callback;
+  final Function()? tapOnLabel;
   final bool state;
 
   const AdditionalSettingsPageHeader(
@@ -12,7 +13,8 @@ class AdditionalSettingsPageHeader extends StatelessWidget {
       required this.text,
       required this.iconData,
       required this.callback,
-      required this.state});
+      required this.state,
+      this.tapOnLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -22,22 +24,25 @@ class AdditionalSettingsPageHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Container(
-              height: 37,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(smallBorderRadius),
-                  color: Theme.of(context).canvasColor),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      text,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Icon(iconData)
-                  ],
+            child: GestureDetector(
+              onTap: () => tapOnLabel != null ? tapOnLabel!() : null,
+              child: Container(
+                height: 37,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(smallBorderRadius),
+                    color: Theme.of(context).canvasColor),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        text,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Icon(iconData)
+                    ],
+                  ),
                 ),
               ),
             ),

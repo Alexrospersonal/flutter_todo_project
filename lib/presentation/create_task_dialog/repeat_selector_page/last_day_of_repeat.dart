@@ -8,6 +8,7 @@ import 'package:flutter_todo_project/presentation/create_task_dialog/additional_
 import 'package:flutter_todo_project/presentation/create_task_dialog/generic_picker_dialog.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class LastDayOfRepeat extends StatefulWidget {
@@ -27,41 +28,79 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
       barrierLabel: "Add Task",
       barrierColor: Colors.white.withOpacity(0.5),
       pageBuilder: (context, anim1, anim2) {
-        return ChangeNotifierProvider.value(
-          value: parentContext.read<TaskState>(),
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(
+              value: parentContext.watch<TaskState>(),
+            ),
+            ChangeNotifierProvider.value(
+              value: parentContext.watch<RepeatlyNotifier>(),
+            ),
+            ChangeNotifierProvider.value(
+              value: parentContext.watch<LastDayOfRepeatNotifier>(),
+            )
+          ],
           child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
-              child: PickEndOfDateDialog(parentContext: parentContext)),
+              child: const PickEndOfDateDialog()),
         );
       },
       transitionDuration: const Duration(milliseconds: 100),
     );
   }
 
+  String formatDate(Locale locale, DateTime date) {
+    late DateFormat dateFormat;
+
+    switch (locale.countryCode) {
+      case 'US':
+        dateFormat = DateFormat('MM/dd/yyyy');
+      case 'GB':
+        dateFormat = DateFormat('dd/MM/yyyy');
+      default:
+        dateFormat = DateFormat('dd/MM/yyyy');
+    }
+
+    return dateFormat.format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     bool isEnabled = context.watch<LastDayOfRepeatNotifier>().isEnabled;
+    Locale locale = Localizations.localeOf(context);
+    DateTime? lastDayOfRepeat =
+        context.watch<LastDayOfRepeatNotifier>().lastDate;
 
-    BuildContext parentContext = context;
+    String text = lastDayOfRepeat != null
+        ? formatDate(locale, lastDayOfRepeat)
+        : S.of(context).lastDayOfRepeat;
+
+    IconData icon = lastDayOfRepeat != null ? Icons.edit : Icons.add;
 
     return AdditionalSettingsPageHeader(
-      text: S.of(context).lastDayOfRepeat,
-      iconData: Icons.add,
+      text: text,
+      iconData: icon,
       state: isEnabled,
-      callback: (bool state) {
-        if (state) {
-          callShowGeneralDialog(parentContext);
+      tapOnLabel: () {
+        bool isEnabled = context.read<LastDayOfRepeatNotifier>().isEnabled;
+        if (isEnabled) {
+          callShowGeneralDialog(context);
         }
-        context.read<LastDayOfRepeatNotifier>().setIsLastDayOfRepeat(state);
+      },
+      callback: (bool state) {
+        var result =
+            context.read<LastDayOfRepeatNotifier>().setIsLastDayOfRepeat(state);
+
+        if (result && state) {
+          callShowGeneralDialog(context);
+        }
       },
     );
   }
 }
 
 class PickEndOfDateDialog extends StatefulWidget {
-  final BuildContext parentContext;
-
-  const PickEndOfDateDialog({super.key, required this.parentContext});
+  const PickEndOfDateDialog({super.key});
 
   @override
   State<PickEndOfDateDialog> createState() => _PickEndOfDateDialogState();
@@ -70,8 +109,6 @@ class PickEndOfDateDialog extends StatefulWidget {
 class _PickEndOfDateDialogState extends State<PickEndOfDateDialog> {
   @override
   Widget build(BuildContext context) {
-    widget.parentContext.watch<LastDayOfRepeatNotifier>().lastDate;
-
     return GenericPickerDialog(
       height: 400,
       callback: () {},
@@ -83,15 +120,13 @@ class _PickEndOfDateDialogState extends State<PickEndOfDateDialog> {
             borderRadius: BorderRadius.circular(mediumBorderRadius),
             color: Theme.of(context).canvasColor,
           ),
-          // TODO: проблеми з календарем. Виправити помилку.
           child: CalendarWidget<TaskState>(
-              weekdays:
-                  widget.parentContext.watch<RepeatlyNotifier>().repeatOfDays,
-              recurringEndDate: widget.parentContext
-                  .watch<LastDayOfRepeatNotifier>()
-                  .lastDate,
+              weekdays: context.read<RepeatlyNotifier>().repeatOfDays,
+              focusedDay: context.watch<LastDayOfRepeatNotifier>().lastDate,
+              recurringEndDate:
+                  context.watch<LastDayOfRepeatNotifier>().lastDate,
               changeDate: (DateTime selectedDay) {
-                widget.parentContext
+                context
                     .read<LastDayOfRepeatNotifier>()
                     .setLastDate(selectedDay);
               }),

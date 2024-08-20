@@ -14,17 +14,20 @@ class RepeatInTimesList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: List.generate(
-              4,
-              (int idx) => AddTimeToListButton(
-                    index: idx,
-                    time: times[idx],
-                    callback: (time, idx) {
-                      context
-                          .read<RepeatInTimeNotifier>()
-                          .setRepeatTime(time, idx);
-                    },
-                  ))),
+          children: List.generate(4 * 2 - 1, (int idx) {
+            if (idx.isEven) {
+              int itemIndex = idx ~/ 2;
+              return AddTimeToListButton(
+                  index: itemIndex,
+                  time: times[itemIndex],
+                  callback: (time, itemIndex) {
+                    context
+                        .read<RepeatInTimeNotifier>()
+                        .setRepeatTime(time, itemIndex);
+                  });
+            }
+            return const Spacer(flex: 1);
+          })),
     );
   }
 }

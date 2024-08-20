@@ -23,15 +23,15 @@ class DayInWeekLableWidget extends StatelessWidget {
         : Theme.of(context).canvasColor;
 
     return Flexible(
-      flex: 1,
+      flex: 3,
       child: GestureDetector(
         onTap: () {
           callback(index);
         },
         child: Container(
-          // width: 38,
+          // constraints: const BoxConstraints(minWidth: 10, maxWidth: 20),
           height: 60,
-          margin: const EdgeInsets.symmetric(horizontal: 2.5),
+          // margin: const EdgeInsets.symmetric(horizontal: 2.5),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(mediumBorderRadius),
               color: labelColor),

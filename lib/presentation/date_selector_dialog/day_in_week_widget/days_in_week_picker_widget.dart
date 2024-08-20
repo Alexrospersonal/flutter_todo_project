@@ -11,14 +11,22 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DaysInWeekPickerWidget extends StatefulWidget {
-  const DaysInWeekPickerWidget({ super.key });
+  const DaysInWeekPickerWidget({super.key});
 
   @override
   State<DaysInWeekPickerWidget> createState() => _DaysInWeekPickerWidgetState();
 }
 
 class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
-  final List<String> weekDays = ['Пн','Вт','Ср','Чт','Пт','Сб','Нд',];
+  final List<String> weekDays = [
+    'Пн',
+    'Вт',
+    'Ср',
+    'Чт',
+    'Пт',
+    'Сб',
+    'Нд',
+  ];
   late TaskState taskState;
   bool isEndless = true;
 
@@ -29,7 +37,9 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          return const CustomAlerDialog(errorMessage: 'Виберіть спочатку дату',);
+          return const CustomAlerDialog(
+            errorMessage: 'Виберіть спочатку дату',
+          );
         },
       );
     }
@@ -40,38 +50,31 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
     taskState = Provider.of<TaskState>(context, listen: false);
 
     return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Виберіть дні повторення завдання",
-          style: TextStyle(
-            fontSize: 18,
-            height: 1,
-            fontWeight: FontWeight.normal
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Виберіть дні повторення завдання",
+            style: TextStyle(
+                fontSize: 18, height: 1, fontWeight: FontWeight.normal),
           ),
-        ),
-        const SizedBox(height: 10),
-        SwitchWithLabel(
-          state: context.watch<TaskState>().isRecurring,
-          label: "Додати повторення",
-          callback: switchRecurringStatus
-        ),
-        WeekdaysContainer(taskState: taskState),
-        const SizedBox(height: 5),
-        RepetitionEndDateRowContainer(taskState: taskState)
-      ]
-    );
+          const SizedBox(height: 10),
+          SwitchWithLabel(
+              state: context.watch<TaskState>().isRecurring,
+              label: "Додати повторення",
+              callback: switchRecurringStatus),
+          WeekdaysContainer(taskState: taskState),
+          const SizedBox(height: 5),
+          RepetitionEndDateRowContainer(taskState: taskState)
+        ]);
   }
 }
 
 class RepetitionEndDateRowContainer extends StatelessWidget {
   final TaskState taskState;
 
-  const RepetitionEndDateRowContainer({
-    super.key,
-    required this.taskState
-  });
+  const RepetitionEndDateRowContainer({super.key, required this.taskState});
 
   void showEndOfRepeatDayDialog(BuildContext providerContext) {
     bool result = taskState.isRecurring;
@@ -81,7 +84,7 @@ class RepetitionEndDateRowContainer extends StatelessWidget {
         context: providerContext,
         barrierDismissible: false,
         barrierColor: Colors.white.withOpacity(0.5),
-        builder:(context) {
+        builder: (context) {
           var res = providerContext.watch<TaskState>();
 
           return DialogForEndDateOfRepetition(providerState: res);
@@ -92,7 +95,6 @@ class RepetitionEndDateRowContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,24 +103,27 @@ class RepetitionEndDateRowContainer extends StatelessWidget {
           selector: (context, state) => state.endOfRecurring,
           builder: (context, endOfRecurring, child) {
             return SwitchWithLabel(
-              state: endOfRecurring,
-              label: "Додати кінцеву",
-              callback: (value) {
-                var res = context.read<TaskState>().setEndOfRecurring(value);
-                if (res) {
-                  showEndOfRepeatDayDialog(context);
-                }
-              }
-            );
-          }, 
+                state: endOfRecurring,
+                label: "Додати кінцеву",
+                callback: (value) {
+                  var res = context.read<TaskState>().setEndOfRecurring(value);
+                  if (res) {
+                    showEndOfRepeatDayDialog(context);
+                  }
+                });
+          },
         ),
         Selector<TaskState, DateTime?>(
           selector: (context, state) => state.recurringEndDate,
           builder: (context, recurringEndDate, child) {
             return SetEndDialogButton(
-            state: recurringEndDate != null ? false : true,
-            text: recurringEndDate != null ? DateFormat('dd/MM/yyyy').format(recurringEndDate) : "Без кінця",
-            callback: recurringEndDate != null ? showEndOfRepeatDayDialog: (BuildContext context) {},
+              state: recurringEndDate != null ? false : true,
+              text: recurringEndDate != null
+                  ? DateFormat('dd/MM/yyyy').format(recurringEndDate)
+                  : "Без кінця",
+              callback: recurringEndDate != null
+                  ? showEndOfRepeatDayDialog
+                  : (BuildContext context) {},
             );
           },
         )
@@ -130,11 +135,7 @@ class RepetitionEndDateRowContainer extends StatelessWidget {
 class WeekdaysContainer extends StatelessWidget {
   final TaskState taskState;
 
-  const WeekdaysContainer({
-    super.key,
-    required this.taskState
-    });
-
+  const WeekdaysContainer({super.key, required this.taskState});
 
   void toggleDay(int index) {
     taskState.setRecurringDays(index);
@@ -142,26 +143,29 @@ class WeekdaysContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> weekDays = ['Пн','Вт','Ср','Чт','Пт','Сб','Нд',];
+    final List<String> weekDays = [
+      'Пн',
+      'Вт',
+      'Ср',
+      'Чт',
+      'Пт',
+      'Сб',
+      'Нд',
+    ];
 
     return Selector<TaskState, List<bool>>(
       selector: (context, state) => state.recurringDays,
-      builder:(context, recurringDays, child) => 
-      Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(
-          weekDays.length,
-          (index) {
+      builder: (context, recurringDays, child) => Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: List.generate(weekDays.length, (index) {
             return DayInWeekLableWidget(
               dayName: weekDays[index],
               index: index,
               selectedDay: recurringDays[index],
               callback: toggleDay,
             );
-          }
-        )
-      ),
+          })),
     );
   }
 }
@@ -181,35 +185,34 @@ class DialogForEndDateOfRepetition extends StatelessWidget {
       child: DialogContainer(
         children: [
           InnerDialogContainer(
-            title: "Дата завершення",
-            child: SizedBox(
-              height: 350,
-              width: 350,
-              child: Selector<TaskState, DateTime?>(
-                selector: (context, state) => state.recurringEndDate,
-                builder: (context, recurringEndDate, child) {
-                  var weekdays = context.read<TaskState>().recurringDays;
-    
-                  return CalendarWidget<TaskState>(
-                    weekdays: weekdays,
-                    recurringEndDate: recurringEndDate,
-                    changeDate: (DateTime selectedDay) {
-                      context.read<TaskState>().setRecurringEndDate(selectedDay);
-                    }
-                  );
-                },
-              )
-            )
-          ),
+              title: "Дата завершення",
+              child: SizedBox(
+                  height: 350,
+                  width: 350,
+                  child: Selector<TaskState, DateTime?>(
+                    selector: (context, state) => state.recurringEndDate,
+                    builder: (context, recurringEndDate, child) {
+                      var weekdays = context.read<TaskState>().recurringDays;
+
+                      return CalendarWidget<TaskState>(
+                          weekdays: weekdays,
+                          recurringEndDate: recurringEndDate,
+                          changeDate: (DateTime selectedDay) {
+                            context
+                                .read<TaskState>()
+                                .setRecurringEndDate(selectedDay);
+                          });
+                    },
+                  ))),
           Positioned(
-            left: 155-30,
-            right: 155-30,
-            bottom: -25,
-            child: DoneButton(action: () => true,)
-          )
+              left: 155 - 30,
+              right: 155 - 30,
+              bottom: -25,
+              child: DoneButton(
+                action: () => true,
+              ))
         ],
       ),
     );
   }
 }
-

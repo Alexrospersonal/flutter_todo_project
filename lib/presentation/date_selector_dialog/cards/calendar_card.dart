@@ -3,7 +3,6 @@ import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repe
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
-import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:intl/intl.dart';
@@ -25,15 +24,6 @@ class CalendarCardWidget extends StatelessWidget {
     }
 
     return dateFormat.format(date);
-  }
-
-  void callSnackBar(BuildContext dialogContext) {
-    const snackBar = SnackBar(
-      content: Text("TESt SNACK BAR"),
-      behavior: SnackBarBehavior.floating,
-    );
-
-    ScaffoldMessenger.of(dialogContext).showSnackBar(snackBar);
   }
 
   @override

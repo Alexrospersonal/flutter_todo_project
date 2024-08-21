@@ -71,10 +71,10 @@ class LastDayOfRepeatNotifier extends ChangeNotifier
   }
 
   void setLastDate(DateTime selectedDay) {
-    if (lastDate == null) {
-      lastDate = selectedDay;
-    } else {
+    if (lastDate != null && lastDate!.compareTo(selectedDay) == 0) {
       resetDate();
+    } else {
+      lastDate = selectedDay;
     }
     notifyListeners();
   }

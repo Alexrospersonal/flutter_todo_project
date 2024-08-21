@@ -68,6 +68,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "shortDay": MessageLookupByLibrary.simpleMessage("д"),
         "shortHour": MessageLookupByLibrary.simpleMessage("год"),
         "shortMinute": MessageLookupByLibrary.simpleMessage("хв"),
+        "snackInfoMessageDate":
+            MessageLookupByLibrary.simpleMessage("Виберість спочатку дату"),
+        "snackInfoMessageRepeatedly": MessageLookupByLibrary.simpleMessage(
+            "Виберість спочатку повтор днів"),
+        "snackInfoMessageTime":
+            MessageLookupByLibrary.simpleMessage("Виберість спочатку годину"),
         "startIn": MessageLookupByLibrary.simpleMessage("Починається"),
         "statusTitle1":
             MessageLookupByLibrary.simpleMessage("Легкість та продуктивність"),

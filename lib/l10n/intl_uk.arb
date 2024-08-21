@@ -239,6 +239,21 @@
   "@repeatInTime": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "snackInfoMessageDate": "Виберість спочатку дату",
+  "@snackInfoMessageDate": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "snackInfoMessageTime": "Виберість спочатку годину",
+  "@snackInfoMessageTime": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "snackInfoMessageRepeatedly": "Виберість спочатку повтор днів",
+  "@snackInfoMessageRepeatedly": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
   
 }

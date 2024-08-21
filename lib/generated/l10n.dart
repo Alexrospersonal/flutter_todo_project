@@ -529,6 +529,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Select a date first`
+  String get snackInfoMessageDate {
+    return Intl.message(
+      'Select a date first',
+      name: 'snackInfoMessageDate',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Select a time first`
+  String get snackInfoMessageTime {
+    return Intl.message(
+      'Select a time first',
+      name: 'snackInfoMessageTime',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Select a repeatedly days first`
+  String get snackInfoMessageRepeatedly {
+    return Intl.message(
+      'Select a repeatedly days first',
+      name: 'snackInfoMessageRepeatedly',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

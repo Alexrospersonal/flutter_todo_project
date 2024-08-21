@@ -5,6 +5,7 @@ import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repe
 import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/pick_end_of_date_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -64,6 +65,7 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
 
   @override
   Widget build(BuildContext context) {
+    var callInformBar = getCallInformBar(context);
     bool isEnabled = context.watch<LastDayOfRepeatNotifier>().isEnabled;
     Locale locale = Localizations.localeOf(context);
     DateTime? lastDayOfRepeat =
@@ -86,11 +88,14 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
         }
       },
       callback: (bool state) {
-        var result =
+        var res =
             context.read<LastDayOfRepeatNotifier>().setIsLastDayOfRepeat(state);
 
-        if (result && state) {
+        if (res && state) {
           callShowGeneralDialog(context);
+        }
+        if (!res && state) {
+          callInformBar(SnackBarMessageType.noEnabledRepeatedly);
         }
       },
     );

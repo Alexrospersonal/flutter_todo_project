@@ -65,6 +65,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "shortDay": MessageLookupByLibrary.simpleMessage("d"),
         "shortHour": MessageLookupByLibrary.simpleMessage("h"),
         "shortMinute": MessageLookupByLibrary.simpleMessage("m"),
+        "snackInfoMessageDate":
+            MessageLookupByLibrary.simpleMessage("Select a date first"),
+        "snackInfoMessageRepeatedly": MessageLookupByLibrary.simpleMessage(
+            "Select a repeatedly days first"),
+        "snackInfoMessageTime":
+            MessageLookupByLibrary.simpleMessage("Select a time first"),
         "startIn": MessageLookupByLibrary.simpleMessage("Start in"),
         "statusTitle1":
             MessageLookupByLibrary.simpleMessage("Easy and productive"),

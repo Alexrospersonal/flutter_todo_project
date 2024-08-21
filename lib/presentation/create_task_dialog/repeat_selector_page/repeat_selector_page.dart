@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/last_day_of_repeat.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_in_times_list.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_in_times_selector.dart';
@@ -19,6 +20,7 @@ class _RepeatSelectorPageState extends State<RepeatSelectorPage> {
   @override
   Widget build(BuildContext context) {
     bool isRepeatOfDays = context.watch<RepeatlyNotifier>().isEnabled;
+    var callInformBar = getCallInformBar(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 10),
@@ -29,7 +31,11 @@ class _RepeatSelectorPageState extends State<RepeatSelectorPage> {
             iconData: Icons.timer,
             state: isRepeatOfDays,
             callback: (bool state) {
-              context.read<RepeatlyNotifier>().setIsRepeatOfDays(state);
+              var res =
+                  context.read<RepeatlyNotifier>().setIsRepeatOfDays(state);
+              if (!res) {
+                callInformBar(SnackBarMessageType.noEnabledDate);
+              }
             },
           ),
           const WeekdaysList(),

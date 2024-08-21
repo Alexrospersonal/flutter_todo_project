@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_24_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
@@ -32,6 +33,7 @@ class _TimeSelectorPageState extends State<TimeSelectorPage> {
   @override
   Widget build(BuildContext context) {
     DateTime? taskDateTime = context.watch<TaskTimeNotifier>().taskDateTime;
+    var callInformBar = getCallInformBar(context);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 27, vertical: 10),
@@ -47,7 +49,11 @@ class _TimeSelectorPageState extends State<TimeSelectorPage> {
                 iconData: Icons.schedule_rounded,
                 state: isEnabled,
                 callback: (bool state) {
-                  context.read<TaskTimeNotifier>().setIsEnabled(state);
+                  var res =
+                      context.read<TaskTimeNotifier>().setIsEnabled(state);
+                  if (!res) {
+                    callInformBar(SnackBarMessageType.noEnabledDate);
+                  }
                 },
               ),
               const SizedBox(

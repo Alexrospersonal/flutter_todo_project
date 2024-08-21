@@ -10,13 +10,16 @@ class TaskTimeNotifier extends ChangeNotifier implements IsEnabledNotifier {
 
   DateTime? taskDateTime;
 
-  void setIsEnabled(bool state) {
+  bool setIsEnabled(bool state) {
     if (canEnabled) {
       isEnabled = state;
       taskDateTime ??= DateTime.now();
       resetTime(state);
+      notifyListeners();
+      return true;
     }
     notifyListeners();
+    return false;
   }
 
   setTaskDateTime(DateTime time) {

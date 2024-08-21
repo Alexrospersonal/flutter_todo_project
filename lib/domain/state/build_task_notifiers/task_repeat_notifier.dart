@@ -8,12 +8,16 @@ class RepeatlyNotifier extends ChangeNotifier implements IsEnabledNotifier {
   bool isEnabled = false;
   List<bool> repeatOfDays = List.generate(7, (idx) => false);
 
-  void setIsRepeatOfDays(bool state) {
+  bool setIsRepeatOfDays(bool state) {
     if (canEnabled) {
       isEnabled = state;
       resetWeekDays(state);
+      notifyListeners();
+
+      return true;
     }
     notifyListeners();
+    return false;
   }
 
   void resetWeekDays(bool state) {
@@ -49,12 +53,16 @@ class LastDayOfRepeatNotifier extends ChangeNotifier
   bool isEnabled = false;
   DateTime? lastDate;
 
+  // TODO: поправити логіку
   bool setIsLastDayOfRepeat(bool state) {
     if (canEnabled) {
       isEnabled = state;
       if (!state) {
         resetDate();
+        notifyListeners();
+        return false;
       }
+      lastDate = DateTime.now();
       notifyListeners();
       return true;
     }
@@ -101,12 +109,14 @@ class RepeatInTimeNotifier extends ChangeNotifier implements IsEnabledNotifier {
     }
   }
 
-  void setRepeatInTime(bool state) {
+  bool setRepeatInTime(bool state) {
     if (canEnabled) {
       isEnabled = state;
       resetTimes(state);
       notifyListeners();
+      return true;
     }
+    return false;
   }
 
   void setRepeatTime(DateTime? time, int idx) {

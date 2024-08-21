@@ -22,17 +22,23 @@ class CreateTaskBottomButton extends ConsumerWidget {
   void _showAddTaskDialog(BuildContext context, Category cat) {
     showGeneralDialog(
       context: context,
+      useRootNavigator: false,
       barrierDismissible: false,
       barrierLabel: "Add Task",
       barrierColor: Colors.white.withOpacity(0.5),
       pageBuilder: (context, anim1, anim2) {
         return BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
-          child: NewTaskDialogWidget(category: cat));
+            filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
+            child: ScaffoldMessenger(
+              child: Builder(builder: (context) {
+                return Scaffold(
+                  body: NewTaskDialogWidget(category: cat),
+                  backgroundColor: Colors.transparent,
+                );
+              }),
+            ));
       },
       transitionDuration: const Duration(milliseconds: 100),
     );
   }
 }
-
-

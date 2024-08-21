@@ -81,6 +81,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
         formKey: _formKey,
         titleController: _titleController,
         descriptionController: _descriptionController,
+        onItemTapped: _onItemTapped,
         callback: updateExpandStatusForNotes,
       ),
       const TaskDateSelectorPage(),
@@ -114,6 +115,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
             TaskDialogMainPage(
               topPadding: 45,
               formKey: _formKey,
+              onItemTapped: _onItemTapped,
               titleController: _titleController,
               descriptionController: _descriptionController,
               callback: updateExpandStatusForNotes,

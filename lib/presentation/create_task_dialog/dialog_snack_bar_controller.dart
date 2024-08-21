@@ -11,16 +11,17 @@ class DialogSnackBarController {
     return _instance;
   }
 
-  void callSnackBar(
-      BuildContext dialogContext, SnackBarMessageType messageType) {
-    final String message = getMessageType(messageType, dialogContext);
+  void callSnackBar(BuildContext context, SnackBarMessageType messageType) {
+    final String message = getMessageType(messageType, context);
 
     var snackBar = SnackBar(
-      content: Text(message),
-      behavior: SnackBarBehavior.floating,
-    );
+        content: Text(message),
+        behavior: SnackBarBehavior.floating,
+        showCloseIcon: true,
+        closeIconColor: Theme.of(context).canvasColor,
+        backgroundColor: Theme.of(context).colorScheme.error);
 
-    ScaffoldMessenger.of(dialogContext).showSnackBar(snackBar);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   String getMessageType(SnackBarMessageType messageType, BuildContext context) {

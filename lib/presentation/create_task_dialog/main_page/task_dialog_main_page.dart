@@ -11,6 +11,7 @@ class TaskDialogMainPage extends StatefulWidget {
   final TextEditingController titleController;
   final TextEditingController descriptionController;
   final void Function(bool) callback;
+  final void Function(int) onItemTapped;
   final double topPadding;
 
   const TaskDialogMainPage(
@@ -18,6 +19,7 @@ class TaskDialogMainPage extends StatefulWidget {
       required this.formKey,
       required this.titleController,
       required this.descriptionController,
+      required this.onItemTapped,
       required this.callback,
       this.topPadding = 0});
 
@@ -52,7 +54,7 @@ class _TaskDialogMainPageState extends State<TaskDialogMainPage> {
                     ),
                     const CategorySelectorWidget(),
                     const IconButtonsRow(),
-                    const AdditionalTaskSetting(),
+                    AdditionalTaskSetting(onItemTapped: widget.onItemTapped),
                   ],
                 ),
               ),

@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/pick_end_of_date_dialog.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class LastDayOfRepeat extends StatefulWidget {
@@ -46,21 +46,6 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
       },
       transitionDuration: const Duration(milliseconds: 100),
     );
-  }
-
-  String formatDate(Locale locale, DateTime date) {
-    late DateFormat dateFormat;
-
-    switch (locale.countryCode) {
-      case 'US':
-        dateFormat = DateFormat('MM/dd/yyyy');
-      case 'GB':
-        dateFormat = DateFormat('dd/MM/yyyy');
-      default:
-        dateFormat = DateFormat('dd/MM/yyyy');
-    }
-
-    return dateFormat.format(date);
   }
 
   @override

@@ -1,30 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
 import 'package:flutter_todo_project/presentation/screens/calendar_screen/calendar_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CalendarCardWidget extends StatelessWidget {
   const CalendarCardWidget({super.key});
-
-  String formatDate(Locale locale, DateTime date) {
-    late DateFormat dateFormat;
-
-    switch (locale.countryCode) {
-      case 'US':
-        dateFormat = DateFormat('MM/dd/yyyy');
-      case 'GB':
-        dateFormat = DateFormat('dd/MM/yyyy');
-      default:
-        dateFormat = DateFormat('dd/MM/yyyy');
-    }
-
-    return dateFormat.format(date);
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
+import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_24_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class TimeSelectorPage extends StatefulWidget {
@@ -20,14 +20,6 @@ class _TimeSelectorPageState extends State<TimeSelectorPage> {
   void getTimeFromTimePicker(TimeOfDay time) {
     Provider.of<TaskTimeNotifier>(context, listen: false).setTaskDateTime(
         DateTime.now().copyWith(hour: time.hour, minute: time.minute));
-  }
-
-  String formatTime(DateTime time) {
-    final bool is24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
-    if (is24HourFormat) {
-      return "${time.hour}:${time.minute}";
-    }
-    return DateFormat("hh:mm a", "en_US").format(time);
   }
 
   @override
@@ -44,7 +36,7 @@ class _TimeSelectorPageState extends State<TimeSelectorPage> {
             children: [
               AdditionalSettingsPageHeader(
                 text: taskDateTime != null && isEnabled
-                    ? formatTime(taskDateTime)
+                    ? formatTime(taskDateTime, context)
                     : S.of(context).none,
                 iconData: Icons.schedule_rounded,
                 state: isEnabled,

@@ -4,13 +4,13 @@ import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repe
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings/additional_settings_button.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings/additional_settings_container.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings/additional_settings_info_field.dart';
 import 'package:provider/provider.dart';
 
-// TODO: Рефакторінг зробити
 class AdditionalTaskSetting extends ConsumerStatefulWidget {
   final void Function(int) onItemTapped;
 
@@ -24,53 +24,6 @@ class AdditionalTaskSetting extends ConsumerStatefulWidget {
 class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
   void switchExpanded(bool isExpanded) {
     ref.read(initialTaskDialogExpandedProvider.notifier).state = !isExpanded;
-  }
-
-  String formatDate(Locale locale, DateTime date) {
-    late DateFormat dateFormat;
-
-    switch (locale.countryCode) {
-      case 'US':
-        dateFormat = DateFormat('MM/dd/yyyy');
-      case 'GB':
-        dateFormat = DateFormat('dd/MM/yyyy');
-      default:
-        dateFormat = DateFormat('dd/MM/yyyy');
-    }
-
-    return dateFormat.format(date);
-  }
-
-  String formatTime(DateTime time) {
-    final bool is24HourFormat = MediaQuery.of(context).alwaysUse24HourFormat;
-    if (is24HourFormat) {
-      return "${time.hour}:${time.minute}";
-    }
-    return DateFormat("hh:mm a", "en_US").format(time);
-  }
-
-  List<String> repeatlyDaysAsStrings(S s, List<bool> repetlyDates) {
-    final dateFormat = DateFormat('EEE');
-
-    final List<String> formattedDates = repetlyDates
-        .asMap()
-        .entries
-        .where((entry) => entry.value) // Фільтруємо записи, де значення true
-        .map((entry) {
-      final date = DateTime.utc(2024, 1, 1).add(Duration(days: entry.key));
-      return dateFormat.format(date); // Форматуємо дату
-    }).toList(); // Перетворюємо результат в список
-
-    if (formattedDates.length == 7) {
-      return [s.week];
-    }
-    return formattedDates.isEmpty ? [s.none] : formattedDates;
-  }
-
-  List<String> repeatlyTimesAsStrings(List<DateTime?> times) {
-    return times.map<String>((date) {
-      return date != null ? "X" : "-";
-    }).toList();
   }
 
   @override
@@ -104,8 +57,9 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
         },
       ),
       AdditionalSettingInput(
-        buttonLabel:
-            time != null ? formatTime(time) : S.of(context).additionalTimeLabel,
+        buttonLabel: time != null
+            ? formatTime(time, context)
+            : S.of(context).additionalTimeLabel,
         state: context.watch<TaskTimeNotifier>().isEnabled,
         icon: Icons.schedule_rounded,
         callback: (bool state) {
@@ -155,76 +109,6 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
             : AdditionalSettingsButton(
                 callback: () => switchExpanded(isExpanded)),
       ),
-    );
-  }
-}
-
-class AdditionalSettingInput extends StatefulWidget {
-  final String buttonLabel;
-  final IconData icon;
-  final bool state;
-  final void Function(bool state) callback;
-
-  const AdditionalSettingInput(
-      {super.key,
-      required this.buttonLabel,
-      required this.icon,
-      required this.state,
-      required this.callback});
-
-  @override
-  State<AdditionalSettingInput> createState() => _AdditionalSettingInputState();
-}
-
-class _AdditionalSettingInputState extends State<AdditionalSettingInput> {
-  // bool state = false;
-
-  @override
-  Widget build(BuildContext context) {
-    var offTextStyle = Theme.of(context)
-        .textTheme
-        .labelMedium!
-        .copyWith(fontWeight: FontWeight.normal);
-    var onTextStyle = Theme.of(context).textTheme.labelMedium!.copyWith(
-        fontWeight: FontWeight.normal,
-        color: Theme.of(context).colorScheme.onSurface);
-
-    Color iconColor = widget.state ? onTextStyle.color! : offTextStyle.color!;
-
-    return Row(
-      children: [
-        Expanded(
-          child: SizedBox(
-              height: 32,
-              child: ElevatedButton(
-                style: const ButtonStyle(
-                    padding: WidgetStatePropertyAll(
-                        EdgeInsets.symmetric(horizontal: 10))),
-                onPressed: () => widget.callback(true),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(widget.buttonLabel,
-                        style: widget.state ? onTextStyle : offTextStyle),
-                    Icon(
-                      widget.icon,
-                      color: iconColor,
-                    )
-                  ],
-                ),
-              )),
-        ),
-        const SizedBox(
-          width: 16,
-        ),
-        Switch(
-          value: widget.state,
-          onChanged: (value) {
-            widget.callback(value);
-          },
-        )
-      ],
     );
   }
 }

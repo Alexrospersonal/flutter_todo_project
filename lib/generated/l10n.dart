@@ -559,6 +559,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Task color`
+  String get color {
+    return Intl.message(
+      'Task color',
+      name: 'color',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

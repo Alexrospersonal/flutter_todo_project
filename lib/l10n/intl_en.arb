@@ -256,5 +256,10 @@
   "@snackInfoMessageRepeatedly": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "color": "Task color",
+  "@color": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
 }

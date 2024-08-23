@@ -96,7 +96,6 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
         callback: (bool state) {},
       )
     ];
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: AnimatedSize(

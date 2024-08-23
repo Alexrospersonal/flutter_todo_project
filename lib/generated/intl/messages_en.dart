@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Additional settings"),
         "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Time"),
         "cancel": MessageLookupByLibrary.simpleMessage("Undo"),
+        "color": MessageLookupByLibrary.simpleMessage("Task color"),
         "confirmVuttonLabel": MessageLookupByLibrary.simpleMessage("CREATE"),
         "createTask": MessageLookupByLibrary.simpleMessage("Create task"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Daily progress"),

@@ -12,8 +12,9 @@ class IconButtonsRow extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          PriorityButton(),
           ColorPicker(),
+          SizedBox(width: 10),
+          PriorityButton(),
           //AddFileToTaskButton()
         ],
       ),

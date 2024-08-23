@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Додаткові налаштування"),
         "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Час"),
         "cancel": MessageLookupByLibrary.simpleMessage("Відмінити"),
+        "color": MessageLookupByLibrary.simpleMessage("Колір завдання"),
         "confirmVuttonLabel": MessageLookupByLibrary.simpleMessage("СТВОРИТИ"),
         "createTask": MessageLookupByLibrary.simpleMessage("Створити завдання"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),

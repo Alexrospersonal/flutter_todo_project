@@ -254,6 +254,11 @@
   "@snackInfoMessageRepeatedly": {
     "description": "Label for newest filter",
     "placeholders": {}
+  },
+  "color": "Колір завдання",
+  "@color": {
+    "description": "Label for newest filter",
+    "placeholders": {}
   }
   
 }

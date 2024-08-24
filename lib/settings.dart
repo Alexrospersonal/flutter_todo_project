@@ -1,14 +1,10 @@
 final List<String> namesOfCaterories = [
   "Today"
-  "😍Несортоване",
+      "😍Несортоване",
   "😄Home",
   "😇GYM",
   "😄Work",
   "😊Morning routine"
-];
-
-final List<String> emojis = [
-  "😊", "😄", "😍", "😂", "🥰", "😎", "🤩", "😇",
 ];
 
 enum Filter {
@@ -25,12 +21,12 @@ enum Filter {
   final String name;
 
   static List<Filter> get filters => [
-    newest,
-    oldest,
-    isComing,
-    important,
-    withFiles,
-    done,
-    overdue,
-  ];
+        newest,
+        oldest,
+        isComing,
+        important,
+        withFiles,
+        done,
+        overdue,
+      ];
 }

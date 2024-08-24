@@ -31,33 +31,36 @@ class _CategorySelectorWidgetState
       Selector<TaskState, Category>(
         selector: (context, taskState) => taskState.category,
         builder: (context, category, child) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Container(
-              height: 32,
-              width: 160,
-              padding: const EdgeInsets.fromLTRB(10, 1.5, 10, 1.5),
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor,
-                borderRadius: BorderRadius.circular(smallBorderRadius),
-              ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton(
-                    isExpanded: true,
-                    hint: const Text("Choose category"),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    value: category,
-                    items: categoryList.map<DropdownMenuItem<Category>>((cat) {
-                      return DropdownMenuItem(
-                          value: cat,
-                          child: SizedBox(
-                              width: 120,
-                              child: Text(cat.name,
-                                  overflow: TextOverflow.ellipsis)));
-                    }).toList(),
-                    onChanged: (newCategory) {
-                      context.read<TaskState>().setCategory(newCategory!);
-                    }),
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Container(
+                height: 32,
+                // width: 160,
+                padding: const EdgeInsets.fromLTRB(10, 1.5, 10, 1.5),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor,
+                  borderRadius: BorderRadius.circular(smallBorderRadius),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      elevation: 10,
+                      isExpanded: true,
+                      borderRadius: BorderRadius.circular(mediumBorderRadius),
+                      hint: const Text("Choose category"),
+                      style: Theme.of(context).textTheme.bodyMedium,
+                      value: category,
+                      items:
+                          categoryList.map<DropdownMenuItem<Category>>((cat) {
+                        return DropdownMenuItem(
+                            value: cat,
+                            child: Text(cat.name,
+                                overflow: TextOverflow.ellipsis));
+                      }).toList(),
+                      onChanged: (newCategory) {
+                        context.read<TaskState>().setCategory(newCategory!);
+                      }),
+                ),
               ),
             ),
           );
@@ -77,7 +80,7 @@ class _CategorySelectorWidgetState
                 showDialog(
                   context: context,
                   barrierDismissible: false,
-                  barrierColor: Colors.white.withOpacity(0.5),
+                  barrierColor: Colors.white.withOpacity(0),
                   builder: (BuildContext context) {
                     return BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),

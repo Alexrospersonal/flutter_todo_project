@@ -125,18 +125,23 @@ class _TaskFormState extends ConsumerState<TaskForm> {
               selectedIndex: _selectedIndex,
               onItemTapped: _onItemTapped,
             ),
-          DoneButton(
-            action: () {
-              ref.read(initialTaskDialogExpandedProvider.notifier).state =
-                  false;
-              // var db = DbService.db;
-              // db.writeTxn(() async {
-              //   Task task = Task();
-              //   task.title = "Task title 1";
-              //   await db.tasks.put(task);
-              // });
-              return validateTaskData();
-            },
+          Positioned(
+            left: 110,
+            right: 110,
+            bottom: -8,
+            child: DoneButton(
+              action: () {
+                ref.read(initialTaskDialogExpandedProvider.notifier).state =
+                    false;
+                // var db = DbService.db;
+                // db.writeTxn(() async {
+                //   Task task = Task();
+                //   task.title = "Task title 1";
+                //   await db.tasks.put(task);
+                // });
+                return validateTaskData();
+              },
+            ),
           )
         ],
       ),

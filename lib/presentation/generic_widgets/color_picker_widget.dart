@@ -222,7 +222,6 @@ class _ColorPickerState extends State<ColorPicker> {
                         return Positioned(
                             top: overlayPosition.dy - 55,
                             left: overlayPosition.dx + 30,
-                            // TODO: написати власну форму з хвостиком
                             child: PhysicalShape(
                               color: Colors.white,
                               clipper: RoundedRectWithTailClipper(),

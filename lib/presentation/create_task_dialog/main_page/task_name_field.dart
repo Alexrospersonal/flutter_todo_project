@@ -9,12 +9,11 @@ class TaskNameField extends ConsumerWidget {
   final String invalidValidationText;
   final GlobalKey<FormState> formKey;
 
-  const TaskNameField({
-    super.key,
-    required this.titleController,
-    required this.invalidValidationText,
-    required this.formKey
-  });
+  const TaskNameField(
+      {super.key,
+      required this.titleController,
+      required this.invalidValidationText,
+      required this.formKey});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

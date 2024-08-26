@@ -27,7 +27,7 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
     'Сб',
     'Нд',
   ];
-  late TaskState taskState;
+  late TaskStateDeprecated taskState;
   bool isEndless = true;
 
   void switchRecurringStatus(bool state) {
@@ -47,7 +47,7 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    taskState = Provider.of<TaskState>(context, listen: false);
+    taskState = Provider.of<TaskStateDeprecated>(context, listen: false);
 
     return Column(
         mainAxisSize: MainAxisSize.max,
@@ -61,7 +61,7 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
           ),
           const SizedBox(height: 10),
           SwitchWithLabel(
-              state: context.watch<TaskState>().isRecurring,
+              state: context.watch<TaskStateDeprecated>().isRecurring,
               label: "Додати повторення",
               callback: switchRecurringStatus),
           WeekdaysContainer(taskState: taskState),
@@ -72,7 +72,7 @@ class _DaysInWeekPickerWidgetState extends State<DaysInWeekPickerWidget> {
 }
 
 class RepetitionEndDateRowContainer extends StatelessWidget {
-  final TaskState taskState;
+  final TaskStateDeprecated taskState;
 
   const RepetitionEndDateRowContainer({super.key, required this.taskState});
 
@@ -85,7 +85,7 @@ class RepetitionEndDateRowContainer extends StatelessWidget {
         barrierDismissible: false,
         barrierColor: Colors.white.withOpacity(0.5),
         builder: (context) {
-          var res = providerContext.watch<TaskState>();
+          var res = providerContext.watch<TaskStateDeprecated>();
 
           return DialogForEndDateOfRepetition(providerState: res);
         },
@@ -99,21 +99,23 @@ class RepetitionEndDateRowContainer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Selector<TaskState, bool>(
+        Selector<TaskStateDeprecated, bool>(
           selector: (context, state) => state.endOfRecurring,
           builder: (context, endOfRecurring, child) {
             return SwitchWithLabel(
                 state: endOfRecurring,
                 label: "Додати кінцеву",
                 callback: (value) {
-                  var res = context.read<TaskState>().setEndOfRecurring(value);
+                  var res = context
+                      .read<TaskStateDeprecated>()
+                      .setEndOfRecurring(value);
                   if (res) {
                     showEndOfRepeatDayDialog(context);
                   }
                 });
           },
         ),
-        Selector<TaskState, DateTime?>(
+        Selector<TaskStateDeprecated, DateTime?>(
           selector: (context, state) => state.recurringEndDate,
           builder: (context, recurringEndDate, child) {
             return SetEndDialogButton(
@@ -133,7 +135,7 @@ class RepetitionEndDateRowContainer extends StatelessWidget {
 }
 
 class WeekdaysContainer extends StatelessWidget {
-  final TaskState taskState;
+  final TaskStateDeprecated taskState;
 
   const WeekdaysContainer({super.key, required this.taskState});
 
@@ -153,7 +155,7 @@ class WeekdaysContainer extends StatelessWidget {
       'Нд',
     ];
 
-    return Selector<TaskState, List<bool>>(
+    return Selector<TaskStateDeprecated, List<bool>>(
       selector: (context, state) => state.recurringDays,
       builder: (context, recurringDays, child) => Row(
           mainAxisSize: MainAxisSize.max,
@@ -176,7 +178,7 @@ class DialogForEndDateOfRepetition extends StatelessWidget {
     required this.providerState,
   });
 
-  final TaskState providerState;
+  final TaskStateDeprecated providerState;
 
   @override
   Widget build(BuildContext context) {
@@ -189,17 +191,18 @@ class DialogForEndDateOfRepetition extends StatelessWidget {
               child: SizedBox(
                   height: 350,
                   width: 350,
-                  child: Selector<TaskState, DateTime?>(
+                  child: Selector<TaskStateDeprecated, DateTime?>(
                     selector: (context, state) => state.recurringEndDate,
                     builder: (context, recurringEndDate, child) {
-                      var weekdays = context.read<TaskState>().recurringDays;
+                      var weekdays =
+                          context.read<TaskStateDeprecated>().recurringDays;
 
-                      return CalendarWidget<TaskState>(
+                      return CalendarWidget<TaskStateDeprecated>(
                           weekdays: weekdays,
                           recurringEndDate: recurringEndDate,
                           changeDate: (DateTime selectedDay) {
                             context
-                                .read<TaskState>()
+                                .read<TaskStateDeprecated>()
                                 .setRecurringEndDate(selectedDay);
                           });
                     },

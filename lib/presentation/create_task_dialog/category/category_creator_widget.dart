@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/domain/utils/smiles_data.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/category/category_emoji_selector.dart';
@@ -12,7 +12,6 @@ import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_bu
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:provider/provider.dart';
 
-// TODO: Refactor
 class CategoryCreatorWidget extends ConsumerStatefulWidget {
   final BuildContext context;
 
@@ -37,7 +36,7 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
       var newCategory = ref
           .read(listCategoryNotifierProvider.notifier)
           .addCategory(categoryName);
-      widget.context.read<TaskState>().setCategory(newCategory);
+      widget.context.read<TaskNotifier>().setCategory(newCategory);
 
       categoryNameController.clear();
 

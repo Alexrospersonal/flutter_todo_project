@@ -22,46 +22,48 @@ class _TaskTimePickerWidgetState extends State<TaskTimePickerWidget> {
   int hourFormat = 24;
 
   void changeFromAllDay(value) {
-    bool result = Provider.of<TaskState>(context, listen: false).setHasTime(value);
+    bool result = Provider.of<TaskStateDeprecated>(context, listen: false)
+        .setHasTime(value);
     if (!result) {
       showDialog(
         context: context,
         barrierDismissible: true,
         builder: (context) {
-          return const CustomAlerDialog(errorMessage: 'Виберіть спочатку дату',);
+          return const CustomAlerDialog(
+            errorMessage: 'Виберіть спочатку дату',
+          );
         },
       );
     }
   }
 
   void addTimeToTime(int hour, int minute) {
-    TaskState taskState = Provider.of<TaskState>(context, listen: false);
- 
+    TaskStateDeprecated taskState =
+        Provider.of<TaskStateDeprecated>(context, listen: false);
+
     if (taskState.taskDateTime != null) {
-      taskState.setTime(
-        taskState.taskDateTime!.hour + hour,
-        taskState.taskDateTime!.minute + minute
-      );
+      taskState.setTime(taskState.taskDateTime!.hour + hour,
+          taskState.taskDateTime!.minute + minute);
     }
   }
 
   void onChangedTime(int? hour, int? minute) {
     if (hour != null) {
-      Provider.of<TaskState>(context, listen: false).setHour(hour);
+      Provider.of<TaskStateDeprecated>(context, listen: false).setHour(hour);
     }
     if (minute != null) {
-      Provider.of<TaskState>(context, listen: false).setMinute(minute);
+      Provider.of<TaskStateDeprecated>(context, listen: false)
+          .setMinute(minute);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    bool hasTime = context.watch<TaskState>().hasTime;
+    bool hasTime = context.watch<TaskStateDeprecated>().hasTime;
 
-    return Selector<TaskState, DateTime?>(
+    return Selector<TaskStateDeprecated, DateTime?>(
       selector: (context, state) => state.taskDateTime,
       builder: (context, taskDateTime, child) {
-
         return SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -79,15 +81,19 @@ class _TaskTimePickerWidgetState extends State<TaskTimePickerWidget> {
                 time: taskDateTime,
                 callback: onChangedTime,
               ),
-              const SizedBox(height: 10),   
+              const SizedBox(height: 10),
               TimeTemplatesContainer(
                 children: [
-                  TimeTemplateItem(callback: addTimeToTime,hour: 1,minutes: 0),
-                  TimeTemplateItem(callback: addTimeToTime,hour: 0,minutes: 30),
-                  TimeTemplateItem(callback: addTimeToTime,hour: 12,minutes: 0),
-                  TimeTemplateItem(callback: addTimeToTime,hour: 3, minutes: 45),
+                  TimeTemplateItem(
+                      callback: addTimeToTime, hour: 1, minutes: 0),
+                  TimeTemplateItem(
+                      callback: addTimeToTime, hour: 0, minutes: 30),
+                  TimeTemplateItem(
+                      callback: addTimeToTime, hour: 12, minutes: 0),
+                  TimeTemplateItem(
+                      callback: addTimeToTime, hour: 3, minutes: 45),
                 ],
-              )  
+              )
             ],
           ),
         );
@@ -95,5 +101,3 @@ class _TaskTimePickerWidgetState extends State<TaskTimePickerWidget> {
     );
   }
 }
-
-

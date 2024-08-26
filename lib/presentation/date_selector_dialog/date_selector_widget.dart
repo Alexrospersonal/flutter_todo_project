@@ -13,7 +13,7 @@ import 'package:flutter_todo_project/presentation/date_selector_dialog/wide_done
 import 'package:provider/provider.dart';
 
 class DateSelectorWidget extends StatefulWidget {
-  final TaskState taskState;
+  final TaskStateDeprecated taskState;
 
   const DateSelectorWidget({super.key, required this.taskState});
 

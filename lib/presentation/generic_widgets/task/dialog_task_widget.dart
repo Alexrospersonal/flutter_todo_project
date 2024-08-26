@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/task_form.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +19,8 @@ class NewTaskDialogWidget extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-            create: (context) => TaskState(category: category)),
-        ChangeNotifierProxyProvider<TaskState, TaskDateNotifier>(
+            create: (context) => TaskNotifier(category: category)),
+        ChangeNotifierProxyProvider<TaskNotifier, TaskDateNotifier>(
             create: (context) => TaskDateNotifier(),
             update: (context, taskState, taskDateNotifier) =>
                 taskDateNotifier!..update(taskState)),

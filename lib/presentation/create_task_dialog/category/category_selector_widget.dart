@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/category/category_creator_widget.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
@@ -22,14 +22,13 @@ class _CategorySelectorWidgetState
     extends ConsumerState<CategorySelectorWidget> {
   @override
   Widget build(BuildContext context) {
-    // TaskState state = Provider.of<TaskState>(context, listen: false);
     BuildContext providerContext = context;
 
     List<Category> categoryList = ref.watch(listCategoryNotifierProvider);
 
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Selector<TaskState, Category>(
-        selector: (context, taskState) => taskState.category,
+      Selector<TaskNotifier, Category>(
+        selector: (context, taskNotifier) => taskNotifier.category,
         builder: (context, category, child) {
           return Expanded(
             child: Padding(
@@ -58,7 +57,7 @@ class _CategorySelectorWidgetState
                                 overflow: TextOverflow.ellipsis));
                       }).toList(),
                       onChanged: (newCategory) {
-                        context.read<TaskState>().setCategory(newCategory!);
+                        context.read<TaskNotifier>().setCategory(newCategory!);
                       }),
                 ),
               ),

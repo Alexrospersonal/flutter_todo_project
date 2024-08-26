@@ -27,7 +27,7 @@ class _PickEndOfDateDialogState extends State<PickEndOfDateDialog> {
             borderRadius: BorderRadius.circular(mediumBorderRadius),
             color: Theme.of(context).canvasColor,
           ),
-          child: CalendarWidget<TaskState>(
+          child: CalendarWidget<TaskStateDeprecated>(
               weekdays: context.read<RepeatlyNotifier>().repeatOfDays,
               focusedDay: context.watch<LastDayOfRepeatNotifier>().lastDate,
               recurringEndDate:

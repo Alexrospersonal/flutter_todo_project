@@ -16,7 +16,7 @@ class _DateSelectorButtonState extends State<DateSelectorButton> {
 
   @override
   Widget build(BuildContext context) {
-    final taskState = Provider.of<TaskState>(context, listen: false);
+    final taskState = Provider.of<TaskStateDeprecated>(context, listen: false);
 
     return ElevatedButton(
         onPressed: () {

@@ -20,7 +20,7 @@ class DateSelectorInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TaskState state = context.watch<TaskState>();
+    TaskStateDeprecated state = context.watch<TaskStateDeprecated>();
 
     String date = state.taskDateTime != null
         ? DateFormat('dd/MM/yyyy').format(state.taskDateTime!)

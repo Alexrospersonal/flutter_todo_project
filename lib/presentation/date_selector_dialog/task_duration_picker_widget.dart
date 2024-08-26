@@ -38,7 +38,8 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
   String getEndDurationDate(bool hasTime, DateTime? time) {
     if (hasTime) {
       DateTime startDate =
-          Provider.of<TaskState>(context, listen: false).taskDateTime!;
+          Provider.of<TaskStateDeprecated>(context, listen: false)
+              .taskDateTime!;
       DateTime endDate =
           startDate.add(Duration(hours: time!.hour, minutes: time.minute));
       return DateFormat('dd/MM/yyyy HH:mm').format(endDate);
@@ -49,16 +50,18 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
 
   void onChangedTime(int? hour, int? minute) {
     if (hour != null) {
-      Provider.of<TaskState>(context, listen: false).setDurationHour(hour);
+      Provider.of<TaskStateDeprecated>(context, listen: false)
+          .setDurationHour(hour);
     }
     if (minute != null) {
-      Provider.of<TaskState>(context, listen: false).setDurationMinute(minute);
+      Provider.of<TaskStateDeprecated>(context, listen: false)
+          .setDurationMinute(minute);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    TaskState state = context.read<TaskState>();
+    TaskStateDeprecated state = context.read<TaskStateDeprecated>();
 
     var switchIsActiveStatus = state.setHasDuration;
     var swithEndOfNotication = state.setNotifyAboutTheEndOfTheTask;
@@ -82,7 +85,7 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Selector<TaskState, bool>(
+            Selector<TaskStateDeprecated, bool>(
               selector: (context, state) => state.hasDuration,
               builder: (context, hasDuration, child) => SwitchWithLabel(
                   state: hasDuration,
@@ -105,7 +108,7 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
                     }
                   }),
             ),
-            Selector<TaskState, bool>(
+            Selector<TaskStateDeprecated, bool>(
               selector: (context, state) => state.notifyAboutTheEndOfTheTask,
               builder: (context, notifyAboutTheEndOfTheTask, child) =>
                   SwitchWithLabel(
@@ -115,7 +118,7 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
             ),
           ],
         ),
-        Selector<TaskState, DateTime?>(
+        Selector<TaskStateDeprecated, DateTime?>(
           selector: (context, state) => state.taskDuration,
           builder: (context, taskDuration, child) => CustomTimePicker(
             isEnabled: state.hasTime,
@@ -161,14 +164,14 @@ class _TaskDurationPickerWidgetState extends State<TaskDurationPickerWidget> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Selector<TaskState, DateTime?>(
+            Selector<TaskStateDeprecated, DateTime?>(
               selector: (context, state) => state.taskDateTime,
               builder: (context, taskDateTime, child) => Text(
                 "Початок:\n${getStartDurationDate(state.hasTime, taskDateTime)}",
                 style: const TextStyle(height: 1, fontSize: 16),
               ),
             ),
-            Selector<TaskState, DateTime?>(
+            Selector<TaskStateDeprecated, DateTime?>(
               selector: (context, state) => state.taskDuration,
               builder: (context, taskDuration, child) => Text(
                 "Кінець:\n${getEndDurationDate(state.hasDuration, taskDuration)}",

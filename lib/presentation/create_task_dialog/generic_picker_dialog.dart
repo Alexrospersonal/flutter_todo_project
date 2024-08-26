@@ -29,11 +29,16 @@ class GenericPickerDialog extends StatelessWidget {
             clipBehavior: Clip.none,
             children: [
               ...children,
-              DoneButton(
-                action: () {
-                  callback();
-                  return true;
-                },
+              Positioned(
+                left: 110,
+                right: 110,
+                bottom: -8,
+                child: DoneButton(
+                  action: () {
+                    callback();
+                    return true;
+                  },
+                ),
               )
             ],
           ),

@@ -4,7 +4,6 @@ import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings/additional_settings_button.dart';

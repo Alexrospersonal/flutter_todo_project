@@ -30,7 +30,7 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(
-              value: parentContext.watch<TaskState>(),
+              value: parentContext.watch<TaskStateDeprecated>(),
             ),
             ChangeNotifierProvider.value(
               value: parentContext.watch<RepeatlyNotifier>(),

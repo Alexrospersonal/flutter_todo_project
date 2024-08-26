@@ -9,7 +9,7 @@ abstract class CalendarState implements IsEnabledNotifier {
   void setDate(DateTime newDate);
 }
 
-class TaskState extends ChangeNotifier implements CalendarState {
+class TaskStateDeprecated extends ChangeNotifier implements CalendarState {
   String title = "";
   String? note;
   Category category;
@@ -38,7 +38,7 @@ class TaskState extends ChangeNotifier implements CalendarState {
 
   Set<DateTime> notification = <DateTime>{};
 
-  TaskState({required this.category});
+  TaskStateDeprecated({required this.category});
 
   bool setHasDuration(bool state) {
     if (taskDateTime != null && hasTime) {

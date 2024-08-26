@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +11,8 @@ class PriorityButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<TaskState, bool>(
-      selector: (context, taskState) => taskState.important,
+    return Selector<TaskNotifier, bool>(
+      selector: (context, taskNotifier) => taskNotifier.important,
       builder: (context, isImportant, child) {
         return Flexible(
           flex: 1,
@@ -21,7 +21,7 @@ class PriorityButton extends StatelessWidget {
             child: ElevatedButton(
               style: const ButtonStyle(
                   padding: WidgetStatePropertyAll(EdgeInsets.zero)),
-              onPressed: () => context.read<TaskState>().setImportant(),
+              onPressed: () => context.read<TaskNotifier>().setImportant(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(

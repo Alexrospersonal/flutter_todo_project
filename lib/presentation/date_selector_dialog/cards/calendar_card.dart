@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
@@ -14,10 +14,10 @@ class CalendarCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Locale locale = Localizations.localeOf(context);
-    DateTime? date = context.watch<TaskState>().taskDateTime;
+    DateTime? date = context.watch<TaskDateNotifier>().taskDateTime;
 
-    return Selector<TaskState, bool>(
-      selector: (context, state) => state.canEnabled,
+    return Selector<TaskDateNotifier, bool>(
+      selector: (context, state) => state.isEnabled,
       builder: (context, hasDate, child) {
         return Column(
           children: [
@@ -27,7 +27,7 @@ class CalendarCardWidget extends StatelessWidget {
               iconData: Icons.calendar_month,
               state: hasDate,
               callback: (bool state) {
-                context.read<TaskState>().setHasDate(state);
+                context.read<TaskDateNotifier>().setHasDate(state);
               },
             ),
             const SizedBox(
@@ -44,12 +44,12 @@ class CalendarCardWidget extends StatelessWidget {
                 opacity: hasDate ? 1 : 0.5,
                 child: IgnorePointer(
                     ignoring: hasDate ? false : true,
-                    child: CalendarWidget<TaskState>(
+                    child: CalendarWidget<TaskDateNotifier>(
                         weekdays: context.read<RepeatlyNotifier>().repeatOfDays,
                         recurringEndDate:
                             context.watch<LastDayOfRepeatNotifier>().lastDate,
                         changeDate: (DateTime selectedDay) {
-                          context.read<TaskState>().setDate(selectedDay);
+                          context.read<TaskDateNotifier>().setDate(selectedDay);
                         })),
               ),
             )

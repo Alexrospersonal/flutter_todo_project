@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
@@ -30,7 +31,7 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
   Widget build(BuildContext context) {
     bool isExpanded = ref.watch(initialTaskDialogExpandedProvider);
     Locale locale = Localizations.localeOf(context);
-    var date = context.read<TaskState>().taskDateTime;
+    var date = context.read<TaskDateNotifier>().taskDateTime;
     var time = context.read<TaskTimeNotifier>().taskDateTime;
 
     var repeatOfDays = context.watch<RepeatlyNotifier>().repeatOfDays;
@@ -47,10 +48,10 @@ class _AdditionalTaskSettingState extends ConsumerState<AdditionalTaskSetting> {
         buttonLabel: date != null
             ? formatDate(locale, date)
             : S.of(context).additionalDateLabel,
-        state: context.watch<TaskState>().canEnabled,
+        state: context.watch<TaskDateNotifier>().isEnabled,
         icon: Icons.calendar_month,
         callback: (bool state) {
-          context.read<TaskState>().setHasDate(state);
+          context.read<TaskDateNotifier>().setHasDate(state);
           if (state) {
             widget.onItemTapped(1);
           }

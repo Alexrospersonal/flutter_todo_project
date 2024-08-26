@@ -37,10 +37,10 @@ class TaskTimeNotifier extends ChangeNotifier implements IsEnabledNotifier {
 
   @override
   void update<T extends IsEnabledNotifier>(T state) {
-    canEnabled = state.canEnabled;
-    if (state.canEnabled == false) {
+    canEnabled = state.isEnabled;
+    if (state.isEnabled == false) {
       isEnabled = false;
-      resetTime(state.canEnabled);
+      resetTime(state.isEnabled);
     }
     notifyListeners();
   }

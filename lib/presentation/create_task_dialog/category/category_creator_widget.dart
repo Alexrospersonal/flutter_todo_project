@@ -5,12 +5,14 @@ import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/domain/utils/smiles_data.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/category/category_emoji_selector.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/category/emoji_switch_category_button.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_name_field.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:provider/provider.dart';
 
+// TODO: Refactor
 class CategoryCreatorWidget extends ConsumerStatefulWidget {
   final BuildContext context;
 
@@ -51,13 +53,6 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    categoryNameController.dispose();
-    emojiController.dispose();
-  }
-
   void setSelectedEmojisListIdx(int idx) {
     setState(() {
       selectedEmojisListIdx = idx;
@@ -66,6 +61,13 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
 
   List<String> getEmojis() {
     return emojisCategoryList[selectedEmojisListIdx];
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    categoryNameController.dispose();
+    emojiController.dispose();
   }
 
   @override
@@ -81,7 +83,6 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(bigBorderRadius)),
           backgroundColor: Theme.of(context).cardColor,
-          // backgroundColor: Colors.amber,
           insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
           child: SizedBox(
             height: 445,
@@ -121,7 +122,7 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
                           child: ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) =>
-                                  EmojiCategoryListItem(
+                                  EmojiSwicthCategoryButton(
                                     index: index,
                                     selectedIndex: selectedEmojisListIdx,
                                     callback: setSelectedEmojisListIdx,
@@ -147,38 +148,6 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
                   child: DoneButton(action: () => addNewCategory()))
             ]),
           )),
-    );
-  }
-}
-
-class EmojiCategoryListItem extends StatelessWidget {
-  final int index;
-  final int selectedIndex;
-  final void Function(int) callback;
-  const EmojiCategoryListItem(
-      {super.key,
-      required this.index,
-      required this.selectedIndex,
-      required this.callback});
-
-  @override
-  Widget build(BuildContext context) {
-    Color bgColor = index == selectedIndex
-        ? Theme.of(context).primaryColor
-        : Theme.of(context).canvasColor;
-
-    return GestureDetector(
-      onTap: () => callback(index),
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(mediumBorderRadius),
-            color: bgColor),
-        child: Center(
-          child:
-              Text(emojiCategory[index], style: const TextStyle(fontSize: 24)),
-        ),
-      ),
     );
   }
 }

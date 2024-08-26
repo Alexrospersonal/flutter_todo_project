@@ -84,7 +84,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
         onItemTapped: _onItemTapped,
         callback: updateExpandStatusForNotes,
       ),
-      const TaskDateSelectorPage(),
+      const DateSelectorPage(),
       const TimeSelectorPage(),
       const RepeatSelectorPage(),
       const Placeholder(),

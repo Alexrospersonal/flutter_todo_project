@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_state.dart';
@@ -19,14 +20,18 @@ class NewTaskDialogWidget extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (context) => TaskState(category: category)),
-        ChangeNotifierProxyProvider<TaskState, TaskTimeNotifier>(
+        ChangeNotifierProxyProvider<TaskState, TaskDateNotifier>(
+            create: (context) => TaskDateNotifier(),
+            update: (context, taskState, taskDateNotifier) =>
+                taskDateNotifier!..update(taskState)),
+        ChangeNotifierProxyProvider<TaskDateNotifier, TaskTimeNotifier>(
             create: (context) => TaskTimeNotifier(),
-            update: (context, taskState, taskTimeNotifier) =>
-                taskTimeNotifier!..update(taskState)),
-        ChangeNotifierProxyProvider<TaskState, RepeatlyNotifier>(
+            update: (context, taskDateNotifier, taskTimeNotifier) =>
+                taskTimeNotifier!..update(taskDateNotifier)),
+        ChangeNotifierProxyProvider<TaskDateNotifier, RepeatlyNotifier>(
           create: (context) => RepeatlyNotifier(),
-          update: (context, taskState, repeatlyNotifier) =>
-              repeatlyNotifier!..update(taskState),
+          update: (context, taskDateNotifier, repeatlyNotifier) =>
+              repeatlyNotifier!..update(taskDateNotifier),
         ),
         ChangeNotifierProxyProvider<RepeatlyNotifier, LastDayOfRepeatNotifier>(
           create: (context) => LastDayOfRepeatNotifier(),

@@ -36,10 +36,10 @@ class RepeatlyNotifier extends ChangeNotifier implements IsEnabledNotifier {
 
   @override
   void update<T extends IsEnabledNotifier>(T state) {
-    canEnabled = state.canEnabled;
-    if (state.canEnabled == false) {
+    canEnabled = state.isEnabled;
+    if (state.isEnabled == false) {
       isEnabled = false;
-      resetWeekDays(state.canEnabled);
+      resetWeekDays(state.isEnabled);
       notifyListeners();
     }
   }

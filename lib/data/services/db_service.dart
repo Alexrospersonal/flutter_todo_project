@@ -1,21 +1,18 @@
+import 'package:flutter_todo_project/domain/entities/category.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 class DbService {
   static late Isar _db;
 
-  static void initialize() async {
+  static Future<void> initialize() async {
     final dir = await getApplicationDocumentsDirectory();
     _db = await Isar.open(
-      directory: dir.path,
-      [TaskSchema],
-      inspector: true
-    );
+        directory: dir.path,
+        [TaskEntitySchema, CategoryEntitySchema],
+        inspector: true);
   }
 
   static Isar get db => _db;
 }
-
-

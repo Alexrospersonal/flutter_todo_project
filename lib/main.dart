@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
+import 'package:flutter_todo_project/domain/entities/category.dart';
 import 'package:flutter_todo_project/domain/state/settings_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour_format_picker.dart';
@@ -10,18 +11,33 @@ import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_pi
 import 'package:flutter_todo_project/presentation/generic_widgets/settings_widget.dart';
 import 'package:flutter_todo_project/presentation/screens/homepage.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
+import 'package:isar/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DbService.initialize();
+  await DbService.initialize();
+
+  // TODO: test adding categories
+  List<CategoryEntity> categories =
+      await DbService.db.categoryEntitys.where().findAll();
+  if (categories.isEmpty) {
+    final initialCategories = [
+      CategoryEntity(name: 'Work', emoji: '💼'),
+      CategoryEntity(name: 'Personal', emoji: '🏠'),
+    ];
+
+    await DbService.db.writeTxn(() async {
+      await DbService.db.categoryEntitys.putAll(initialCategories);
+    });
+  }
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   runApp(ProviderScope(child: MainApp(preferences: prefs)));
 }
 
 class MainApp extends ConsumerWidget {
   final SharedPreferences preferences;
-
   const MainApp({super.key, required this.preferences});
 
   @override

@@ -133,6 +133,8 @@ class _TaskFormState extends ConsumerState<TaskForm> {
               action: () {
                 ref.read(initialTaskDialogExpandedProvider.notifier).state =
                     false;
+
+                // TODO: реалізувати збір данних із станів та збереження в БД
                 // var db = DbService.db;
                 // db.writeTxn(() async {
                 //   Task task = Task();

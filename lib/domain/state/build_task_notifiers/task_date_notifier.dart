@@ -25,9 +25,7 @@ class TaskDateNotifier extends ChangeNotifier
   }
 
   @override
-  void update<T extends IsEnabledNotifier>(T state) {
-    // TODO: implement update
-  }
+  void update<T extends IsEnabledNotifier>(T state) {}
 
   @override
   void setDate(DateTime newDate) {

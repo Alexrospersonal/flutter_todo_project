@@ -18,9 +18,7 @@ class TaskNotifier extends ChangeNotifier implements IsEnabledNotifier {
   bool isEnabled = true;
 
   @override
-  void update<T extends IsEnabledNotifier>(T state) {
-    // TODO: implement update
-  }
+  void update<T extends IsEnabledNotifier>(T state) {}
 
   void setImportant() {
     important = !important;

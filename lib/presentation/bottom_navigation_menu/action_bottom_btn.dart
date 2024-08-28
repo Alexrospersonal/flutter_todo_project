@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
+
 import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/task/dialog_task_widget.dart';
 
@@ -31,8 +32,8 @@ class CreateTaskBottomButton extends ConsumerWidget {
             filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
             child: ScaffoldMessenger(
               child: Builder(builder: (context) {
-                return Scaffold(
-                  body: NewTaskDialogWidget(category: cat),
+                return const Scaffold(
+                  body: NewTaskDialogWidget(),
                   backgroundColor: Colors.transparent,
                 );
               }),

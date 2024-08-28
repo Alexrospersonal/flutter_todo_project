@@ -13,4 +13,14 @@ class CategoryEntity {
   final IsarLinks<TaskEntity> tasks = IsarLinks<TaskEntity>();
 
   CategoryEntity({required this.name, this.emoji = ""});
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is CategoryEntity && other.id == id && other.name == name && other.emoji == emoji;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode ^ emoji.hashCode;
 }

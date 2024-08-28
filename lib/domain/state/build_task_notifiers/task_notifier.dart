@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/data/services/category.dart';
+import 'package:flutter_todo_project/domain/entities/category.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/enabled_notifier_interface.dart';
 import 'package:flutter_todo_project/presentation/styles/generic_styles.dart';
 
 class TaskNotifier extends ChangeNotifier implements IsEnabledNotifier {
   String title = "";
   String? note;
-  Category category;
+  CategoryEntity? category;
   Color color = taskColors[0];
   bool important = false;
-  TaskNotifier({required this.category});
 
   @override
   bool canEnabled = true;
@@ -30,7 +29,7 @@ class TaskNotifier extends ChangeNotifier implements IsEnabledNotifier {
     notifyListeners();
   }
 
-  void setCategory(Category newCategory) {
+  void setCategory(CategoryEntity newCategory) {
     category = newCategory;
     notifyListeners();
   }

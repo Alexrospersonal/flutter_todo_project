@@ -172,6 +172,11 @@
     "description": "Label for newest filter",
     "placeholders": {}
   },
+  "createCategory": "Create category",
+  "@createCategory": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
   "addTaskName": "Name",
   "@addTaskName": {
     "description": "Label for newest filter",

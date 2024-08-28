@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
+import 'package:flutter_todo_project/domain/entities/category.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/domain/utils/smiles_data.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
@@ -10,12 +10,13 @@ import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/t
 import 'package:flutter_todo_project/presentation/create_task_dialog/task_form_title.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
-import 'package:provider/provider.dart';
 
 class CategoryCreatorWidget extends ConsumerStatefulWidget {
   final BuildContext context;
+  final void Function(int) getCreatedCategoryId;
 
-  const CategoryCreatorWidget({super.key, required this.context});
+  const CategoryCreatorWidget(
+      {super.key, required this.context, required this.getCreatedCategoryId});
 
   @override
   ConsumerState<CategoryCreatorWidget> createState() =>
@@ -31,14 +32,27 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
 
   bool addNewCategory() {
     if (_formKey.currentState!.validate()) {
-      String categoryName = emojiController.text + categoryNameController.text;
+      // String categoryName = emojiController.text + categoryNameController.text;
 
-      var newCategory = ref
-          .read(listCategoryNotifierProvider.notifier)
-          .addCategory(categoryName);
-      widget.context.read<TaskNotifier>().setCategory(newCategory);
+      // var newCategory = ref
+      //     .read(listCategoryNotifierProvider.notifier)
+      //     .addCategory(categoryName);
+      // widget.context.read<TaskNotifier>().setCategory(newCategory);
 
       categoryNameController.clear();
+
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> addNewAsyncCategory() async {
+    if (_formKey.currentState!.validate()) {
+      var newCategory = CategoryEntity(
+          name: categoryNameController.text, emoji: emojiController.text);
+      var id =
+          await ref.read(categoriesProvider.notifier).addCategory(newCategory);
+      widget.getCreatedCategoryId(id);
 
       return true;
     }
@@ -91,7 +105,7 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TaskFormTitleWidget(title: S.of(context).createTask),
+                      TaskFormTitleWidget(title: S.of(context).createCategory),
                       const Divider(color: greyColor),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 27),
@@ -144,7 +158,8 @@ class _CategoryCreatorWidgetState extends ConsumerState<CategoryCreatorWidget> {
                   left: 100,
                   right: 100,
                   bottom: -8,
-                  child: DoneButton(action: () => addNewCategory()))
+                  child: DoneAsyncButton(
+                      action: () async => await addNewAsyncCategory()))
             ]),
           )),
     );

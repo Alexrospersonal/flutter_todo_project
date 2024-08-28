@@ -390,6 +390,16 @@ class S {
     );
   }
 
+  /// `Create category`
+  String get createCategory {
+    return Intl.message(
+      'Create category',
+      name: 'createCategory',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
   /// `Name`
   String get addTaskName {
     return Intl.message(

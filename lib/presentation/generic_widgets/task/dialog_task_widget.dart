@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
@@ -10,16 +9,13 @@ import 'package:provider/provider.dart';
 
 /// Create the dialog which contains form for createing a new task
 class NewTaskDialogWidget extends StatelessWidget {
-  final Category category;
-
-  const NewTaskDialogWidget({super.key, required this.category});
+  const NewTaskDialogWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-            create: (context) => TaskNotifier(category: category)),
+        ChangeNotifierProvider(create: (context) => TaskNotifier()),
         ChangeNotifierProxyProvider<TaskNotifier, TaskDateNotifier>(
             create: (context) => TaskDateNotifier(),
             update: (context, taskState, taskDateNotifier) =>

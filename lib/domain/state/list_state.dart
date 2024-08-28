@@ -4,20 +4,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/category.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/entities/category.dart';
+import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/settings.dart';
 import 'package:isar/isar.dart';
 
-class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryEntity>> {
+class CategoryData {
+  final String name;
+  final String emoji;
+  final int tasks;
+  final int categoryId;
+
+  const CategoryData(
+      {required this.name,
+      required this.emoji,
+      required this.tasks,
+      required this.categoryId});
+}
+
+class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
   Future<void> loadCategories() async {
-    state =
-        AsyncValue.data(await DbService.db.categoryEntitys.where().findAll());
+    state = AsyncValue.data(await getData());
   }
 
-  Future<void> addCategory(CategoryEntity category) async {
+  Future<int> addCategory(CategoryEntity category) async {
+    late int id;
+
     await DbService.db.writeTxn(() async {
-      await DbService.db.categoryEntitys.put(category);
+      id = await DbService.db.categoryEntitys.put(category);
     });
     await loadCategories();
+    return id;
   }
 
   Future<void> removeCategory(CategoryEntity category) async {
@@ -27,14 +43,42 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryEntity>> {
     await loadCategories();
   }
 
+  Future<CategoryData> buildCategoryData(CategoryEntity cat) async {
+    int tasks = 0;
+
+    if (cat.name == "#01") {
+      tasks = await DbService.db.taskEntitys
+          .filter()
+          .taskDateEqualTo(DateTime.now())
+          .count();
+    } else {
+      cat.tasks.load();
+      tasks = cat.tasks.length;
+    }
+    return CategoryData(
+        name: cat.name, emoji: cat.emoji, tasks: tasks, categoryId: cat.id);
+  }
+
+  Future<List<CategoryData>> getData() async {
+    var categories = await DbService.db.categoryEntitys.where().findAll();
+    var categoriesData =
+        categories.map((cat) async => await buildCategoryData(cat));
+    return Future.wait(categoriesData);
+  }
+
   @override
-  FutureOr<List<CategoryEntity>> build() async {
-    return await DbService.db.categoryEntitys.where().findAll();
+  FutureOr<List<CategoryData>> build() async {
+    var categories = await DbService.db.categoryEntitys.where().findAll();
+    var categoriesData =
+        categories.map((cat) async => await buildCategoryData(cat));
+    return Future.wait(categoriesData);
   }
 }
 
+final selectedCategoryId = StateProvider<int>((ref) => 0);
+
 final categoriesProvider =
-    AsyncNotifierProvider<ListCategoryFromDbNotifier, List<CategoryEntity>>(
+    AsyncNotifierProvider<ListCategoryFromDbNotifier, List<CategoryData>>(
         () => ListCategoryFromDbNotifier());
 
 final selectedCategoryIndex = StateProvider<int>((ref) => 0);

@@ -27,8 +27,13 @@ const TaskEntitySchema = CollectionSchema(
       name: r'notate',
       type: IsarType.string,
     ),
-    r'title': PropertySchema(
+    r'taskDate': PropertySchema(
       id: 2,
+      name: r'taskDate',
+      type: IsarType.dateTime,
+    ),
+    r'title': PropertySchema(
+      id: 3,
       name: r'title',
       type: IsarType.string,
     )
@@ -78,7 +83,8 @@ void _taskEntitySerialize(
 ) {
   writer.writeBool(offsets[0], object.important);
   writer.writeString(offsets[1], object.notate);
-  writer.writeString(offsets[2], object.title);
+  writer.writeDateTime(offsets[2], object.taskDate);
+  writer.writeString(offsets[3], object.title);
 }
 
 TaskEntity _taskEntityDeserialize(
@@ -88,11 +94,12 @@ TaskEntity _taskEntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TaskEntity(
-    title: reader.readString(offsets[2]),
+    title: reader.readString(offsets[3]),
   );
   object.id = id;
   object.important = reader.readBool(offsets[0]);
   object.notate = reader.readStringOrNull(offsets[1]);
+  object.taskDate = reader.readDateTimeOrNull(offsets[2]);
   return object;
 }
 
@@ -108,6 +115,8 @@ P _taskEntityDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -418,6 +427,77 @@ extension TaskEntityQueryFilter
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'taskDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      taskDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'taskDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'taskDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      taskDateGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'taskDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'taskDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'taskDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -595,6 +675,18 @@ extension TaskEntityQuerySortBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByTaskDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByTaskDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -646,6 +738,18 @@ extension TaskEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByTaskDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByTaskDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -674,6 +778,12 @@ extension TaskEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByTaskDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'taskDate');
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -699,6 +809,12 @@ extension TaskEntityQueryProperty
   QueryBuilder<TaskEntity, String?, QQueryOperations> notateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'notate');
+    });
+  }
+
+  QueryBuilder<TaskEntity, DateTime?, QQueryOperations> taskDateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'taskDate');
     });
   }
 

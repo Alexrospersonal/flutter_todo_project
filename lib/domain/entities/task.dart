@@ -15,5 +15,7 @@ class TaskEntity {
 
   String? notate;
 
+  DateTime? taskDate;
+
   TaskEntity({required this.title});
 }

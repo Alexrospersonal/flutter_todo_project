@@ -23,6 +23,7 @@ void main() async {
       await DbService.db.categoryEntitys.where().findAll();
   if (categories.isEmpty) {
     final initialCategories = [
+      CategoryEntity(name: '#01', emoji: ''),
       CategoryEntity(name: 'Work', emoji: '💼'),
       CategoryEntity(name: 'Personal', emoji: '🏠'),
     ];

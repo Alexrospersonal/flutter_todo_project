@@ -39,6 +39,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Undo"),
         "color": MessageLookupByLibrary.simpleMessage("Task color"),
         "confirmVuttonLabel": MessageLookupByLibrary.simpleMessage("CREATE"),
+        "createCategory":
+            MessageLookupByLibrary.simpleMessage("Create category"),
         "createTask": MessageLookupByLibrary.simpleMessage("Create task"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Daily progress"),
         "determinatedTasks":

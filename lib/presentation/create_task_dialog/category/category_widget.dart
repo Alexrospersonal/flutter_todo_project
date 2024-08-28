@@ -1,12 +1,11 @@
+import 'dart:ui';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo_project/data/services/db_service.dart';
-import 'package:flutter_todo_project/domain/entities/category.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/category/category_creator_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
-import 'package:isar/isar.dart';
 
 class CategoryList extends ConsumerStatefulWidget {
   const CategoryList({super.key});
@@ -16,8 +15,8 @@ class CategoryList extends ConsumerStatefulWidget {
 }
 
 class _CategoryListState extends ConsumerState<CategoryList> {
-  // int _selectedIndex = 0;
   final emojiRegex = RegExp(r'^\p{Emoji}', unicode: true);
+  int selectedIndex = 0;
 
   bool checkIfEmojiExists(String text) {
     return emojiRegex.hasMatch(text);
@@ -31,58 +30,40 @@ class _CategoryListState extends ConsumerState<CategoryList> {
     return text.substring(2);
   }
 
-  // TODO: перенести логіку отрмимання дани з build в стан і там вже створити все необхідне як окремий обєкд для елемета як у сеттінг
   @override
   Widget build(BuildContext context) {
-    int selectedIndex = ref.watch(selectedCategoryIndex);
-
     var listOfCategories = ref.watch(categoriesProvider);
 
     String today = S.of(context).today;
 
     return listOfCategories.when(
         data: (list) {
-          var apendedList = [CategoryEntity(name: ""), ...list];
-
           return ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: apendedList.length + 1,
+            itemCount: list.length + 1,
             separatorBuilder: (context, index) => const SizedBox(width: 16),
             itemBuilder: (context, index) {
-              if (index == apendedList.length) {
+              if (index == list.length) {
                 return const CreateCategoryButton();
               }
 
               bool isSelected = selectedIndex == index;
-              String emoji = apendedList[index].emoji;
-              String name = apendedList[index].name;
-              int tasks = 0;
-
-              if (index == 0) {
-                name = today;
-              }
-
-              if (index != 0) {
-                apendedList[index].tasks.loadSync();
-                tasks = apendedList[index].tasks.length;
-              }
 
               return GestureDetector(
                 onTap: () {
+                  ref.read(selectedCategoryId.notifier).state =
+                      list[index].categoryId;
+
                   setState(() {
-                    var selectedCategory = ref
-                        .read(listCategoryNotifierProvider.notifier)
-                        .getCategoryById(index);
-                    ref
-                        .read(selectedCategoryNotifierProvider.notifier)
-                        .selectCategory(selectedCategory);
+                    selectedIndex = index;
                   });
                 },
                 child: CategoryListItemContainer(
                     isSelected: isSelected,
-                    categoryText: name,
-                    emoji: emoji,
-                    tasksCount: tasks),
+                    categoryText:
+                        list[index].name == "#01" ? today : list[index].name,
+                    emoji: list[index].emoji,
+                    tasksCount: list[index].tasks),
               );
             },
           );
@@ -105,7 +86,19 @@ class CreateCategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          barrierColor: Colors.white.withOpacity(0),
+          builder: (BuildContext context) {
+            return BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: CategoryCreatorWidget(
+                    context: context, getCreatedCategoryId: (p0) {}));
+          },
+        );
+      },
       child: Container(
           constraints: const BoxConstraints(minWidth: 113, maxWidth: 125),
           padding: const EdgeInsets.all(1),

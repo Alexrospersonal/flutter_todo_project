@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/data/services/db_service.dart';
+import 'package:flutter_todo_project/domain/builders/task_builder.dart';
+import 'package:flutter_todo_project/domain/entities/task.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/date_selector_page/date_selector_page.dart';
@@ -11,6 +15,7 @@ import 'package:flutter_todo_project/presentation/create_task_dialog/task_page_n
 import 'package:flutter_todo_project/presentation/create_task_dialog/time_selector_page/time_selector_page.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/dialog_done_button.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
+import 'package:provider/provider.dart';
 
 class TaskForm extends ConsumerStatefulWidget {
   const TaskForm({super.key});
@@ -39,8 +44,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
     setState(() {
       _selectedIndex = index;
     });
-    _pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 300), curve: Curves.linear);
+    _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.linear);
   }
 
   void changePage(int index) {
@@ -131,17 +135,23 @@ class _TaskFormState extends ConsumerState<TaskForm> {
             bottom: -8,
             child: DoneButton(
               action: () {
-                ref.read(initialTaskDialogExpandedProvider.notifier).state =
-                    false;
+                if (validateTaskData()) {
+                  TaskDependencies dependencies = context.read<TaskDependencies>();
+                  TaskEntity task = TaskBuilder(dependencies: dependencies).build();
+                  DbService.db.writeTxn(() async {
+                    await DbService.db.taskEntitys.put(task);
+                    await task.category.save();
+                  });
+                  return true;
+                }
+                return false;
 
-                // TODO: реалізувати збір данних із станів та збереження в БД
                 // var db = DbService.db;
                 // db.writeTxn(() async {
                 //   Task task = Task();
                 //   task.title = "Task title 1";
                 //   await db.tasks.put(task);
                 // });
-                return validateTaskData();
               },
             ),
           )

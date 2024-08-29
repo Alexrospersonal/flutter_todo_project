@@ -14,11 +14,7 @@ class CategoryData {
   final int tasks;
   final int categoryId;
 
-  const CategoryData(
-      {required this.name,
-      required this.emoji,
-      required this.tasks,
-      required this.categoryId});
+  const CategoryData({required this.name, required this.emoji, required this.tasks, required this.categoryId});
 }
 
 class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
@@ -47,30 +43,24 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
     int tasks = 0;
 
     if (cat.name == "#01") {
-      tasks = await DbService.db.taskEntitys
-          .filter()
-          .taskDateEqualTo(DateTime.now())
-          .count();
+      tasks = await DbService.db.taskEntitys.filter().dateTimeData((q) => q.taskDateEqualTo(DateTime.now())).count();
     } else {
       cat.tasks.load();
       tasks = cat.tasks.length;
     }
-    return CategoryData(
-        name: cat.name, emoji: cat.emoji, tasks: tasks, categoryId: cat.id);
+    return CategoryData(name: cat.name, emoji: cat.emoji, tasks: tasks, categoryId: cat.id);
   }
 
   Future<List<CategoryData>> getData() async {
     var categories = await DbService.db.categoryEntitys.where().findAll();
-    var categoriesData =
-        categories.map((cat) async => await buildCategoryData(cat));
+    var categoriesData = categories.map((cat) async => await buildCategoryData(cat));
     return Future.wait(categoriesData);
   }
 
   @override
   FutureOr<List<CategoryData>> build() async {
     var categories = await DbService.db.categoryEntitys.where().findAll();
-    var categoriesData =
-        categories.map((cat) async => await buildCategoryData(cat));
+    var categoriesData = categories.map((cat) async => await buildCategoryData(cat));
     return Future.wait(categoriesData);
   }
 }
@@ -78,14 +68,13 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
 final selectedCategoryId = StateProvider<int>((ref) => 0);
 
 final categoriesProvider =
-    AsyncNotifierProvider<ListCategoryFromDbNotifier, List<CategoryData>>(
-        () => ListCategoryFromDbNotifier());
+    AsyncNotifierProvider<ListCategoryFromDbNotifier, List<CategoryData>>(() => ListCategoryFromDbNotifier());
 
 final selectedCategoryIndex = StateProvider<int>((ref) => 0);
 
 class ListCategoriesNotifier extends Notifier<List<Category>> {
-  final List<Category> baseList = List.generate(namesOfCaterories.length,
-      (index) => Category(id: index, name: namesOfCaterories[index]));
+  final List<Category> baseList =
+      List.generate(namesOfCaterories.length, (index) => Category(id: index, name: namesOfCaterories[index]));
 
   @override
   List<Category> build() {
@@ -110,8 +99,7 @@ class ListCategoriesNotifier extends Notifier<List<Category>> {
   }
 }
 
-final listCategoryNotifierProvider =
-    NotifierProvider<ListCategoriesNotifier, List<Category>>(() {
+final listCategoryNotifierProvider = NotifierProvider<ListCategoriesNotifier, List<Category>>(() {
   return ListCategoriesNotifier();
 });
 
@@ -127,7 +115,6 @@ class SelectedCategoryNotifier extends Notifier<Category> {
   }
 }
 
-final selectedCategoryNotifierProvider =
-    NotifierProvider<SelectedCategoryNotifier, Category>(() {
+final selectedCategoryNotifierProvider = NotifierProvider<SelectedCategoryNotifier, Category>(() {
   return SelectedCategoryNotifier();
 });

@@ -15,7 +15,22 @@ class TaskEntity {
 
   String? notate;
 
-  DateTime? taskDate;
+  // DateTime? taskDate;
+
+  int? color;
+
+  TaskEntityDateTimeData? dateTimeData;
 
   TaskEntity({required this.title});
+}
+
+@embedded
+class TaskEntityDateTimeData {
+  DateTime? taskDate;
+  bool isTime = false;
+
+  bool isRepeatedly = false;
+  List<bool>? repeatDuringWeek;
+  DateTime? endDateOfRepeadetly;
+  List<DateTime>? repeatDuringDay;
 }

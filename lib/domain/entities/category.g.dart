@@ -22,8 +22,13 @@ const CategoryEntitySchema = CollectionSchema(
       name: r'emoji',
       type: IsarType.string,
     ),
-    r'name': PropertySchema(
+    r'hashCode': PropertySchema(
       id: 1,
+      name: r'hashCode',
+      type: IsarType.long,
+    ),
+    r'name': PropertySchema(
+      id: 2,
       name: r'name',
       type: IsarType.string,
     )
@@ -68,7 +73,8 @@ void _categoryEntitySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.emoji);
-  writer.writeString(offsets[1], object.name);
+  writer.writeLong(offsets[1], object.hashCode);
+  writer.writeString(offsets[2], object.name);
 }
 
 CategoryEntity _categoryEntityDeserialize(
@@ -79,7 +85,7 @@ CategoryEntity _categoryEntityDeserialize(
 ) {
   final object = CategoryEntity(
     emoji: reader.readStringOrNull(offsets[0]) ?? "",
-    name: reader.readString(offsets[1]),
+    name: reader.readString(offsets[2]),
   );
   object.id = id;
   return object;
@@ -95,6 +101,8 @@ P _categoryEntityDeserializeProp<P>(
     case 0:
       return (reader.readStringOrNull(offset) ?? "") as P;
     case 1:
+      return (reader.readLong(offset)) as P;
+    case 2:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -330,6 +338,62 @@ extension CategoryEntityQueryFilter
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'emoji',
         value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterFilterCondition>
+      hashCodeEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterFilterCondition>
+      hashCodeGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterFilterCondition>
+      hashCodeLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'hashCode',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterFilterCondition>
+      hashCodeBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'hashCode',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -607,6 +671,19 @@ extension CategoryEntityQuerySortBy
     });
   }
 
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterSortBy> sortByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterSortBy>
+      sortByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
+    });
+  }
+
   QueryBuilder<CategoryEntity, CategoryEntity, QAfterSortBy> sortByName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'name', Sort.asc);
@@ -631,6 +708,19 @@ extension CategoryEntityQuerySortThenBy
   QueryBuilder<CategoryEntity, CategoryEntity, QAfterSortBy> thenByEmojiDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'emoji', Sort.desc);
+    });
+  }
+
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterSortBy> thenByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.asc);
+    });
+  }
+
+  QueryBuilder<CategoryEntity, CategoryEntity, QAfterSortBy>
+      thenByHashCodeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hashCode', Sort.desc);
     });
   }
 
@@ -668,6 +758,12 @@ extension CategoryEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<CategoryEntity, CategoryEntity, QDistinct> distinctByHashCode() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hashCode');
+    });
+  }
+
   QueryBuilder<CategoryEntity, CategoryEntity, QDistinct> distinctByName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -687,6 +783,12 @@ extension CategoryEntityQueryProperty
   QueryBuilder<CategoryEntity, String, QQueryOperations> emojiProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'emoji');
+    });
+  }
+
+  QueryBuilder<CategoryEntity, int, QQueryOperations> hashCodeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hashCode');
     });
   }
 

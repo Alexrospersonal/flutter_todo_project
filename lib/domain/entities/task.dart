@@ -32,5 +32,5 @@ class TaskEntityDateTimeData {
   bool isRepeatedly = false;
   List<bool>? repeatDuringWeek;
   DateTime? endDateOfRepeadetly;
-  List<DateTime>? repeatDuringDay;
+  List<DateTime?>? repeatDuringDay;
 }

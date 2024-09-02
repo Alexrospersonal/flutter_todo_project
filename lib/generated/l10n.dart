@@ -570,6 +570,16 @@ class S {
     );
   }
 
+  /// `Title is empty`
+  String get snackInfoMessageTitleIsEmpty {
+    return Intl.message(
+      'Title is empty',
+      name: 'snackInfoMessageTitleIsEmpty',
+      desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
   /// `Task color`
   String get color {
     return Intl.message(

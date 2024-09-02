@@ -260,6 +260,11 @@
     "description": "Label for newest filter",
     "placeholders": {}
   },
+  "snackInfoMessageTitleIsEmpty": "Спочатку введіть назву",
+  "@snackInfoMessageTitleIsEmpty": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
   "color": "Колір завдання",
   "@color": {
     "description": "Label for newest filter",

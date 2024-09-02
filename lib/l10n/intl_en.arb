@@ -262,6 +262,11 @@
     "description": "Label for newest filter",
     "placeholders": {}
   },
+  "snackInfoMessageTitleIsEmpty": "Title is empty",
+  "@snackInfoMessageTitleIsEmpty": {
+    "description": "Label for newest filter",
+    "placeholders": {}
+  },
   "color": "Task color",
   "@color": {
     "description": "Label for newest filter",

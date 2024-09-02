@@ -74,6 +74,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Select a repeatedly days first"),
         "snackInfoMessageTime":
             MessageLookupByLibrary.simpleMessage("Select a time first"),
+        "snackInfoMessageTitleIsEmpty":
+            MessageLookupByLibrary.simpleMessage("Title is empty"),
         "startIn": MessageLookupByLibrary.simpleMessage("Start in"),
         "statusTitle1":
             MessageLookupByLibrary.simpleMessage("Easy and productive"),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 
-enum SnackBarMessageType { noEnabledDate, noEnabledTime, noEnabledRepeatedly }
+enum SnackBarMessageType { noEnabledDate, noEnabledTime, noEnabledRepeatedly, noValidateTitle }
 
 class DialogSnackBarController {
   static final _instance = DialogSnackBarController._internal();
@@ -32,6 +32,8 @@ class DialogSnackBarController {
         return S.of(context).snackInfoMessageTime;
       case SnackBarMessageType.noEnabledRepeatedly:
         return S.of(context).snackInfoMessageRepeatedly;
+      case SnackBarMessageType.noValidateTitle:
+        return S.of(context).snackInfoMessageTitleIsEmpty;
     }
   }
 }

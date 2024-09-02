@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/builders/task_builder.dart';
+import 'package:flutter_todo_project/domain/builders/task_builder_director.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/date_selector_page/date_selector_page.dart';
+import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_dialog_main_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/page_view_container.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_selector_page.dart';
@@ -34,7 +37,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
   bool isExpandedNotes = false;
 
   bool validateTaskData() {
-    if (_formKey.currentState!.validate()) {
+    if (_selectedIndex == 0 && _formKey.currentState!.validate()) {
       return true;
     }
     return false;
@@ -135,23 +138,32 @@ class _TaskFormState extends ConsumerState<TaskForm> {
             bottom: -8,
             child: DoneButton(
               action: () {
-                if (validateTaskData()) {
+                // TODO: Навести тут порядок
+                if (_titleController.text.isNotEmpty) {
+                  var taskNotifier = context.read<TaskNotifier>();
+                  taskNotifier.title = _titleController.text;
+                  taskNotifier.note = _descriptionController.text;
                   TaskDependencies dependencies = context.read<TaskDependencies>();
-                  TaskEntity task = TaskBuilder(dependencies: dependencies).build();
+
+                  TaskEntity task;
+                  var taskBuilder = TaskBuilder(dependencies: dependencies);
+                  var director = TaskBuilderDirector()..setBuilder(taskBuilder);
+
+                  if (dependencies.taskDateNotifier.isEnabled) {
+                    task = director.buildWithDate();
+                  } else {
+                    task = director.build();
+                  }
+
                   DbService.db.writeTxn(() async {
                     await DbService.db.taskEntitys.put(task);
                     await task.category.save();
                   });
                   return true;
                 }
+                var callInformBar = getCallInformBar(context);
+                callInformBar(SnackBarMessageType.noEnabledDate);
                 return false;
-
-                // var db = DbService.db;
-                // db.writeTxn(() async {
-                //   Task task = Task();
-                //   task.title = "Task title 1";
-                //   await db.tasks.put(task);
-                // });
               },
             ),
           )

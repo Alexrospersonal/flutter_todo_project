@@ -10,10 +10,7 @@ class TaskNameField extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
 
   const TaskNameField(
-      {super.key,
-      required this.titleController,
-      required this.invalidValidationText,
-      required this.formKey});
+      {super.key, required this.titleController, required this.invalidValidationText, required this.formKey});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,18 +30,16 @@ class TaskNameField extends ConsumerWidget {
           FocusScope.of(context).unfocus();
         },
         controller: titleController,
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-            fontWeight: FontWeight.w500,
-            color: Theme.of(context).colorScheme.onSurface),
+        style: Theme.of(context)
+            .textTheme
+            .labelMedium!
+            .copyWith(fontWeight: FontWeight.w500, color: Theme.of(context).colorScheme.onSurface),
         decoration: InputDecoration(
             filled: true,
             fillColor: Theme.of(context).canvasColor,
             contentPadding: const EdgeInsets.all(10),
             hintText: S.of(context).addTaskName,
-            hintStyle: Theme.of(context)
-                .textTheme
-                .labelMedium!
-                .copyWith(fontWeight: FontWeight.w400),
+            hintStyle: Theme.of(context).textTheme.labelMedium!.copyWith(fontWeight: FontWeight.w400),
             isDense: true,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(smallBorderRadius),
@@ -52,13 +47,11 @@ class TaskNameField extends ConsumerWidget {
             ),
             focusedBorder: UnderlineInputBorder(
               borderRadius: BorderRadius.circular(smallBorderRadius),
-              borderSide:
-                  BorderSide(color: Theme.of(context).primaryColor, width: 2.0),
+              borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2.0),
             ),
             errorBorder: UnderlineInputBorder(
               borderRadius: BorderRadius.circular(smallBorderRadius),
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.error, width: 2.0),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 2.0),
             ),
             errorStyle: const TextStyle(fontSize: 0, height: 1)
             // errorStyle: const TextStyle(fontSize: 0)

@@ -77,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Виберість спочатку повтор днів"),
         "snackInfoMessageTime":
             MessageLookupByLibrary.simpleMessage("Виберість спочатку годину"),
+        "snackInfoMessageTitleIsEmpty":
+            MessageLookupByLibrary.simpleMessage("Спочатку введіть назву"),
         "startIn": MessageLookupByLibrary.simpleMessage("Починається"),
         "statusTitle1":
             MessageLookupByLibrary.simpleMessage("Легкість та продуктивність"),

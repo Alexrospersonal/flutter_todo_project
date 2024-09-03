@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
-import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time_notifier.dart';
@@ -14,7 +13,6 @@ class NewTaskDialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: переписати код. Використати патерн композиація для роботи із станами.
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => TaskNotifier()),
@@ -36,19 +34,6 @@ class NewTaskDialogWidget extends StatelessWidget {
         ChangeNotifierProxyProvider<RepeatlyNotifier, RepeatInTimeNotifier>(
           create: (context) => RepeatInTimeNotifier(),
           update: (context, repeatlyNotifier, repeatInTimeNotifier) => repeatInTimeNotifier!..update(repeatlyNotifier),
-        ),
-        ProxyProvider6<TaskNotifier, TaskDateNotifier, TaskTimeNotifier, RepeatlyNotifier, LastDayOfRepeatNotifier,
-            RepeatInTimeNotifier, TaskDependencies>(
-          update: (context, taskNotifier, taskDateNotifier, taskTimeNotifier, repeatlyNotifier, lastDayOfRepeatNotifier,
-                  repeatInTimeNotifier, _) =>
-              TaskDependencies(
-            taskNotifier: taskNotifier,
-            taskDateNotifier: taskDateNotifier,
-            taskTimeNotifier: taskTimeNotifier,
-            repeatlyNotifier: repeatlyNotifier,
-            lastDayOfRepeatNotifier: lastDayOfRepeatNotifier,
-            repeatInTimeNotifier: repeatInTimeNotifier,
-          ),
         ),
       ],
       child: GestureDetector(

@@ -1,29 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
-import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CalendarWidget<T extends CalendarState> extends StatefulWidget {
+class CalendarWidget extends StatefulWidget {
   final void Function(DateTime)? changeDate;
+  final DateTime? startDate;
   final DateTime? recurringEndDate;
   final DateTime? focusedDay;
   final List<bool> weekdays;
 
-  const CalendarWidget({
-    super.key,
-    required this.weekdays,
-    this.focusedDay,
-    this.changeDate,
-    this.recurringEndDate,
-  });
+  const CalendarWidget(
+      {super.key, required this.weekdays, this.focusedDay, this.changeDate, this.recurringEndDate, this.startDate});
 
   @override
-  State<CalendarWidget> createState() => _CalendarWidgetState<T>();
+  State<CalendarWidget> createState() => _CalendarWidgetState();
 }
 
-class _CalendarWidgetState<T extends CalendarState>
-    extends State<CalendarWidget> {
+class _CalendarWidgetState extends State<CalendarWidget> {
   DateTime _selectedDay = DateTime.now();
 
   bool isHighlighted(DateTime day) {
@@ -49,7 +42,8 @@ class _CalendarWidgetState<T extends CalendarState>
 
   @override
   Widget build(BuildContext context) {
-    var startDate = context.watch<T>().taskDateTime;
+    var startDate = widget.startDate;
+    // var startDate = context.watch<T>().taskDateTime;
 
     if (startDate == null) {
       _selectedDay = DateTime.now();
@@ -76,19 +70,16 @@ class _CalendarWidgetState<T extends CalendarState>
           formatButtonVisible: false,
           headerPadding: EdgeInsets.all(3),
         ),
-        calendarStyle: const CalendarStyle(
-            cellMargin: EdgeInsets.all(5), tablePadding: EdgeInsets.all(0)),
+        calendarStyle: const CalendarStyle(cellMargin: EdgeInsets.all(5), tablePadding: EdgeInsets.all(0)),
         calendarBuilders: CalendarBuilders(
           defaultBuilder: (context, day, focusedDay) {
-            if (widget.recurringEndDate != null &&
-                isSameDay(widget.recurringEndDate, day)) {
+            if (widget.recurringEndDate != null && isSameDay(widget.recurringEndDate, day)) {
               return Container(
                 margin: const EdgeInsets.all(4.0),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Theme.of(context).primaryColor, width: 2),
+                  border: Border.all(color: Theme.of(context).primaryColor, width: 2),
                 ),
                 child: Text(
                   '${day.day}',
@@ -154,16 +145,12 @@ class _CalendarWidgetState<T extends CalendarState>
               ),
               child: Text(
                 '${day.day}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Theme.of(context).canvasColor),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: Theme.of(context).canvasColor),
               ),
             );
           },
           outsideBuilder: (context, day, focusedDay) {
-            if (widget.recurringEndDate != null &&
-                isSameDay(widget.recurringEndDate, day)) {
+            if (widget.recurringEndDate != null && isSameDay(widget.recurringEndDate, day)) {
               return Container(
                 margin: const EdgeInsets.all(4.0),
                 alignment: Alignment.center,
@@ -186,10 +173,7 @@ class _CalendarWidgetState<T extends CalendarState>
               ),
               child: Text(
                 '${day.day}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: greyColor),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: greyColor),
               ),
             );
           },

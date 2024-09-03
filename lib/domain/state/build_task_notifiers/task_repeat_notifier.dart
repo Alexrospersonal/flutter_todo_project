@@ -45,15 +45,14 @@ class RepeatlyNotifier extends ChangeNotifier implements IsEnabledNotifier {
   }
 }
 
-class LastDayOfRepeatNotifier extends ChangeNotifier
-    implements IsEnabledNotifier {
+class LastDayOfRepeatNotifier extends ChangeNotifier implements IsEnabledNotifier {
   @override
   bool canEnabled = false;
   @override
   bool isEnabled = false;
   DateTime? lastDate;
 
-  // TODO: поправити логіку
+  // TODO: поправити логіку або переписати використовуючи RxDart
   bool setIsLastDayOfRepeat(bool state) {
     if (canEnabled) {
       isEnabled = state;

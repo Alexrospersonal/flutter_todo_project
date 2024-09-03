@@ -143,7 +143,9 @@ class _TaskFormState extends ConsumerState<TaskForm> {
                   var taskNotifier = context.read<TaskNotifier>();
                   taskNotifier.title = _titleController.text;
                   taskNotifier.note = _descriptionController.text;
-                  TaskDependencies dependencies = context.read<TaskDependencies>();
+                  // TaskDependencies dependencies = context.read<TaskDependencies>();
+
+                  TaskDependencies dependencies = TaskDependencies.fromContext(context);
 
                   TaskEntity task;
                   var taskBuilder = TaskBuilder(dependencies: dependencies);

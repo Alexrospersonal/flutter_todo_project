@@ -22,8 +22,7 @@ class CalendarCardWidget extends StatelessWidget {
         return Column(
           children: [
             AdditionalSettingsPageHeader(
-              text:
-                  date != null ? formatDate(locale, date) : S.of(context).none,
+              text: date != null ? formatDate(locale, date) : S.of(context).none,
               iconData: Icons.calendar_month,
               state: hasDate,
               callback: (bool state) {
@@ -44,10 +43,10 @@ class CalendarCardWidget extends StatelessWidget {
                 opacity: hasDate ? 1 : 0.5,
                 child: IgnorePointer(
                     ignoring: hasDate ? false : true,
-                    child: CalendarWidget<TaskDateNotifier>(
+                    child: CalendarWidget(
+                        startDate: context.watch<TaskDateNotifier>().taskDateTime,
                         weekdays: context.read<RepeatlyNotifier>().repeatOfDays,
-                        recurringEndDate:
-                            context.watch<LastDayOfRepeatNotifier>().lastDate,
+                        recurringEndDate: context.watch<LastDayOfRepeatNotifier>().lastDate,
                         changeDate: (DateTime selectedDay) {
                           context.read<TaskDateNotifier>().setDate(selectedDay);
                         })),

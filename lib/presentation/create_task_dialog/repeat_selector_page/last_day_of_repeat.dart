@@ -1,8 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repeat_notifier.dart';
-import 'package:flutter_todo_project/domain/state/task_state.dart';
 import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
@@ -30,7 +31,10 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
         return MultiProvider(
           providers: [
             ChangeNotifierProvider.value(
-              value: parentContext.watch<TaskStateDeprecated>(),
+              value: parentContext.watch<TaskDateNotifier>(),
+            ),
+            ChangeNotifierProvider.value(
+              value: parentContext.watch<TaskNotifier>(),
             ),
             ChangeNotifierProvider.value(
               value: parentContext.watch<RepeatlyNotifier>(),
@@ -39,9 +43,8 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
               value: parentContext.watch<LastDayOfRepeatNotifier>(),
             )
           ],
-          child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0),
-              child: const PickEndOfDateDialog()),
+          child:
+              BackdropFilter(filter: ImageFilter.blur(sigmaX: 11.0, sigmaY: 11.0), child: const PickEndOfDateDialog()),
         );
       },
       transitionDuration: const Duration(milliseconds: 100),
@@ -53,12 +56,9 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
     var callInformBar = getCallInformBar(context);
     bool isEnabled = context.watch<LastDayOfRepeatNotifier>().isEnabled;
     Locale locale = Localizations.localeOf(context);
-    DateTime? lastDayOfRepeat =
-        context.watch<LastDayOfRepeatNotifier>().lastDate;
+    DateTime? lastDayOfRepeat = context.watch<LastDayOfRepeatNotifier>().lastDate;
 
-    String text = lastDayOfRepeat != null
-        ? formatDate(locale, lastDayOfRepeat)
-        : S.of(context).lastDayOfRepeat;
+    String text = lastDayOfRepeat != null ? formatDate(locale, lastDayOfRepeat) : S.of(context).lastDayOfRepeat;
 
     IconData icon = lastDayOfRepeat != null ? Icons.edit : Icons.add;
 
@@ -73,8 +73,7 @@ class _LastDayOfRepeatState extends State<LastDayOfRepeat> {
         }
       },
       callback: (bool state) {
-        var res =
-            context.read<LastDayOfRepeatNotifier>().setIsLastDayOfRepeat(state);
+        var res = context.read<LastDayOfRepeatNotifier>().setIsLastDayOfRepeat(state);
 
         if (res && state) {
           callShowGeneralDialog(context);

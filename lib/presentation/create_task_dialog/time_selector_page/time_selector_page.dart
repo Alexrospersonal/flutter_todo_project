@@ -3,7 +3,7 @@ import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_time
 import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
-import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
+import 'package:flutter_todo_project/domain/contollers/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_12_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/inner_24_hour_format_picker.dart';
 import 'package:flutter_todo_project/presentation/generic_widgets/nested_time_picker/nested_time_picker.dart';
@@ -18,8 +18,8 @@ class TimeSelectorPage extends StatefulWidget {
 
 class _TimeSelectorPageState extends State<TimeSelectorPage> {
   void getTimeFromTimePicker(TimeOfDay time) {
-    Provider.of<TaskTimeNotifier>(context, listen: false).setTaskDateTime(
-        DateTime.now().copyWith(hour: time.hour, minute: time.minute));
+    Provider.of<TaskTimeNotifier>(context, listen: false)
+        .setTaskDateTime(DateTime.now().copyWith(hour: time.hour, minute: time.minute));
   }
 
   @override
@@ -35,14 +35,11 @@ class _TimeSelectorPageState extends State<TimeSelectorPage> {
           return Column(
             children: [
               AdditionalSettingsPageHeader(
-                text: taskDateTime != null && isEnabled
-                    ? formatTime(taskDateTime, context)
-                    : S.of(context).none,
+                text: taskDateTime != null && isEnabled ? formatTime(taskDateTime, context) : S.of(context).none,
                 iconData: Icons.schedule_rounded,
                 state: isEnabled,
                 callback: (bool state) {
-                  var res =
-                      context.read<TaskTimeNotifier>().setIsEnabled(state);
+                  var res = context.read<TaskTimeNotifier>().setIsEnabled(state);
                   if (!res) {
                     callInformBar(SnackBarMessageType.noEnabledDate);
                   }

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_todo_project/data/services/db_service.dart';
-import 'package:flutter_todo_project/domain/builders/task_builder.dart';
-import 'package:flutter_todo_project/domain/builders/task_builder_director.dart';
-import 'package:flutter_todo_project/domain/entities/task.dart';
-import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
+import 'package:flutter_todo_project/domain/contollers/create_task_controller.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/date_selector_page/date_selector_page.dart';
-import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
+import 'package:flutter_todo_project/domain/contollers/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/main_page/task_dialog_main_page.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/page_view_container.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/repeat_selector_page.dart';
@@ -66,7 +62,6 @@ class _TaskFormState extends ConsumerState<TaskForm> {
     if (isExpandedNotes) {
       return 340;
     }
-
     return 290;
   }
 
@@ -75,6 +70,12 @@ class _TaskFormState extends ConsumerState<TaskForm> {
     _titleController.dispose();
     _descriptionController.dispose();
     super.dispose();
+  }
+
+  void saveTextFromControllersToNotifier() {
+    var taskNotifier = context.read<TaskNotifier>();
+    taskNotifier.title = _titleController.text;
+    taskNotifier.note = _descriptionController.text;
   }
 
   @override
@@ -138,33 +139,13 @@ class _TaskFormState extends ConsumerState<TaskForm> {
             bottom: -8,
             child: DoneButton(
               action: () {
-                // TODO: Навести тут порядок
                 if (_titleController.text.isNotEmpty) {
-                  var taskNotifier = context.read<TaskNotifier>();
-                  taskNotifier.title = _titleController.text;
-                  taskNotifier.note = _descriptionController.text;
-                  // TaskDependencies dependencies = context.read<TaskDependencies>();
-
-                  TaskDependencies dependencies = TaskDependencies.fromContext(context);
-
-                  TaskEntity task;
-                  var taskBuilder = TaskBuilder(dependencies: dependencies);
-                  var director = TaskBuilderDirector()..setBuilder(taskBuilder);
-
-                  if (dependencies.taskDateNotifier.isEnabled) {
-                    task = director.buildWithDate();
-                  } else {
-                    task = director.build();
-                  }
-
-                  DbService.db.writeTxn(() async {
-                    await DbService.db.taskEntitys.put(task);
-                    await task.category.save();
-                  });
+                  saveTextFromControllersToNotifier();
+                  CreateTaskController(context: context).saveTask();
                   return true;
                 }
                 var callInformBar = getCallInformBar(context);
-                callInformBar(SnackBarMessageType.noEnabledDate);
+                callInformBar(SnackBarMessageType.noValidateTitle);
                 return false;
               },
             ),

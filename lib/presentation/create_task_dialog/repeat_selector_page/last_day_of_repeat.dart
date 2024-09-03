@@ -7,7 +7,7 @@ import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_repe
 import 'package:flutter_todo_project/domain/utils/format.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/additional_settings_page_header.dart';
-import 'package:flutter_todo_project/presentation/create_task_dialog/dialog_snack_bar_controller.dart';
+import 'package:flutter_todo_project/domain/contollers/dialog_snack_bar_controller.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/repeat_selector_page/pick_end_of_date_dialog.dart';
 import 'package:provider/provider.dart';
 

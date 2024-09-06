@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/entities/category.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/category/category_creator_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
@@ -19,6 +20,8 @@ class CategorySelectorWidget extends ConsumerStatefulWidget {
 }
 
 class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget> {
+  CategoryEntity? selectedCategory;
+
   void Function(int) getUpdateTaskCategory(BuildContext parentContext) {
     return (int id) {
       var createdCategory = DbService.db.categoryEntitys.getSync(id);
@@ -27,9 +30,18 @@ class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget>
   }
 
   @override
+  void initState() {
+    super.initState();
+    var id = ref.read(selectedCategoryId.notifier).state;
+    if (id != 1) {
+      selectedCategory = DbService.db.categoryEntitys.getSync(id);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     BuildContext providerContext = context;
-    CategoryEntity? selectedCategory = context.watch<TaskNotifier>().category;
+    selectedCategory ??= context.watch<TaskNotifier>().category;
     var updateTaskCategory = getUpdateTaskCategory(context);
     var categoryList = DbService.db.categoryEntitys.filter().not().nameEqualTo("#01").findAllSync();
 
@@ -64,7 +76,6 @@ class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget>
         ),
       ),
       const SizedBox(width: 10),
-      // Invoke a new category dialog window.
       Expanded(
         child: SizedBox(
           height: 32,

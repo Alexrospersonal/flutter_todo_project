@@ -19,8 +19,7 @@ void main() async {
   await DbService.initialize();
 
   // TODO: test adding categories
-  List<CategoryEntity> categories =
-      await DbService.db.categoryEntitys.where().findAll();
+  List<CategoryEntity> categories = await DbService.db.categoryEntitys.where().findAll();
   if (categories.isEmpty) {
     final initialCategories = [
       CategoryEntity(name: '#01', emoji: ''),
@@ -76,47 +75,46 @@ class MainApp extends ConsumerWidget {
   }
 }
 
-class TimePickerTest extends ConsumerStatefulWidget {
-  const TimePickerTest({super.key});
+// class TimePickerTest extends ConsumerStatefulWidget {
+//   const TimePickerTest({super.key});
 
-  @override
-  TimePickerTestState createState() => TimePickerTestState();
-}
+//   @override
+//   TimePickerTestState createState() => TimePickerTestState();
+// }
 
-class TimePickerTestState extends ConsumerState<TimePickerTest> {
-  void getTimeFromTimePicker(TimeOfDay time) {}
+// class TimePickerTestState extends ConsumerState<TimePickerTest> {
+//   void getTimeFromTimePicker(TimeOfDay time) {}
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SettingsWidget(),
-            Container(
-                width: 326,
-                height: 200,
-                padding: const EdgeInsets.all(cardPadding),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(bigBorderRadius),
-                    color: Theme.of(context).cardColor),
-                child: NestedTimePicker(
-                  // title: S.of(context).selectNotificationTime,
-                  format12TimePicker: Inner12HourFormatPicker(
-                    initialDate: DateTime.now(),
-                    callback: getTimeFromTimePicker,
-                    enabled: false,
-                  ),
-                  format24TimePicker: Inner24HourFormatPicker(
-                    initialDate: DateTime.now(),
-                    callback: getTimeFromTimePicker,
-                    enabled: false,
-                  ),
-                )),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             const SettingsWidget(),
+//             Container(
+//                 width: 326,
+//                 height: 200,
+//                 padding: const EdgeInsets.all(cardPadding),
+//                 decoration: BoxDecoration(
+//                     borderRadius: BorderRadius.circular(bigBorderRadius), color: Theme.of(context).cardColor),
+//                 child: NestedTimePicker(
+//                   // title: S.of(context).selectNotificationTime,
+//                   format12TimePicker: Inner12HourFormatPicker(
+//                     initialDate: DateTime.now(),
+//                     callback: getTimeFromTimePicker,
+//                     enabled: false,
+//                   ),
+//                   format24TimePicker: Inner24HourFormatPicker(
+//                     initialDate: DateTime.now(),
+//                     callback: getTimeFromTimePicker,
+//                     enabled: false,
+//                   ),
+//                 )),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

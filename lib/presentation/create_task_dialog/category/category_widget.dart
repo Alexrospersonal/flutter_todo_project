@@ -51,8 +51,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
 
               return GestureDetector(
                 onTap: () {
-                  ref.read(selectedCategoryId.notifier).state =
-                      list[index].categoryId;
+                  ref.read(selectedCategoryId.notifier).state = list[index].categoryId;
 
                   setState(() {
                     selectedIndex = index;
@@ -60,8 +59,7 @@ class _CategoryListState extends ConsumerState<CategoryList> {
                 },
                 child: CategoryListItemContainer(
                     isSelected: isSelected,
-                    categoryText:
-                        list[index].name == "#01" ? today : list[index].name,
+                    categoryText: list[index].name == "#01" ? today : list[index].name,
                     emoji: list[index].emoji,
                     tasksCount: list[index].tasks),
               );
@@ -94,8 +92,7 @@ class CreateCategoryButton extends StatelessWidget {
           builder: (BuildContext context) {
             return BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: CategoryCreatorWidget(
-                    context: context, getCreatedCategoryId: (p0) {}));
+                child: CategoryCreatorWidget(context: context, getCreatedCategoryId: (p0) {}));
           },
         );
       },
@@ -152,8 +149,7 @@ class CategoryListItemContainer extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   height: 1,
-                  color:
-                      isSelected ? Theme.of(context).canvasColor : textColor),
+                  color: isSelected ? Theme.of(context).canvasColor : textColor),
             ),
           ),
           Positioned(

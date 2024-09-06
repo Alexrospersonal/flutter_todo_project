@@ -43,7 +43,7 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
     int tasks = 0;
 
     if (cat.name == "#01") {
-      tasks = await DbService.db.taskEntitys.filter().dateTimeData((q) => q.taskDateEqualTo(DateTime.now())).count();
+      tasks = await DbService.db.taskEntitys.filter().taskDateEqualTo(DateTime.now()).count();
     } else {
       cat.tasks.load();
       tasks = cat.tasks.length;

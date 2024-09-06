@@ -1,49 +1,35 @@
 import 'package:flutter_todo_project/domain/builders/entity_builder.dart';
-import 'package:flutter_todo_project/domain/entities/task.dart';
+import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
 
-class TaskEntityDateTimeDataBuilder implements EntityBuilder<TaskEntityDateTimeData> {
+class RepeatedTaskBuilder implements EntityBuilder<RepeatedTaskEntity> {
   final TaskDependencies dependencies;
-  TaskEntityDateTimeData? _entityDatesDate;
+  RepeatedTaskEntity? _entityDatesDate;
 
-  TaskEntityDateTimeDataBuilder({required this.dependencies});
+  RepeatedTaskBuilder({required this.dependencies});
 
-  TaskEntityDateTimeDataBuilder createTaskEntityDateTimeData() {
-    _entityDatesDate = TaskEntityDateTimeData();
+  RepeatedTaskBuilder createTaskEntityDateTimeData() {
+    _entityDatesDate = RepeatedTaskEntity();
     return this;
   }
 
-  TaskEntityDateTimeDataBuilder setDate() {
-    _entityDatesDate?.taskDate = dependencies.taskDateNotifier.taskDateTime;
-    return this;
-  }
-
-  TaskEntityDateTimeDataBuilder setTime() {
-    var hour = dependencies.taskTimeNotifier.taskDateTime?.hour;
-    var minute = dependencies.taskTimeNotifier.taskDateTime?.minute;
-    _entityDatesDate?.taskDate = _entityDatesDate?.taskDate?.copyWith(hour: hour, minute: minute);
-    _entityDatesDate?.isTime = dependencies.taskTimeNotifier.isEnabled;
-    return this;
-  }
-
-  TaskEntityDateTimeDataBuilder setRepeadeylyDuringWeek() {
+  RepeatedTaskBuilder setRepeadeylyDuringWeek() {
     _entityDatesDate?.repeatDuringWeek = dependencies.repeatlyNotifier.repeatOfDays;
-    _entityDatesDate?.isRepeatedly = dependencies.repeatlyNotifier.isEnabled;
     return this;
   }
 
-  TaskEntityDateTimeDataBuilder setEndDateOfRepeadetly() {
-    _entityDatesDate?.endDateOfRepeadetly = dependencies.lastDayOfRepeatNotifier.lastDate;
+  RepeatedTaskBuilder setEndDateOfRepeadetly() {
+    _entityDatesDate?.endDateOfRepeatedly = dependencies.lastDayOfRepeatNotifier.lastDate;
     return this;
   }
 
-  TaskEntityDateTimeDataBuilder setRepeadeylyDuringDay() {
+  RepeatedTaskBuilder setRepeadeylyDuringDay() {
     _entityDatesDate?.repeatDuringDay = dependencies.repeatInTimeNotifier.times;
     return this;
   }
 
   @override
-  TaskEntityDateTimeData build() {
+  RepeatedTaskEntity build() {
     if (_entityDatesDate == null) {
       throw Exception("Entity is null");
     }

@@ -22,24 +22,38 @@ const TaskEntitySchema = CollectionSchema(
       name: r'color',
       type: IsarType.long,
     ),
-    r'dateTimeData': PropertySchema(
+    r'hasRepeats': PropertySchema(
       id: 1,
-      name: r'dateTimeData',
-      type: IsarType.object,
-      target: r'TaskEntityDateTimeData',
+      name: r'hasRepeats',
+      type: IsarType.bool,
+    ),
+    r'hasTime': PropertySchema(
+      id: 2,
+      name: r'hasTime',
+      type: IsarType.bool,
     ),
     r'important': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'important',
       type: IsarType.bool,
     ),
+    r'isFinished': PropertySchema(
+      id: 4,
+      name: r'isFinished',
+      type: IsarType.bool,
+    ),
     r'notate': PropertySchema(
-      id: 3,
+      id: 5,
       name: r'notate',
       type: IsarType.string,
     ),
+    r'taskDate': PropertySchema(
+      id: 6,
+      name: r'taskDate',
+      type: IsarType.dateTime,
+    ),
     r'title': PropertySchema(
-      id: 4,
+      id: 7,
       name: r'title',
       type: IsarType.string,
     )
@@ -58,7 +72,7 @@ const TaskEntitySchema = CollectionSchema(
       single: true,
     )
   },
-  embeddedSchemas: {r'TaskEntityDateTimeData': TaskEntityDateTimeDataSchema},
+  embeddedSchemas: {},
   getId: _taskEntityGetId,
   getLinks: _taskEntityGetLinks,
   attach: _taskEntityAttach,
@@ -71,14 +85,6 @@ int _taskEntityEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  {
-    final value = object.dateTimeData;
-    if (value != null) {
-      bytesCount += 3 +
-          TaskEntityDateTimeDataSchema.estimateSize(
-              value, allOffsets[TaskEntityDateTimeData]!, allOffsets);
-    }
-  }
   {
     final value = object.notate;
     if (value != null) {
@@ -96,15 +102,13 @@ void _taskEntitySerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.color);
-  writer.writeObject<TaskEntityDateTimeData>(
-    offsets[1],
-    allOffsets,
-    TaskEntityDateTimeDataSchema.serialize,
-    object.dateTimeData,
-  );
-  writer.writeBool(offsets[2], object.important);
-  writer.writeString(offsets[3], object.notate);
-  writer.writeString(offsets[4], object.title);
+  writer.writeBool(offsets[1], object.hasRepeats);
+  writer.writeBool(offsets[2], object.hasTime);
+  writer.writeBool(offsets[3], object.important);
+  writer.writeBool(offsets[4], object.isFinished);
+  writer.writeString(offsets[5], object.notate);
+  writer.writeDateTime(offsets[6], object.taskDate);
+  writer.writeString(offsets[7], object.title);
 }
 
 TaskEntity _taskEntityDeserialize(
@@ -114,17 +118,16 @@ TaskEntity _taskEntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TaskEntity(
-    title: reader.readString(offsets[4]),
+    title: reader.readString(offsets[7]),
   );
   object.color = reader.readLongOrNull(offsets[0]);
-  object.dateTimeData = reader.readObjectOrNull<TaskEntityDateTimeData>(
-    offsets[1],
-    TaskEntityDateTimeDataSchema.deserialize,
-    allOffsets,
-  );
+  object.hasRepeats = reader.readBool(offsets[1]);
+  object.hasTime = reader.readBool(offsets[2]);
   object.id = id;
-  object.important = reader.readBool(offsets[2]);
-  object.notate = reader.readStringOrNull(offsets[3]);
+  object.important = reader.readBool(offsets[3]);
+  object.isFinished = reader.readBool(offsets[4]);
+  object.notate = reader.readStringOrNull(offsets[5]);
+  object.taskDate = reader.readDateTimeOrNull(offsets[6]);
   return object;
 }
 
@@ -138,16 +141,18 @@ P _taskEntityDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readObjectOrNull<TaskEntityDateTimeData>(
-        offset,
-        TaskEntityDateTimeDataSchema.deserialize,
-        allOffsets,
-      )) as P;
+      return (reader.readBool(offset)) as P;
     case 2:
       return (reader.readBool(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 4:
+      return (reader.readBool(offset)) as P;
+    case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    case 6:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 7:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -316,20 +321,22 @@ extension TaskEntityQueryFilter
     });
   }
 
-  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
-      dateTimeDataIsNull() {
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> hasRepeatsEqualTo(
+      bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'dateTimeData',
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hasRepeats',
+        value: value,
       ));
     });
   }
 
-  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
-      dateTimeDataIsNotNull() {
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> hasTimeEqualTo(
+      bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'dateTimeData',
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hasTime',
+        value: value,
       ));
     });
   }
@@ -392,6 +399,16 @@ extension TaskEntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'important',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> isFinishedEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isFinished',
         value: value,
       ));
     });
@@ -545,6 +562,77 @@ extension TaskEntityQueryFilter
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'taskDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      taskDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'taskDate',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'taskDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      taskDateGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'taskDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'taskDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'taskDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -678,14 +766,7 @@ extension TaskEntityQueryFilter
 }
 
 extension TaskEntityQueryObject
-    on QueryBuilder<TaskEntity, TaskEntity, QFilterCondition> {
-  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> dateTimeData(
-      FilterQuery<TaskEntityDateTimeData> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.object(q, r'dateTimeData');
-    });
-  }
-}
+    on QueryBuilder<TaskEntity, TaskEntity, QFilterCondition> {}
 
 extension TaskEntityQueryLinks
     on QueryBuilder<TaskEntity, TaskEntity, QFilterCondition> {
@@ -717,6 +798,30 @@ extension TaskEntityQuerySortBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByHasRepeats() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasRepeats', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByHasRepeatsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasRepeats', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByHasTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByHasTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByImportant() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'important', Sort.asc);
@@ -729,6 +834,18 @@ extension TaskEntityQuerySortBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByIsFinished() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFinished', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByIsFinishedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFinished', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByNotate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'notate', Sort.asc);
@@ -738,6 +855,18 @@ extension TaskEntityQuerySortBy
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByNotateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'notate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByTaskDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByTaskDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.desc);
     });
   }
 
@@ -768,6 +897,30 @@ extension TaskEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByHasRepeats() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasRepeats', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByHasRepeatsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasRepeats', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByHasTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByHasTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasTime', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -792,6 +945,18 @@ extension TaskEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByIsFinished() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFinished', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByIsFinishedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isFinished', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByNotate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'notate', Sort.asc);
@@ -801,6 +966,18 @@ extension TaskEntityQuerySortThenBy
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByNotateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'notate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByTaskDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByTaskDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'taskDate', Sort.desc);
     });
   }
 
@@ -825,9 +1002,27 @@ extension TaskEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByHasRepeats() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hasRepeats');
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByHasTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hasTime');
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByImportant() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'important');
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByIsFinished() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isFinished');
     });
   }
 
@@ -835,6 +1030,12 @@ extension TaskEntityQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'notate', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByTaskDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'taskDate');
     });
   }
 
@@ -860,10 +1061,15 @@ extension TaskEntityQueryProperty
     });
   }
 
-  QueryBuilder<TaskEntity, TaskEntityDateTimeData?, QQueryOperations>
-      dateTimeDataProperty() {
+  QueryBuilder<TaskEntity, bool, QQueryOperations> hasRepeatsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'dateTimeData');
+      return query.addPropertyName(r'hasRepeats');
+    });
+  }
+
+  QueryBuilder<TaskEntity, bool, QQueryOperations> hasTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hasTime');
     });
   }
 
@@ -873,9 +1079,21 @@ extension TaskEntityQueryProperty
     });
   }
 
+  QueryBuilder<TaskEntity, bool, QQueryOperations> isFinishedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isFinished');
+    });
+  }
+
   QueryBuilder<TaskEntity, String?, QQueryOperations> notateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'notate');
+    });
+  }
+
+  QueryBuilder<TaskEntity, DateTime?, QQueryOperations> taskDateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'taskDate');
     });
   }
 
@@ -885,580 +1103,3 @@ extension TaskEntityQueryProperty
     });
   }
 }
-
-// **************************************************************************
-// IsarEmbeddedGenerator
-// **************************************************************************
-
-// coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
-
-const TaskEntityDateTimeDataSchema = Schema(
-  name: r'TaskEntityDateTimeData',
-  id: -6856039928482930222,
-  properties: {
-    r'endDateOfRepeadetly': PropertySchema(
-      id: 0,
-      name: r'endDateOfRepeadetly',
-      type: IsarType.dateTime,
-    ),
-    r'isRepeatedly': PropertySchema(
-      id: 1,
-      name: r'isRepeatedly',
-      type: IsarType.bool,
-    ),
-    r'isTime': PropertySchema(
-      id: 2,
-      name: r'isTime',
-      type: IsarType.bool,
-    ),
-    r'repeatDuringDay': PropertySchema(
-      id: 3,
-      name: r'repeatDuringDay',
-      type: IsarType.dateTimeList,
-    ),
-    r'repeatDuringWeek': PropertySchema(
-      id: 4,
-      name: r'repeatDuringWeek',
-      type: IsarType.boolList,
-    ),
-    r'taskDate': PropertySchema(
-      id: 5,
-      name: r'taskDate',
-      type: IsarType.dateTime,
-    )
-  },
-  estimateSize: _taskEntityDateTimeDataEstimateSize,
-  serialize: _taskEntityDateTimeDataSerialize,
-  deserialize: _taskEntityDateTimeDataDeserialize,
-  deserializeProp: _taskEntityDateTimeDataDeserializeProp,
-);
-
-int _taskEntityDateTimeDataEstimateSize(
-  TaskEntityDateTimeData object,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  var bytesCount = offsets.last;
-  {
-    final value = object.repeatDuringDay;
-    if (value != null) {
-      bytesCount += 3 + value.length * 8;
-    }
-  }
-  {
-    final value = object.repeatDuringWeek;
-    if (value != null) {
-      bytesCount += 3 + value.length;
-    }
-  }
-  return bytesCount;
-}
-
-void _taskEntityDateTimeDataSerialize(
-  TaskEntityDateTimeData object,
-  IsarWriter writer,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  writer.writeDateTime(offsets[0], object.endDateOfRepeadetly);
-  writer.writeBool(offsets[1], object.isRepeatedly);
-  writer.writeBool(offsets[2], object.isTime);
-  writer.writeDateTimeList(offsets[3], object.repeatDuringDay);
-  writer.writeBoolList(offsets[4], object.repeatDuringWeek);
-  writer.writeDateTime(offsets[5], object.taskDate);
-}
-
-TaskEntityDateTimeData _taskEntityDateTimeDataDeserialize(
-  Id id,
-  IsarReader reader,
-  List<int> offsets,
-  Map<Type, List<int>> allOffsets,
-) {
-  final object = TaskEntityDateTimeData();
-  object.endDateOfRepeadetly = reader.readDateTimeOrNull(offsets[0]);
-  object.isRepeatedly = reader.readBool(offsets[1]);
-  object.isTime = reader.readBool(offsets[2]);
-  object.repeatDuringDay = reader.readDateTimeList(offsets[3]);
-  object.repeatDuringWeek = reader.readBoolList(offsets[4]);
-  object.taskDate = reader.readDateTimeOrNull(offsets[5]);
-  return object;
-}
-
-P _taskEntityDateTimeDataDeserializeProp<P>(
-  IsarReader reader,
-  int propertyId,
-  int offset,
-  Map<Type, List<int>> allOffsets,
-) {
-  switch (propertyId) {
-    case 0:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    case 1:
-      return (reader.readBool(offset)) as P;
-    case 2:
-      return (reader.readBool(offset)) as P;
-    case 3:
-      return (reader.readDateTimeList(offset)) as P;
-    case 4:
-      return (reader.readBoolList(offset)) as P;
-    case 5:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    default:
-      throw IsarError('Unknown property with id $propertyId');
-  }
-}
-
-extension TaskEntityDateTimeDataQueryFilter on QueryBuilder<
-    TaskEntityDateTimeData, TaskEntityDateTimeData, QFilterCondition> {
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> endDateOfRepeadetlyIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'endDateOfRepeadetly',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> endDateOfRepeadetlyIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'endDateOfRepeadetly',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> endDateOfRepeadetlyEqualTo(DateTime? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'endDateOfRepeadetly',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> endDateOfRepeadetlyGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'endDateOfRepeadetly',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> endDateOfRepeadetlyLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'endDateOfRepeadetly',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> endDateOfRepeadetlyBetween(
-    DateTime? lower,
-    DateTime? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'endDateOfRepeadetly',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> isRepeatedlyEqualTo(bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isRepeatedly',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> isTimeEqualTo(bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isTime',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'repeatDuringDay',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'repeatDuringDay',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayElementEqualTo(DateTime value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'repeatDuringDay',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayElementGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'repeatDuringDay',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayElementLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'repeatDuringDay',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayElementBetween(
-    DateTime lower,
-    DateTime upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'repeatDuringDay',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringDay',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringDay',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringDay',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringDay',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringDay',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringDayLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringDay',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'repeatDuringWeek',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'repeatDuringWeek',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekElementEqualTo(bool value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'repeatDuringWeek',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringWeek',
-        length,
-        true,
-        length,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringWeek',
-        0,
-        true,
-        0,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringWeek',
-        0,
-        false,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringWeek',
-        0,
-        true,
-        length,
-        include,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringWeek',
-        length,
-        include,
-        999999,
-        true,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> repeatDuringWeekLengthBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'repeatDuringWeek',
-        lower,
-        includeLower,
-        upper,
-        includeUpper,
-      );
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> taskDateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'taskDate',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> taskDateIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'taskDate',
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> taskDateEqualTo(DateTime? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'taskDate',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> taskDateGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'taskDate',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> taskDateLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'taskDate',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<TaskEntityDateTimeData, TaskEntityDateTimeData,
-      QAfterFilterCondition> taskDateBetween(
-    DateTime? lower,
-    DateTime? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'taskDate',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-}
-
-extension TaskEntityDateTimeDataQueryObject on QueryBuilder<
-    TaskEntityDateTimeData, TaskEntityDateTimeData, QFilterCondition> {}

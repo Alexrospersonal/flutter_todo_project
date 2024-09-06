@@ -38,6 +38,25 @@ class TaskBuilder implements EntityBuilder<TaskEntity> {
     return this;
   }
 
+  TaskBuilder setDate() {
+    _entity?.taskDate = dependencies.taskDateNotifier.taskDateTime;
+    return this;
+  }
+
+  TaskBuilder setTime() {
+    var hour = dependencies.taskTimeNotifier.taskDateTime?.hour;
+    var minute = dependencies.taskTimeNotifier.taskDateTime?.minute;
+    _entity?.taskDate = _entity?.taskDate?.copyWith(hour: hour, minute: minute);
+    _entity?.hasTime = dependencies.taskTimeNotifier.isEnabled;
+    return this;
+  }
+
+  TaskBuilder setHasRepeats() {
+    var hasRepeats = dependencies.repeatlyNotifier.repeatOfDays.any((day) => day);
+    _entity?.hasRepeats = hasRepeats;
+    return this;
+  }
+
   void validateEntity() {
     if (_entity == null) {
       throw Exception("Entity is null");

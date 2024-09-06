@@ -15,22 +15,26 @@ class TaskEntity {
 
   String? notate;
 
-  // DateTime? taskDate;
+  DateTime? taskDate;
+
+  bool hasTime = false;
 
   int? color;
 
-  TaskEntityDateTimeData? dateTimeData;
+  bool hasRepeats = false;
+
+  bool isFinished = false;
 
   TaskEntity({required this.title});
 }
 
-@embedded
-class TaskEntityDateTimeData {
-  DateTime? taskDate;
-  bool isTime = false;
+// @embedded
+// class TaskEntityDateTimeData {
+//   DateTime? taskDate;
+//   bool isTime = false;
 
-  bool isRepeatedly = false;
-  List<bool>? repeatDuringWeek;
-  DateTime? endDateOfRepeadetly;
-  List<DateTime?>? repeatDuringDay;
-}
+//   bool isRepeatedly = false;
+//   List<bool>? repeatDuringWeek;
+//   DateTime? endDateOfRepeadetly;
+//   List<DateTime?>? repeatDuringDay;
+// }

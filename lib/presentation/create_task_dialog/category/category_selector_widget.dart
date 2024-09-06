@@ -40,7 +40,10 @@ class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget>
 
   @override
   Widget build(BuildContext context) {
-    BuildContext providerContext = context;
+    if (selectedCategory != null && context.read<TaskNotifier>().category == null) {
+      context.read<TaskNotifier>().category = selectedCategory;
+    }
+
     selectedCategory ??= context.watch<TaskNotifier>().category;
     var updateTaskCategory = getUpdateTaskCategory(context);
     var categoryList = DbService.db.categoryEntitys.filter().not().nameEqualTo("#01").findAllSync();
@@ -89,8 +92,7 @@ class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget>
                   builder: (BuildContext context) {
                     return BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                        child:
-                            CategoryCreatorWidget(getCreatedCategoryId: updateTaskCategory, context: providerContext));
+                        child: CategoryCreatorWidget(getCreatedCategoryId: updateTaskCategory, context: context));
                   },
                 );
               },

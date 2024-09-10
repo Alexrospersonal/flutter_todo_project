@@ -15,10 +15,7 @@ class TaskListItemData {
   Duration? duration;
   List<DateTime>? reminders;
 
-  TaskListItemData({
-    required this.id,
-    required this.name
-    });
+  TaskListItemData({required this.id, required this.name});
 
   void addCategory(String category) {
     this.category = category;
@@ -28,7 +25,7 @@ class TaskListItemData {
     this.color = color;
   }
 
-  void addDate(DateTime date) {
+  void addDate(DateTime? date) {
     this.date = date;
   }
 
@@ -48,14 +45,15 @@ class TaskListItemData {
     final dateFormat = DateFormat('EEE');
 
     final List<String> formattedDates = repetlyDates != null
-      ? repetlyDates!.asMap().entries
-          .where((entry) => entry.value) // Фільтруємо записи, де значення true
-          .map((entry) {
+        ? repetlyDates!
+            .asMap()
+            .entries
+            .where((entry) => entry.value) // Фільтруємо записи, де значення true
+            .map((entry) {
             final date = DateTime.utc(2024, 1, 1).add(Duration(days: entry.key));
             return dateFormat.format(date); // Форматуємо дату
-          })
-          .toList() // Перетворюємо результат в список
-      : [];
+          }).toList() // Перетворюємо результат в список
+        : [];
 
     if (formattedDates.length == 7) {
       return [s.week];

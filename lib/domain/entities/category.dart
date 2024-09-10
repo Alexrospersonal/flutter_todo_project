@@ -23,4 +23,7 @@ class CategoryEntity {
 
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ emoji.hashCode;
+
+  @override
+  String toString() => "$emoji $name";
 }

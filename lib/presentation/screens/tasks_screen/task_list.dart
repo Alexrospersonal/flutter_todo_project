@@ -32,6 +32,7 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
 
     final snackBar = SnackBar(
       content: Text(S.of(context).UndoLastAction),
+      duration: const Duration(milliseconds: 1000),
       action: SnackBarAction(
         label: S.of(context).cancel,
         onPressed: () => _undoRemove(),
@@ -47,6 +48,7 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
             await DbService.db.taskEntitys.delete(removedTask.id);
           });
         } else {
+          // TODO: додати провірку чи завдання має повтори якщо має то його не завершувати а лиш додати в список завеошених завдань
           await DbService.db.writeTxn(() async {
             final task = await DbService.db.taskEntitys.get(removedTask.id);
             task?.isFinished = true;
@@ -76,12 +78,12 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
   // Виправити помилку яке стається
   @override
   Widget build(BuildContext context) {
-    final taskListAsync = ref.watch(taskStreamProvier);
+    final taskListAsync = ref.watch(taskStreamProvider);
 
     return taskListAsync.when(
       data: (tasksEntity) {
-        var newTasks = converter(tasksEntity);
-        updateList(newTasks);
+        // var newTasks = convertTaskfromEntityToData(tasksEntity);
+        updateList(tasksEntity);
 
         return Container(
             margin: const EdgeInsets.symmetric(vertical: 10),
@@ -90,7 +92,9 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
               initialItemCount: tasks.length,
               itemBuilder: (context, index, animation) {
                 return TaskListItem(
-                    id: index, taskData: tasks[index], onDismissed: (bool delete) => removeIndex(index, delete));
+                    id: index,
+                    taskData: tasks[index],
+                    onDismissed: (bool delete) => removeIndex(index, delete));
               },
             ));
       },
@@ -100,11 +104,11 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
   }
 
   // TODO: написати нормальну логіку або отримання конвертованих даних із стану
-  List<TaskListItemData> converter(List<TaskEntity> tasksEntity) {
+  List<TaskListItemData> convertTaskfromEntityToData(List<TaskEntity> tasksEntity) {
     return tasksEntity.map<TaskListItemData>((taskEntity) {
       var taskItem = TaskListItemData(id: taskEntity.id, name: taskEntity.title);
       taskEntity.category.load();
-      taskItem.category = taskEntity.category.toString();
+      taskItem.category = taskEntity.category.value.toString();
 
       if (taskEntity.color != null) {
         taskItem.color = Color(taskEntity.color!);

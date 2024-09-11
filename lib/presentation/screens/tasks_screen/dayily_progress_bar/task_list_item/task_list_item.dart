@@ -8,19 +8,17 @@ import 'package:vibration/vibration.dart';
 class TaskListItem extends StatefulWidget {
   final int id;
   final TaskListItemData taskData;
-  final void Function() onDismissed;
+  final void Function(bool isDelete) onDismissed;
 
-  const TaskListItem(
-      {super.key,
-      required this.id,
-      required this.taskData,
-      required this.onDismissed});
+  const TaskListItem({super.key, required this.id, required this.taskData, required this.onDismissed});
 
   @override
   State<TaskListItem> createState() => _TaskListItemState();
 }
 
 class _TaskListItemState extends State<TaskListItem> {
+  bool delete = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -46,12 +44,14 @@ class _TaskListItemState extends State<TaskListItem> {
         ),
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
+            delete = false;
             Vibration.vibrate(duration: 50, amplitude: 1);
           } else {
+            delete = true;
             Vibration.vibrate(duration: 100, amplitude: 32);
           }
           // Vibration.vibrate(pattern: [50,100,50], intensities: [1, 64]);
-          widget.onDismissed();
+          widget.onDismissed(delete);
         },
         child: TaskListItemContainer(
           data: widget.taskData,

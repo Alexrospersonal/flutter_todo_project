@@ -70,6 +70,13 @@ const TaskEntitySchema = CollectionSchema(
       name: r'category',
       target: r'CategoryEntity',
       single: true,
+    ),
+    r'repeatedTask': LinkSchema(
+      id: -3502435907341473718,
+      name: r'repeatedTask',
+      target: r'RepeatedTaskEntity',
+      single: false,
+      linkName: r'task',
     )
   },
   embeddedSchemas: {},
@@ -164,13 +171,15 @@ Id _taskEntityGetId(TaskEntity object) {
 }
 
 List<IsarLinkBase<dynamic>> _taskEntityGetLinks(TaskEntity object) {
-  return [object.category];
+  return [object.category, object.repeatedTask];
 }
 
 void _taskEntityAttach(IsarCollection<dynamic> col, Id id, TaskEntity object) {
   object.id = id;
   object.category
       .attach(col, col.isar.collection<CategoryEntity>(), r'category', id);
+  object.repeatedTask.attach(
+      col, col.isar.collection<RepeatedTaskEntity>(), r'repeatedTask', id);
 }
 
 extension TaskEntityQueryWhereSort
@@ -780,6 +789,67 @@ extension TaskEntityQueryLinks
   QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> categoryIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'category', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> repeatedTask(
+      FilterQuery<RepeatedTaskEntity> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'repeatedTask');
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      repeatedTaskLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'repeatedTask', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      repeatedTaskIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'repeatedTask', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      repeatedTaskIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'repeatedTask', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      repeatedTaskLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'repeatedTask', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      repeatedTaskLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'repeatedTask', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      repeatedTaskLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'repeatedTask', lower, includeLower, upper, includeUpper);
     });
   }
 }

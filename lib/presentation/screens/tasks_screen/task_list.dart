@@ -3,8 +3,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
+import 'package:flutter_todo_project/domain/contollers/task_finishing_controller.dart';
 import 'package:flutter_todo_project/domain/contollers/task_list_controller.dart';
-import 'package:flutter_todo_project/domain/entities/finished_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/task_stream_provider.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
@@ -25,7 +25,6 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
   List<TaskListItemData> tasks = [];
 
   void removeIndex(int index, bool isDelete) {
-    // TODO: відносно isDelete зробити логіку або завершення або видалення
     final removedTask = tasks[index];
     queue.addLast(SnackItemData(id: index, isFinished: false, task: removedTask));
     tasks.removeAt(index);
@@ -41,24 +40,16 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then((reason) async {
-      // TODO: винести в окремий клас який і провіряє завдання і кладе їх у завершенні завдання
+      var controller = TaskFinishingController();
+
       if (reason != SnackBarClosedReason.action) {
         if (isDelete) {
-          await DbService.db.writeTxn(() async {
-            await DbService.db.taskEntitys.delete(removedTask.id);
-          });
+          await controller.removeTask(removedTask.id);
         } else {
-          // TODO: додати провірку чи завдання має повтори якщо має то його не завершувати а лиш додати в список завеошених завдань
           await DbService.db.writeTxn(() async {
             final task = await DbService.db.taskEntitys.get(removedTask.id);
-            task?.isFinished = true;
-            await DbService.db.taskEntitys.put(task!);
-
-            var finishedTask = FinishedTaskEntity(finishedDate: DateTime.now());
-            finishedTask.task.value = task;
-
-            await DbService.db.finishedTaskEntitys.put(finishedTask);
-            finishedTask.task.save();
+            await controller.finishTask(removedTask.id, task);
+            await controller.addTaskToFinishedTasks(task!);
           });
         }
       }
@@ -73,16 +64,12 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
     _listKey.currentState?.insertItem(removedTask.id);
   }
 
-  // TODO: додати видалення і повернення до списку. Тобто його видаляти повертати і завершувати
-  // це все має оновлювати список
-  // Виправити помилку яке стається
   @override
   Widget build(BuildContext context) {
     final taskListAsync = ref.watch(taskStreamProvider);
 
     return taskListAsync.when(
       data: (tasksEntity) {
-        // var newTasks = convertTaskfromEntityToData(tasksEntity);
         updateList(tasksEntity);
 
         return Container(
@@ -103,49 +90,8 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
     );
   }
 
-  // TODO: написати нормальну логіку або отримання конвертованих даних із стану
-  List<TaskListItemData> convertTaskfromEntityToData(List<TaskEntity> tasksEntity) {
-    return tasksEntity.map<TaskListItemData>((taskEntity) {
-      var taskItem = TaskListItemData(id: taskEntity.id, name: taskEntity.title);
-      taskEntity.category.load();
-      taskItem.category = taskEntity.category.value.toString();
-
-      if (taskEntity.color != null) {
-        taskItem.color = Color(taskEntity.color!);
-      }
-
-      if (taskEntity.taskDate != null) {
-        taskItem.addDate(taskEntity.taskDate);
-      }
-
-      return taskItem;
-    }).toList();
-  }
-
   void updateList(List<TaskListItemData> newTasks) {
     tasks = TaskListController(listKey: _listKey, tasks: tasks).updateList(newTasks);
-
-    // if (tasks.isEmpty) {
-    //   tasks = List.from(newTasks);
-    //   for (var i = 0; i < newTasks.length; i++) {
-    //     _listKey.currentState?.insertItem(i);
-    //   }
-    // } else if (tasks.length == newTasks.length) {
-    //   for (var i = tasks.length - 1; i >= 0; i--) {
-    //     final removedTask = tasks.removeAt(i);
-    //     _listKey.currentState?.removeItem(i, (context, animation) {
-    //       return TaskListItem(id: removedTask.id, taskData: removedTask, onDismissed: (bool delete) {});
-    //     });
-    //   }
-    //   tasks = List.from(newTasks);
-    //   for (var i = 0; i < tasks.length; i++) {
-    //     _listKey.currentState?.insertItem(i);
-    //   }
-    // } else {
-    //   final initialLength = tasks.length;
-    //   tasks = List.from(newTasks);
-    //   _listKey.currentState?.insertItem(initialLength);
-    // }
   }
 }
 

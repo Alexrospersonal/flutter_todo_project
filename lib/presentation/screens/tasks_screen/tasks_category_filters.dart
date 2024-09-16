@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/state/selected_filter_state.dart';
+import 'package:flutter_todo_project/domain/task_filters.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
 import 'package:flutter_todo_project/settings.dart';
@@ -13,14 +14,13 @@ class TasksCategoryFilters extends ConsumerStatefulWidget {
 }
 
 class _TasksCategoryFiltersState extends ConsumerState<TasksCategoryFilters> {
-
-  void setFilter(Filter filter) {
+  void setFilter(TaskFilter filter) {
     ref.read(selectedFilterIndexProvider.notifier).state = filter;
   }
 
   @override
   Widget build(BuildContext context) {
-    Filter currentFilter = ref.watch(selectedFilterIndexProvider);
+    TaskFilter currentFilter = ref.watch(selectedFilterIndexProvider);
 
     return Wrap(
       alignment: WrapAlignment.center,
@@ -29,43 +29,37 @@ class _TasksCategoryFiltersState extends ConsumerState<TasksCategoryFilters> {
       children: [
         TaskCategoryFiltersItem(
           title: S.of(context).newest,
-          filter: Filter.newest,
+          filter: TaskFilter.newest,
           currentFilter: currentFilter,
           callback: setFilter,
         ),
         TaskCategoryFiltersItem(
           title: S.of(context).oldest,
-          filter: Filter.oldest,
+          filter: TaskFilter.oldest,
           currentFilter: currentFilter,
           callback: setFilter,
         ),
         TaskCategoryFiltersItem(
           title: S.of(context).isComing,
-          filter: Filter.isComing,
+          filter: TaskFilter.isComing,
           currentFilter: currentFilter,
           callback: setFilter,
         ),
         TaskCategoryFiltersItem(
           title: S.of(context).important,
-          filter: Filter.important,
-          currentFilter: currentFilter,
-          callback: setFilter,
-        ),
-        TaskCategoryFiltersItem(
-          title: S.of(context).withFiles,
-          filter: Filter.withFiles,
+          filter: TaskFilter.important,
           currentFilter: currentFilter,
           callback: setFilter,
         ),
         TaskCategoryFiltersItem(
           title: S.of(context).done,
-          filter: Filter.done,
+          filter: TaskFilter.finished,
           currentFilter: currentFilter,
           callback: setFilter,
         ),
         TaskCategoryFiltersItem(
           title: S.of(context).overdue,
-          filter: Filter.overdue,
+          filter: TaskFilter.outdated,
           currentFilter: currentFilter,
           callback: setFilter,
         ),
@@ -83,9 +77,9 @@ class TaskCategoryFiltersItem extends StatelessWidget {
       required this.callback});
 
   final String title;
-  final Filter filter;
-  final Filter currentFilter;
-  final void Function(Filter) callback;
+  final TaskFilter filter;
+  final TaskFilter currentFilter;
+  final void Function(TaskFilter) callback;
 
   BoxDecoration getDecoration(BuildContext context, bool isSelected) {
     if (isSelected) {
@@ -97,16 +91,13 @@ class TaskCategoryFiltersItem extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(20));
     }
-    return BoxDecoration(
-        color: greyColor, borderRadius: BorderRadius.circular(20));
+    return BoxDecoration(color: greyColor, borderRadius: BorderRadius.circular(20));
   }
 
   @override
   Widget build(BuildContext context) {
     bool isSelected = filter == currentFilter;
-    Color color = isSelected
-        ? Theme.of(context).primaryColor
-        : Theme.of(context).canvasColor;
+    Color color = isSelected ? Theme.of(context).primaryColor : Theme.of(context).canvasColor;
 
     BoxDecoration decoration = getDecoration(context, isSelected);
 
@@ -121,11 +112,7 @@ class TaskCategoryFiltersItem extends StatelessWidget {
             child: Center(
                 child: Text(
               title,
-              style: TextStyle(
-                  fontSize: 10,
-                  color: color,
-                  fontWeight: FontWeight.w500,
-                  height: 1),
+              style: TextStyle(fontSize: 10, color: color, fontWeight: FontWeight.w500, height: 1),
             ))));
   }
 }

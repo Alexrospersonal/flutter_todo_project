@@ -19,6 +19,7 @@ class TaskEntity {
 
   String? notate;
 
+  @Index()
   DateTime? taskDate;
 
   bool hasTime = false;

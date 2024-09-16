@@ -1,4 +1,5 @@
 import 'package:flutter_todo_project/domain/entities/category.dart';
+import 'package:flutter_todo_project/domain/entities/overdue_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
 import 'package:isar/isar.dart';
 
@@ -16,6 +17,9 @@ class TaskEntity {
 
   @Backlink(to: 'task')
   final repeatedTask = IsarLinks<RepeatedTaskEntity>();
+
+  @Backlink(to: 'task')
+  final overdueTask = IsarLinks<OverdueTaskEntity>();
 
   String? notate;
 

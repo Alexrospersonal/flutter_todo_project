@@ -4,7 +4,6 @@ import 'package:flutter_todo_project/domain/state/selected_filter_state.dart';
 import 'package:flutter_todo_project/domain/task_filters.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
-import 'package:flutter_todo_project/settings.dart';
 
 class TasksCategoryFilters extends ConsumerStatefulWidget {
   const TasksCategoryFilters({super.key});

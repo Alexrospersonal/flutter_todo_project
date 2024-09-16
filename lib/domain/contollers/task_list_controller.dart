@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item_data.dart';
 
 typedef ListKey = GlobalKey<AnimatedListState>;
@@ -18,9 +17,9 @@ class TaskListController {
 
   void removeAllTaskFromAnimationState() {
     for (var i = tasks.length - 1; i >= 0; i--) {
-      final removedTask = tasks.removeAt(i);
+      tasks.removeAt(i);
       listKey.currentState?.removeItem(i, (context, animation) {
-        return TaskListItem(id: removedTask.id, taskData: removedTask, onDismissed: (bool delete) {});
+        return const SizedBox.shrink();
       });
     }
   }

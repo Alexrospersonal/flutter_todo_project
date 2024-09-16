@@ -91,6 +91,13 @@ const TaskEntitySchema = CollectionSchema(
       target: r'RepeatedTaskEntity',
       single: false,
       linkName: r'task',
+    ),
+    r'overdueTask': LinkSchema(
+      id: 2831370268375052231,
+      name: r'overdueTask',
+      target: r'OverdueTaskEntity',
+      single: false,
+      linkName: r'task',
     )
   },
   embeddedSchemas: {},
@@ -185,7 +192,7 @@ Id _taskEntityGetId(TaskEntity object) {
 }
 
 List<IsarLinkBase<dynamic>> _taskEntityGetLinks(TaskEntity object) {
-  return [object.category, object.repeatedTask];
+  return [object.category, object.repeatedTask, object.overdueTask];
 }
 
 void _taskEntityAttach(IsarCollection<dynamic> col, Id id, TaskEntity object) {
@@ -194,6 +201,8 @@ void _taskEntityAttach(IsarCollection<dynamic> col, Id id, TaskEntity object) {
       .attach(col, col.isar.collection<CategoryEntity>(), r'category', id);
   object.repeatedTask.attach(
       col, col.isar.collection<RepeatedTaskEntity>(), r'repeatedTask', id);
+  object.overdueTask.attach(
+      col, col.isar.collection<OverdueTaskEntity>(), r'overdueTask', id);
 }
 
 extension TaskEntityQueryWhereSort
@@ -982,6 +991,67 @@ extension TaskEntityQueryLinks
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(
           r'repeatedTask', lower, includeLower, upper, includeUpper);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> overdueTask(
+      FilterQuery<OverdueTaskEntity> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'overdueTask');
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      overdueTaskLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'overdueTask', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      overdueTaskIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'overdueTask', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      overdueTaskIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'overdueTask', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      overdueTaskLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'overdueTask', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      overdueTaskLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'overdueTask', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      overdueTaskLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'overdueTask', lower, includeLower, upper, includeUpper);
     });
   }
 }

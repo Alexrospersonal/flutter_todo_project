@@ -43,10 +43,12 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
     int tasks = 0;
 
     if (cat.name == "#01") {
-      tasks = await DbService.db.taskEntitys.filter().taskDateEqualTo(DateTime.now()).count();
+      var today = DateTime.now().copyWith(hour: 0, minute: 0);
+      tasks = await DbService.db.taskEntitys.filter().isFinishedEqualTo(false).taskDateBetween(today.subtract(const Duration(days: 1)),
+        today.add(const Duration(days: 1))).count();
     } else {
       cat.tasks.load();
-      tasks = cat.tasks.length;
+      tasks = await cat.tasks.filter().isFinishedEqualTo(false).count();
     }
     return CategoryData(name: cat.name, emoji: cat.emoji, tasks: tasks, categoryId: cat.id);
   }
@@ -65,7 +67,7 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
   }
 }
 
-final selectedCategoryId = StateProvider<int>((ref) => 0);
+final selectedCategoryId = StateProvider<int>((ref) => 1);
 
 final categoriesProvider =
     AsyncNotifierProvider<ListCategoryFromDbNotifier, List<CategoryData>>(() => ListCategoryFromDbNotifier());

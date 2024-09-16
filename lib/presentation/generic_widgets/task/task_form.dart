@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/contollers/create_task_controller.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_notifier.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/domain/state/task_dialog_expanded_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/date_selector_page/date_selector_page.dart';
@@ -142,6 +143,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
                 if (_titleController.text.isNotEmpty) {
                   saveTextFromControllersToNotifier();
                   CreateTaskController(context: context).saveTask();
+                  ref.read(categoriesProvider.notifier).loadCategories();
                   return true;
                 }
                 var callInformBar = getCallInformBar(context);

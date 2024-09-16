@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/builders/task_query_builder.dart';
-import 'package:flutter_todo_project/domain/entities/category.dart';
 import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
@@ -87,28 +86,28 @@ final taskStreamProvider = StreamProvider<List<TaskListItemData>>((ref) {
       return taskData;
     }).toList();
 
-    var repeatedEntities = repeatedTaskStream.map((repeatedTask) {
-      var task = repeatedTask.task.value!;
+    // var repeatedEntities = repeatedTaskStream.map((repeatedTask) {
+    //   var task = repeatedTask.task.value!;
 
-      var taskData = TaskListItemData(id: task.id, name: task.title);
+    //   var taskData = TaskListItemData(id: task.id, name: task.title);
 
-      if (task.category.value != null) {
-        taskData.category = task.category.value.toString();
-      }
+    //   if (task.category.value != null) {
+    //     taskData.category = task.category.value.toString();
+    //   }
 
-      if (task.color != null) {
-        taskData.color = Color(task.color!);
-      }
+    //   if (task.color != null) {
+    //     taskData.color = Color(task.color!);
+    //   }
 
-      if (task.taskDate != null) {
-        taskData.date = task.taskDate;
-      }
+    //   if (task.taskDate != null) {
+    //     taskData.date = task.taskDate;
+    //   }
 
-      return taskData;
-    }).toList();
+    //   return taskData;
+    // }).toList();
 
     combinedTasks.addAll(taskEnities);
-    combinedTasks.addAll(repeatedEntities);
+    // combinedTasks.addAll(repeatedEntities);
 
     // combinedTasks.sort((a, b) => a.name.compareTo(b.name));
 

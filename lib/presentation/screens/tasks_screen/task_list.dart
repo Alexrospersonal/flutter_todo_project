@@ -6,6 +6,7 @@ import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/contollers/task_finishing_controller.dart';
 import 'package:flutter_todo_project/domain/contollers/task_list_controller.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/domain/state/task_stream_provider.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item.dart';
@@ -52,6 +53,7 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
             await controller.addTaskToFinishedTasks(task!);
           });
         }
+        await ref.read(categoriesProvider.notifier).loadCategories();
       }
     });
     _listKey.currentState?.removeItem(index, (context, animation) => const SizedBox.shrink());

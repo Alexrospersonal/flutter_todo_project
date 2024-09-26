@@ -36,7 +36,7 @@ const RepeatedTaskEntitySchema = CollectionSchema(
     r'repeatDuringWeek': PropertySchema(
       id: 3,
       name: r'repeatDuringWeek',
-      type: IsarType.boolList,
+      type: IsarType.longList,
     )
   },
   estimateSize: _repeatedTaskEntityEstimateSize,
@@ -89,7 +89,7 @@ int _repeatedTaskEntityEstimateSize(
   {
     final value = object.repeatDuringWeek;
     if (value != null) {
-      bytesCount += 3 + value.length;
+      bytesCount += 3 + value.length * 8;
     }
   }
   return bytesCount;
@@ -104,7 +104,7 @@ void _repeatedTaskEntitySerialize(
   writer.writeDateTime(offsets[0], object.endDateOfRepeatedly);
   writer.writeBool(offsets[1], object.isFinished);
   writer.writeDateTimeList(offsets[2], object.repeatDuringDay);
-  writer.writeBoolList(offsets[3], object.repeatDuringWeek);
+  writer.writeLongList(offsets[3], object.repeatDuringWeek);
 }
 
 RepeatedTaskEntity _repeatedTaskEntityDeserialize(
@@ -118,7 +118,7 @@ RepeatedTaskEntity _repeatedTaskEntityDeserialize(
   object.id = id;
   object.isFinished = reader.readBool(offsets[1]);
   object.repeatDuringDay = reader.readDateTimeOrNullList(offsets[2]);
-  object.repeatDuringWeek = reader.readBoolList(offsets[3]);
+  object.repeatDuringWeek = reader.readLongList(offsets[3]);
   return object;
 }
 
@@ -136,7 +136,7 @@ P _repeatedTaskEntityDeserializeProp<P>(
     case 2:
       return (reader.readDateTimeOrNullList(offset)) as P;
     case 3:
-      return (reader.readBoolList(offset)) as P;
+      return (reader.readLongList(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -703,11 +703,57 @@ extension RepeatedTaskEntityQueryFilter
   }
 
   QueryBuilder<RepeatedTaskEntity, RepeatedTaskEntity, QAfterFilterCondition>
-      repeatDuringWeekElementEqualTo(bool value) {
+      repeatDuringWeekElementEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'repeatDuringWeek',
         value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<RepeatedTaskEntity, RepeatedTaskEntity, QAfterFilterCondition>
+      repeatDuringWeekElementGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'repeatDuringWeek',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<RepeatedTaskEntity, RepeatedTaskEntity, QAfterFilterCondition>
+      repeatDuringWeekElementLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'repeatDuringWeek',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<RepeatedTaskEntity, RepeatedTaskEntity, QAfterFilterCondition>
+      repeatDuringWeekElementBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'repeatDuringWeek',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
       ));
     });
   }
@@ -958,7 +1004,7 @@ extension RepeatedTaskEntityQueryProperty
     });
   }
 
-  QueryBuilder<RepeatedTaskEntity, List<bool>?, QQueryOperations>
+  QueryBuilder<RepeatedTaskEntity, List<int>?, QQueryOperations>
       repeatDuringWeekProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'repeatDuringWeek');

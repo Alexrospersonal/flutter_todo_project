@@ -34,7 +34,7 @@ class RepeatedTaskController {
     return listItems;
   }
 
-  bool _isRepeatDuringWeek(List<bool>? repeatDuringWeek) {
+  bool _isRepeatDuringWeek(List<int>? repeatDuringWeek) {
     if (repeatDuringWeek == null) {
       throw Exception("repeatDuringWeek is not exists");
     }
@@ -87,6 +87,11 @@ class RepeatedTaskController {
         break;
       case TaskFilter.outdated:
         sorteredItems = items.where((item) => item.date!.isBefore(DateTime.now())).toList();
+      case TaskFilter.today:
+        var today = DateTime.now().copyWith(hour: 0, minute: 0);
+        var before = today.subtract(const Duration(days: 1));
+        var after = today.add(const Duration(days: 1));
+        sorteredItems = items.where((item) => item.date!.isAfter(before) && item.date!.isBefore(after)).toList();
     }
 
     return sorteredItems;

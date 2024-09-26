@@ -33,9 +33,7 @@ class _CategorySelectorWidgetState extends ConsumerState<CategorySelectorWidget>
   void initState() {
     super.initState();
     var id = ref.read(selectedCategoryId.notifier).state;
-    if (id != 1) {
-      selectedCategory = DbService.db.categoryEntitys.getSync(id);
-    }
+    selectedCategory = DbService.db.categoryEntitys.getSync(id);
   }
 
   @override

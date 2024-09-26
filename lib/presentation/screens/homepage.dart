@@ -62,10 +62,6 @@ class _HomePageState extends ConsumerState<HomePage> {
             setState(() {
               _selectedIndex = index;
             });
-
-            // setState(() {
-            //   ref.read(initialIndexProvider.notifier).state = index;
-            // });
           },
           children: const [TasksScreen(), CalendarScreen()],
         ),

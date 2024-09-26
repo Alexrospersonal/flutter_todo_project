@@ -37,23 +37,28 @@ const TaskEntitySchema = CollectionSchema(
       name: r'important',
       type: IsarType.bool,
     ),
-    r'isFinished': PropertySchema(
+    r'isCopy': PropertySchema(
       id: 4,
+      name: r'isCopy',
+      type: IsarType.bool,
+    ),
+    r'isFinished': PropertySchema(
+      id: 5,
       name: r'isFinished',
       type: IsarType.bool,
     ),
     r'notate': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'notate',
       type: IsarType.string,
     ),
     r'taskDate': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'taskDate',
       type: IsarType.dateTime,
     ),
     r'title': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'title',
       type: IsarType.string,
     )
@@ -98,6 +103,12 @@ const TaskEntitySchema = CollectionSchema(
       target: r'OverdueTaskEntity',
       single: false,
       linkName: r'task',
+    ),
+    r'originalTask': LinkSchema(
+      id: -8211601693947406828,
+      name: r'originalTask',
+      target: r'TaskEntity',
+      single: true,
     )
   },
   embeddedSchemas: {},
@@ -133,10 +144,11 @@ void _taskEntitySerialize(
   writer.writeBool(offsets[1], object.hasRepeats);
   writer.writeBool(offsets[2], object.hasTime);
   writer.writeBool(offsets[3], object.important);
-  writer.writeBool(offsets[4], object.isFinished);
-  writer.writeString(offsets[5], object.notate);
-  writer.writeDateTime(offsets[6], object.taskDate);
-  writer.writeString(offsets[7], object.title);
+  writer.writeBool(offsets[4], object.isCopy);
+  writer.writeBool(offsets[5], object.isFinished);
+  writer.writeString(offsets[6], object.notate);
+  writer.writeDateTime(offsets[7], object.taskDate);
+  writer.writeString(offsets[8], object.title);
 }
 
 TaskEntity _taskEntityDeserialize(
@@ -146,16 +158,17 @@ TaskEntity _taskEntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TaskEntity(
-    title: reader.readString(offsets[7]),
+    title: reader.readString(offsets[8]),
   );
   object.color = reader.readLongOrNull(offsets[0]);
   object.hasRepeats = reader.readBool(offsets[1]);
   object.hasTime = reader.readBool(offsets[2]);
   object.id = id;
   object.important = reader.readBool(offsets[3]);
-  object.isFinished = reader.readBool(offsets[4]);
-  object.notate = reader.readStringOrNull(offsets[5]);
-  object.taskDate = reader.readDateTimeOrNull(offsets[6]);
+  object.isCopy = reader.readBool(offsets[4]);
+  object.isFinished = reader.readBool(offsets[5]);
+  object.notate = reader.readStringOrNull(offsets[6]);
+  object.taskDate = reader.readDateTimeOrNull(offsets[7]);
   return object;
 }
 
@@ -177,10 +190,12 @@ P _taskEntityDeserializeProp<P>(
     case 4:
       return (reader.readBool(offset)) as P;
     case 5:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 6:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 8:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -192,7 +207,12 @@ Id _taskEntityGetId(TaskEntity object) {
 }
 
 List<IsarLinkBase<dynamic>> _taskEntityGetLinks(TaskEntity object) {
-  return [object.category, object.repeatedTask, object.overdueTask];
+  return [
+    object.category,
+    object.repeatedTask,
+    object.overdueTask,
+    object.originalTask
+  ];
 }
 
 void _taskEntityAttach(IsarCollection<dynamic> col, Id id, TaskEntity object) {
@@ -203,6 +223,8 @@ void _taskEntityAttach(IsarCollection<dynamic> col, Id id, TaskEntity object) {
       col, col.isar.collection<RepeatedTaskEntity>(), r'repeatedTask', id);
   object.overdueTask.attach(
       col, col.isar.collection<OverdueTaskEntity>(), r'overdueTask', id);
+  object.originalTask
+      .attach(col, col.isar.collection<TaskEntity>(), r'originalTask', id);
 }
 
 extension TaskEntityQueryWhereSort
@@ -549,6 +571,16 @@ extension TaskEntityQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'important',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> isCopyEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isCopy',
         value: value,
       ));
     });
@@ -1054,6 +1086,20 @@ extension TaskEntityQueryLinks
           r'overdueTask', lower, includeLower, upper, includeUpper);
     });
   }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> originalTask(
+      FilterQuery<TaskEntity> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'originalTask');
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      originalTaskIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'originalTask', 0, true, 0, true);
+    });
+  }
 }
 
 extension TaskEntityQuerySortBy
@@ -1103,6 +1149,18 @@ extension TaskEntityQuerySortBy
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByImportantDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'important', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByIsCopy() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCopy', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByIsCopyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCopy', Sort.desc);
     });
   }
 
@@ -1217,6 +1275,18 @@ extension TaskEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByIsCopy() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCopy', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByIsCopyDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCopy', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByIsFinished() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isFinished', Sort.asc);
@@ -1292,6 +1362,12 @@ extension TaskEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByIsCopy() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isCopy');
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByIsFinished() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isFinished');
@@ -1348,6 +1424,12 @@ extension TaskEntityQueryProperty
   QueryBuilder<TaskEntity, bool, QQueryOperations> importantProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'important');
+    });
+  }
+
+  QueryBuilder<TaskEntity, bool, QQueryOperations> isCopyProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isCopy');
     });
   }
 

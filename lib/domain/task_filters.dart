@@ -1,1 +1,1 @@
-enum TaskFilter { newest, oldest, isComing, important, finished, outdated }
+enum TaskFilter { today, newest, oldest, isComing, important, finished, outdated }

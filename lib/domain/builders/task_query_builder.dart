@@ -10,21 +10,15 @@ class TaskQueryBuilder {
   final int categoryId;
 
   TaskQueryBuilder({required this.categoryId})
-      : query = DbService.db.taskEntitys.filter().hasRepeatsEqualTo(false);
+      : query = DbService.db.taskEntitys.filter().isFinishedEqualTo(false).group((q) => q
+              .isCopyEqualTo(true)
+              .or()
+              .isCopyEqualTo(false)
+              .and()
+              .hasRepeatsEqualTo(false));
 
   TaskQueryBuilder addCategory() {
-    if (categoryId == 1) {
-      addDateFilter();
-      return this;
-    }
     query = query.category((q) => q.idEqualTo(categoryId));
-    return this;
-  }
-
-  TaskQueryBuilder addDateFilter() {
-    var today = DateTime.now().copyWith(hour: 0, minute: 0);
-    query = query.taskDateBetween(today.subtract(const Duration(days: 1)),
-        today.add(const Duration(days: 1)));
     return this;
   }
 
@@ -36,6 +30,11 @@ class TaskQueryBuilder {
 
   TaskQueryBuilder addIsNotFinished() {
     query = query.isFinishedEqualTo(false);
+    return this;
+  }
+
+  TaskQueryBuilder addAllTaskDate() {
+    query = query.group((q) => q.taskDateIsNull().or().taskDateIsNotNull());
     return this;
   }
 
@@ -58,6 +57,8 @@ class TaskQueryBuilder {
         query = getFinished();
       case TaskFilter.outdated:
         query = getOutdated();
+      case TaskFilter.today:
+        query = getToday();
     }
     return this;
   }
@@ -84,6 +85,12 @@ class TaskQueryBuilder {
 
   QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> getOutdated() {
     return query.taskDateLessThan(DateTime.now());
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> getToday() {
+    var today = DateTime.now().copyWith(hour: 0, minute: 0);
+    return query.taskDateBetween(today.subtract(const Duration(days: 1)),
+        today.add(const Duration(days: 1)));
   }
 
   Query<TaskEntity> build() {
@@ -148,6 +155,17 @@ class TaskQueryBuilderDirector {
         .build();
   }
 
+  Query<TaskEntity> buildIsToday() {
+    return builder
+        .addCategory()
+        .addIsNotFinished()
+        // TODO: додати в сьогодні завдання які не мають дати
+        .addAllTaskDate()
+        // .addTaskDateIsNotNull()
+        .addFilter(TaskFilter.today)
+        .build();
+  }
+
   Query<TaskEntity> build(TaskFilter filter) {
     switch (filter) {
       case TaskFilter.newest:
@@ -162,6 +180,8 @@ class TaskQueryBuilderDirector {
         return buildIsFinished();
       case TaskFilter.outdated:
         return buildIsOutdated();
+      case TaskFilter.today:
+        return buildIsToday();
     }
   }
 }

@@ -14,7 +14,16 @@ class RepeatedTaskBuilder implements EntityBuilder<RepeatedTaskEntity> {
   }
 
   RepeatedTaskBuilder setRepeadeylyDuringWeek() {
-    _entityDatesDate?.repeatDuringWeek = dependencies.repeatlyNotifier.repeatOfDays;
+    List<int> days = [];
+    var boolWeekdays = dependencies.repeatlyNotifier.repeatOfDays;
+
+    for (var i = 0; i < boolWeekdays.length; i++) {
+      if (boolWeekdays[i] == true) {
+        days.add(i+1);
+      }
+    }
+
+    _entityDatesDate?.repeatDuringWeek = days;
     return this;
   }
 

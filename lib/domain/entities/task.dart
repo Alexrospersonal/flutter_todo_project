@@ -21,6 +21,8 @@ class TaskEntity {
   @Backlink(to: 'task')
   final overdueTask = IsarLinks<OverdueTaskEntity>();
 
+  final IsarLink<TaskEntity> originalTask = IsarLink<TaskEntity>();
+
   String? notate;
 
   @Index()
@@ -34,16 +36,28 @@ class TaskEntity {
 
   bool isFinished = false;
 
+  bool isCopy = false;
+
   TaskEntity({required this.title});
+
+  TaskEntity copyWith(
+      {String? title,
+      String? notate,
+      DateTime? taskDate,
+      bool? hasTime,
+      bool? hasRepeats,
+      bool? important,
+      int? color}) {
+
+    var task = TaskEntity(title: title ?? this.title);
+
+    task.notate = notate ?? this.notate;
+    task.taskDate = taskDate ?? this.taskDate;
+    task.hasTime = hasTime ?? this.hasTime;
+    task.hasRepeats = hasRepeats ?? this.hasRepeats;
+    task.important = important ?? this.important;
+    task.color = color ?? this.color;
+
+    return task;
+  }
 }
-
-// @embedded
-// class TaskEntityDateTimeData {
-//   DateTime? taskDate;
-//   bool isTime = false;
-
-//   bool isRepeatedly = false;
-//   List<bool>? repeatDuringWeek;
-//   DateTime? endDateOfRepeadetly;
-//   List<DateTime?>? repeatDuringDay;
-// }

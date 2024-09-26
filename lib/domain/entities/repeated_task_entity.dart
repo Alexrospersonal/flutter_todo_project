@@ -9,7 +9,7 @@ class RepeatedTaskEntity {
 
   final IsarLink<TaskEntity> task = IsarLink<TaskEntity>();
 
-  List<bool>? repeatDuringWeek;
+  List<int>? repeatDuringWeek;
 
   @Index()
   DateTime? endDateOfRepeatedly;

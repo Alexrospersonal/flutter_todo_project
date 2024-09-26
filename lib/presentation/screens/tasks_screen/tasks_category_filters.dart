@@ -9,7 +9,8 @@ class TasksCategoryFilters extends ConsumerStatefulWidget {
   const TasksCategoryFilters({super.key});
 
   @override
-  ConsumerState<TasksCategoryFilters> createState() => _TasksCategoryFiltersState();
+  ConsumerState<TasksCategoryFilters> createState() =>
+      _TasksCategoryFiltersState();
 }
 
 class _TasksCategoryFiltersState extends ConsumerState<TasksCategoryFilters> {
@@ -26,6 +27,12 @@ class _TasksCategoryFiltersState extends ConsumerState<TasksCategoryFilters> {
       runSpacing: 7,
       spacing: 16,
       children: [
+        TaskCategoryFiltersItem(
+          title: S.of(context).today,
+          filter: TaskFilter.today,
+          currentFilter: currentFilter,
+          callback: setFilter,
+        ),
         TaskCategoryFiltersItem(
           title: S.of(context).newest,
           filter: TaskFilter.newest,
@@ -90,13 +97,16 @@ class TaskCategoryFiltersItem extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(20));
     }
-    return BoxDecoration(color: greyColor, borderRadius: BorderRadius.circular(20));
+    return BoxDecoration(
+        color: greyColor, borderRadius: BorderRadius.circular(20));
   }
 
   @override
   Widget build(BuildContext context) {
     bool isSelected = filter == currentFilter;
-    Color color = isSelected ? Theme.of(context).primaryColor : Theme.of(context).canvasColor;
+    Color color = isSelected
+        ? Theme.of(context).primaryColor
+        : Theme.of(context).canvasColor;
 
     BoxDecoration decoration = getDecoration(context, isSelected);
 
@@ -111,7 +121,11 @@ class TaskCategoryFiltersItem extends StatelessWidget {
             child: Center(
                 child: Text(
               title,
-              style: TextStyle(fontSize: 10, color: color, fontWeight: FontWeight.w500, height: 1),
+              style: TextStyle(
+                  fontSize: 10,
+                  color: color,
+                  fontWeight: FontWeight.w500,
+                  height: 1),
             ))));
   }
 }

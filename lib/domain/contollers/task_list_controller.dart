@@ -24,7 +24,6 @@ class TaskListController {
     }
   }
 
-  // TODO: баг з відображенням копій. Напвено не розраховано на додавання більше одного за раз
   List<TaskListItemData> updateList(List<TaskListItemData> newTasks) {
     if (tasks.isEmpty) {
       tasks = List.from(newTasks);
@@ -36,7 +35,9 @@ class TaskListController {
     } else {
       final initialLength = tasks.length;
       tasks = List.from(newTasks);
-      listKey.currentState?.insertItem(initialLength);
+      for (var i = initialLength; i < newTasks.length; i++) {
+        listKey.currentState?.insertItem(i);
+      }
     }
     return tasks;
   }

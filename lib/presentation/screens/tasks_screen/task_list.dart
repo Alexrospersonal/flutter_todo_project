@@ -19,6 +19,7 @@ class TaskListWidget extends ConsumerStatefulWidget {
   ConsumerState<TaskListWidget> createState() => _TaskListWidgetState();
 }
 
+//TODO: Refactor
 class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final Queue<SnackItemData> queue = Queue<SnackItemData>();
@@ -42,6 +43,10 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then((reason) async {
       var controller = TaskFinishingController();
+
+      // TODO: додати логіку завершення завдання
+      //і якщо це останній повтор то його завершити
+      //а якщо ні то стоврити наступну копію якщо її нема
 
       if (reason != SnackBarClosedReason.action) {
         if (isDelete) {

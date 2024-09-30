@@ -25,6 +25,8 @@ class TaskListController {
   }
 
   List<TaskListItemData> updateList(List<TaskListItemData> newTasks) {
+    // TODO: додати лоігку якщо список із завданнями який надходить менший за існуючий
+    // тобто якщо видалити завдання з повторами то всі активна поатори видаляться
     if (tasks.isEmpty) {
       tasks = List.from(newTasks);
       insertAllTasksToAnimationState();

@@ -9,7 +9,6 @@ import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
 import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
 
 class CreateTaskController {
   final BuildContext context;
@@ -114,11 +113,20 @@ class CreateTaskController {
     var startDate = context.read<TaskDateNotifier>().taskDateTime;
     var startDateInWeek = startDate!.weekday;
 
-    int closesetDay = weekdays.firstWhere(
-        (weekday) => weekday >= startDateInWeek,
-        orElse: () => weekdays[0]);
+    int closestDay = getClosestDay(weekdays, startDateInWeek);
 
-    late int addDaysToDate;
+    late int addDaysToDate = getAddDaysToDate(startDateInWeek, closestDay);
+
+    return DateTime.now().add(Duration(days: addDaysToDate));
+  }
+
+  int getClosestDay(List<int> weekdays, int startDateInWeek) {
+    return weekdays.firstWhere((weekday) => weekday >= startDateInWeek,
+        orElse: () => weekdays[0]);
+  }
+
+  int getAddDaysToDate(int startDateInWeek, int closesetDay) {
+    int addDaysToDate = 0;
 
     switch (startDateInWeek.compareTo(closesetDay)) {
       case 0:
@@ -129,13 +137,7 @@ class CreateTaskController {
         addDaysToDate = closesetDay - startDateInWeek;
     }
 
-    // var addDaysToDate = switch (compareVal) {
-    //   0 => 0,
-    //   1 => startDateInWeek - closesetDay,
-    //   _ => ((startDateInWeek + closesetDay) % 7) + 1,
-    // };
-
-    return DateTime.now().add(Duration(days: addDaysToDate));
+    return addDaysToDate;
   }
 
   DateTime getNextDateFromWeekday(DateTime startDate, int weekday) {
@@ -166,10 +168,3 @@ class CreateTaskController {
     return toDate.copyWith(hour: fromTime.hour, minute: fromTime.minute);
   }
 }
-
-// class CreateTaskData {
-//   bool isWeekday;
-//   bool hasRepeats;
-//   bool? isTimes;
-//   List<DateTime?> times;
-// }

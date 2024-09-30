@@ -50,11 +50,20 @@ List<String> repeatlyTimesAsStrings(List<DateTime?> times) {
 }
 
 List<String> repeatlyDaysAsUpperChar() {
+
+  /* This code help's to create a smart selecting of first weekday.
+  MaterialLocalizations localizations = MaterialLocalizations.of(context);
+
+  String firstStringDayOfWeek =
+      localizations.narrowWeekdays[localizations.firstDayOfWeekIndex];
+  var firstDayOfWeek = localizations.firstDayOfWeekIndex;
+  */
+
   final dateFormat = DateFormat('E');
 
   final DateTime now = DateTime.now();
 
-  final DateTime startOfWeek = now.subtract(Duration(days: now.weekday % 7));
+  final DateTime startOfWeek = now.subtract(Duration(days: now.weekday - 1));
 
   return List.generate(7, (index) {
     final DateTime day = startOfWeek.add(Duration(days: index));

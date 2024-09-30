@@ -6,7 +6,10 @@ import 'package:flutter_todo_project/domain/builders/task_builder_director.dart'
 import 'package:flutter_todo_project/domain/builders/task_entity_date_time_data_builder.dart';
 import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
+import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class CreateTaskController {
   final BuildContext context;
@@ -41,7 +44,6 @@ class CreateTaskController {
     return repeatedTaskEntity;
   }
 
-  // TODO: Refactoring
   void saveTask() {
     TaskDependencies dependencies = TaskDependencies.fromContext(context);
 
@@ -79,7 +81,6 @@ class CreateTaskController {
     });
   }
 
-
   Future<void> createAndSaveAllCopiedTasks(
       List<DateTime?> times, DateTime nextDate, TaskEntity task) async {
     List<TaskEntity> copiestTasks = [];
@@ -109,16 +110,37 @@ class CreateTaskController {
     addOriginalTask(task, copiestTask);
   }
 
-  // TODO: виправити логіку створення нової дати
   DateTime getNextDate(List<int> weekdays) {
-    var currentWeekday = DateTime.now().weekday;
+    var startDate = context.read<TaskDateNotifier>().taskDateTime;
+    var startDateInWeek = startDate!.weekday;
 
     int closesetDay = weekdays.firstWhere(
-        (weekday) => weekday >= currentWeekday,
+        (weekday) => weekday >= startDateInWeek,
         orElse: () => weekdays[0]);
 
-    var addDaysToDate = (currentWeekday - closesetDay + 7) % 7;
+    late int addDaysToDate;
+
+    switch (startDateInWeek.compareTo(closesetDay)) {
+      case 0:
+        addDaysToDate = 0;
+      case 1:
+        addDaysToDate = ((startDateInWeek + closesetDay) % 7) + 1;
+      case -1:
+        addDaysToDate = closesetDay - startDateInWeek;
+    }
+
+    // var addDaysToDate = switch (compareVal) {
+    //   0 => 0,
+    //   1 => startDateInWeek - closesetDay,
+    //   _ => ((startDateInWeek + closesetDay) % 7) + 1,
+    // };
+
     return DateTime.now().add(Duration(days: addDaysToDate));
+  }
+
+  DateTime getNextDateFromWeekday(DateTime startDate, int weekday) {
+    var nextWeekday = (startDate.weekday + weekday) % 7;
+    return startDate.add(Duration(days: nextWeekday));
   }
 
   TaskEntity createCopyTaskFromRepeated(TaskEntity task, DateTime date) {

@@ -24,9 +24,36 @@ class TaskListController {
     }
   }
 
+  void removeOneTaskFromAnimationState(int index) {
+    tasks.removeAt(index);
+    listKey.currentState?.removeItem(index, (context, animation) {
+      return const SizedBox.shrink();
+    });
+  }
+
+  void removeOldTasksFromAnimationState(List<TaskListItemData> newTasks) {
+    for (var i = 0; i < tasks.length; i++) {
+      var oldTask = tasks[i];
+
+      int indexInNewTasks =
+          newTasks.indexWhere((newTask) => newTask.id == oldTask.id);
+
+      if (indexInNewTasks == -1) {
+        removeOneTaskFromAnimationState(i);
+        i--;
+      }
+    }
+  }
+
+  void syncAndRemoveFromAnimatedList(List<TaskListItemData> newTasks) {
+    if (newTasks.isEmpty) {
+      removeAllTaskFromAnimationState();
+    } else {
+      removeOldTasksFromAnimationState(newTasks);
+    }
+  }
+
   List<TaskListItemData> updateList(List<TaskListItemData> newTasks) {
-    // TODO: додати лоігку якщо список із завданнями який надходить менший за існуючий
-    // тобто якщо видалити завдання з повторами то всі активна поатори видаляться
     if (tasks.isEmpty) {
       tasks = List.from(newTasks);
       insertAllTasksToAnimationState();
@@ -34,6 +61,8 @@ class TaskListController {
       removeAllTaskFromAnimationState();
       tasks = List.from(newTasks);
       insertAllTasksToAnimationState();
+    } else if (tasks.length > newTasks.length) {
+      syncAndRemoveFromAnimatedList(newTasks);
     } else {
       final initialLength = tasks.length;
       tasks = List.from(newTasks);

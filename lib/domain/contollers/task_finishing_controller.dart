@@ -31,6 +31,8 @@ class TaskFinishingController {
     await DbService.db.writeTxn(() async {
       var isNotCopy = await DbService.db.taskEntitys.filter().idEqualTo(id).originalTaskIsNull().count() > 0;
 
+      // TODO: замінити провірку на копію через поле isCopy
+
       if (isNotCopy == false) {
         var copyTask = await DbService.db.taskEntitys.get(id);
         await copyTask!.originalTask.load();

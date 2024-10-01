@@ -14,6 +14,7 @@ class TaskListItemData {
   List<bool>? repetlyDates;
   Duration? duration;
   List<DateTime>? reminders;
+  bool isCopy = false;
 
   TaskListItemData({required this.id, required this.name});
 

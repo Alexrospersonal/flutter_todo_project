@@ -1,5 +1,3 @@
-
-
 {
   "@@locale": "en",
   "timePickerTittle": "Select time",
@@ -45,6 +43,11 @@
   "tasks": "tasks",
   "@tasks": {
     "description": "Label for tasks",
+    "placeholders": {}
+  },
+  "all": "All",
+  "@all": {
+    "description": "Label for today",
     "placeholders": {}
   },
   "today": "Today",
@@ -270,6 +273,16 @@
   "color": "Task color",
   "@color": {
     "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "deleteRepeatedTaskwarningTitle": "Delete repeated task",
+  "@deleteRepeatedTaskwarningTitle": {
+    "description": "Delete duplicate task? All further repetitions will also be deleted.",
+    "placeholders": {}
+  },
+  "deleteRepeatedTaskwarningText": "Delete duplicate task? All further repetitions will also be deleted.",
+  "@deleteRepeatedTaskwarningText": {
+    "description": "Delete duplicate task? All further repetitions will also be deleted.",
     "placeholders": {}
   }
 }

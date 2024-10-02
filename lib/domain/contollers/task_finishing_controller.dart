@@ -2,6 +2,7 @@ import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/entities/finished_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
+import 'package:flutter_todo_project/presentation/screens/tasks_screen/dayily_progress_bar/task_list_item/task_list_item_data.dart';
 import 'package:isar/isar.dart';
 
 class TaskFinishingController {
@@ -29,7 +30,12 @@ class TaskFinishingController {
     var id = taskId;
 
     await DbService.db.writeTxn(() async {
-      var isNotCopy = await DbService.db.taskEntitys.filter().idEqualTo(id).originalTaskIsNull().count() > 0;
+      var isNotCopy = await DbService.db.taskEntitys
+              .filter()
+              .idEqualTo(id)
+              .originalTaskIsNull()
+              .count() >
+          0;
 
       // TODO: замінити провірку на копію через поле isCopy
 
@@ -99,5 +105,25 @@ class TaskFinishingController {
 
   Future<void> saveCompletedTask(RepeatedTaskEntity repeatedTask) async {
     await DbService.db.repeatedTaskEntitys.put(repeatedTask);
+  }
+
+  // TODO: додати логіку завершення завдання
+  //і якщо це останній повтор то його завершити
+  //а якщо ні то стоврити наступну копію якщо її нема
+  Future<void> handleTaskDeletionOrFinishingAfterSnackBar(
+      bool isDelete, TaskListItemData removedTask) async {
+    if (isDelete) {
+      await removeTask(removedTask.id);
+    } else {
+      await doneTask(removedTask);
+    }
+  }
+
+  Future<void> doneTask(TaskListItemData removedTask) async {
+    await DbService.db.writeTxn(() async {
+      final task = await DbService.db.taskEntitys.get(removedTask.id);
+      await finishTask(removedTask.id, task);
+      await addTaskToFinishedTasks(task!);
+    });
   }
 }

@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "additionalSettingLabel":
             MessageLookupByLibrary.simpleMessage("Additional settings"),
         "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Time"),
+        "all": MessageLookupByLibrary.simpleMessage("All"),
         "cancel": MessageLookupByLibrary.simpleMessage("Undo"),
         "color": MessageLookupByLibrary.simpleMessage("Task color"),
         "confirmVuttonLabel": MessageLookupByLibrary.simpleMessage("CREATE"),
@@ -43,6 +44,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create category"),
         "createTask": MessageLookupByLibrary.simpleMessage("Create task"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Daily progress"),
+        "deleteRepeatedTaskwarningText": MessageLookupByLibrary.simpleMessage(
+            "Delete duplicate task? All further repetitions will also be deleted."),
+        "deleteRepeatedTaskwarningTitle":
+            MessageLookupByLibrary.simpleMessage("Delete repeated task"),
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Determinated\ntasks:"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),

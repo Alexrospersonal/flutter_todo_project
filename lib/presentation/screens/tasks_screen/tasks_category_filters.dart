@@ -28,6 +28,12 @@ class _TasksCategoryFiltersState extends ConsumerState<TasksCategoryFilters> {
       spacing: 16,
       children: [
         TaskCategoryFiltersItem(
+          title: S.of(context).all,
+          filter: TaskFilter.all,
+          currentFilter: currentFilter,
+          callback: setFilter,
+        ),
+        TaskCategoryFiltersItem(
           title: S.of(context).today,
           filter: TaskFilter.today,
           currentFilter: currentFilter,

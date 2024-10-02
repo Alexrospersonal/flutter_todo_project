@@ -140,6 +140,16 @@ class S {
     );
   }
 
+  /// `All`
+  String get all {
+    return Intl.message(
+      'All',
+      name: 'all',
+      desc: 'Label for today',
+      args: [],
+    );
+  }
+
   /// `Today`
   String get today {
     return Intl.message(
@@ -586,6 +596,28 @@ class S {
       'Task color',
       name: 'color',
       desc: 'Label for newest filter',
+      args: [],
+    );
+  }
+
+  /// `Delete repeated task`
+  String get deleteRepeatedTaskwarningTitle {
+    return Intl.message(
+      'Delete repeated task',
+      name: 'deleteRepeatedTaskwarningTitle',
+      desc:
+          'Delete duplicate task? All further repetitions will also be deleted.',
+      args: [],
+    );
+  }
+
+  /// `Delete duplicate task? All further repetitions will also be deleted.`
+  String get deleteRepeatedTaskwarningText {
+    return Intl.message(
+      'Delete duplicate task? All further repetitions will also be deleted.',
+      name: 'deleteRepeatedTaskwarningText',
+      desc:
+          'Delete duplicate task? All further repetitions will also be deleted.',
       args: [],
     );
   }

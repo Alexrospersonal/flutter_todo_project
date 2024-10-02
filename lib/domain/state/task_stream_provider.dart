@@ -11,7 +11,6 @@ final taskStreamProvider = StreamProvider<List<TaskListItemData>>((ref) {
   var categoryId = ref.watch(selectedCategoryId);
   var filter = ref.watch(selectedFilterIndexProvider);
 
-
   var builder = TaskQueryBuilder(categoryId: categoryId);
   var taskQuery = TaskQueryBuilderDirector(builder: builder).build(filter);
 
@@ -57,7 +56,6 @@ final taskStreamProvider = StreamProvider<List<TaskListItemData>>((ref) {
   // });
 });
 
-// TODO: розширити функціонал
 TaskListItemData buildTaskListItemData(TaskEntity task) {
   var taskData = TaskListItemData(id: task.id, name: task.title);
 
@@ -72,6 +70,26 @@ TaskListItemData buildTaskListItemData(TaskEntity task) {
   if (task.taskDate != null) {
     taskData.date = task.taskDate;
   }
-  
+
+  if (task.originalTask.value != null) {
+    taskData.isCopy = true;
+  }
+
+  if (task.hasRepeats && task.isCopy) {
+    task.originalTask.loadSync();
+    var originalTask = task.originalTask.value;
+
+    originalTask!.repeatedTask.loadSync();
+    var repeatedTask = originalTask.repeatedTask.first;
+
+    taskData.repeatedDuringDay = repeatedTask.repeatDuringDay;
+    taskData.endDate = repeatedTask.endDateOfRepeatedly;
+
+    taskData.repetlyDates = List<bool>.generate(
+        7,
+        (int index) =>
+            repeatedTask.repeatDuringWeek!.contains(index + 1) ? true : false);
+  }
+
   return taskData;
 }

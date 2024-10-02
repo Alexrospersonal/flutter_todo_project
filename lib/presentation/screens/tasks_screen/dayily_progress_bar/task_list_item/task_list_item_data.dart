@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
+// TODO: Виправити баги пов'язані з відображенням дати та часу
 class TaskListItemData {
   int id;
   String name;
@@ -11,7 +12,9 @@ class TaskListItemData {
   bool important = false;
   String? category;
   DateTime? date;
+  DateTime? endDate;
   List<bool>? repetlyDates;
+  List<DateTime?>? repeatedDuringDay;
   Duration? duration;
   List<DateTime>? reminders;
   bool isCopy = false;

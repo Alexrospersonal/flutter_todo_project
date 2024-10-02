@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "additionalSettingLabel":
             MessageLookupByLibrary.simpleMessage("Додаткові налаштування"),
         "additionalTimeLabel": MessageLookupByLibrary.simpleMessage("Час"),
+        "all": MessageLookupByLibrary.simpleMessage("Всі"),
         "cancel": MessageLookupByLibrary.simpleMessage("Відмінити"),
         "color": MessageLookupByLibrary.simpleMessage("Колір завдання"),
         "confirmVuttonLabel": MessageLookupByLibrary.simpleMessage("СТВОРИТИ"),
@@ -44,6 +45,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Створити категорію"),
         "createTask": MessageLookupByLibrary.simpleMessage("Створити завдання"),
         "dailyProgress": MessageLookupByLibrary.simpleMessage("Денний прогрес"),
+        "deleteRepeatedTaskwarningText": MessageLookupByLibrary.simpleMessage(
+            "Вилалити повторюване завдання? Також будуть видалені і всі подальші повтори."),
+        "deleteRepeatedTaskwarningTitle": MessageLookupByLibrary.simpleMessage(
+            "Видалити повторюване завдання"),
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Прострочені\nзавдання:"),
         "done": MessageLookupByLibrary.simpleMessage("Завершені"),

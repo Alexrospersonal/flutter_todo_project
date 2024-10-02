@@ -45,6 +45,11 @@
     "description": "Label for tasks",
     "placeholders": {}
   },
+  "all": "Всі",
+  "@all": {
+    "description": "Label for today",
+    "placeholders": {}
+  },
   "today": "Сьогодні",
   "@today": {
     "description": "Label for today",
@@ -268,6 +273,16 @@
   "color": "Колір завдання",
   "@color": {
     "description": "Label for newest filter",
+    "placeholders": {}
+  },
+  "deleteRepeatedTaskwarningTitle": "Видалити повторюване завдання",
+  "@deleteRepeatedTaskwarningTitle": {
+    "description": "Вилалити повторюване завдання? Також будуть видалені і всі подальші повтори.",
+    "placeholders": {}
+  },
+  "deleteRepeatedTaskwarningText": "Вилалити повторюване завдання? Також будуть видалені і всі подальші повтори.",
+  "@deleteRepeatedTaskwarningText": {
+    "description": "Delete duplicate task? All further repetitions will also be deleted.",
     "placeholders": {}
   }
   

@@ -45,6 +45,8 @@ class TaskQueryBuilder {
 
   TaskQueryBuilder addFilter(TaskFilter filter) {
     switch (filter) {
+      case TaskFilter.all:
+        query = query;
       case TaskFilter.newest:
         sortedQuery = getNewestDate();
       case TaskFilter.oldest:
@@ -159,15 +161,19 @@ class TaskQueryBuilderDirector {
     return builder
         .addCategory()
         .addIsNotFinished()
-        // TODO: додати в сьогодні завдання які не мають дати
-        .addAllTaskDate()
-        // .addTaskDateIsNotNull()
+        .addTaskDateIsNotNull()
         .addFilter(TaskFilter.today)
         .build();
   }
 
+  Query<TaskEntity> buildsAll() {
+    return builder.addCategory().addIsNotFinished().addAllTaskDate().build();
+  }
+
   Query<TaskEntity> build(TaskFilter filter) {
     switch (filter) {
+      case TaskFilter.all:
+        return buildsAll();
       case TaskFilter.newest:
         return buildNewest();
       case TaskFilter.oldest:

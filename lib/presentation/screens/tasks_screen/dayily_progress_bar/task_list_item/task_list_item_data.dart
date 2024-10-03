@@ -86,6 +86,10 @@ class TaskListItemData {
   String getFormatedStartIn(Duration? startIn, S s) {
     if (date != null) {
       DateTime now = DateTime.now();
+      if (date!.isBefore(now)) {
+        return "Протерміноване";
+      }
+
       var startIn = date!.difference(now);
 
       int day = startIn.inDays;

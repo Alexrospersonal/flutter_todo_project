@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/domain/builders/directors/filtered_task_query_director.dart';
 import 'package:flutter_todo_project/domain/builders/task_query_builder.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
@@ -12,7 +13,7 @@ final taskStreamProvider = StreamProvider<List<TaskListItemData>>((ref) {
   var filter = ref.watch(selectedFilterIndexProvider);
 
   var builder = TaskQueryBuilder(categoryId: categoryId);
-  var taskQuery = TaskQueryBuilderDirector(builder: builder).build(filter);
+  var taskQuery = FilteredTaskQueryDirector(builder: builder).build(filter);
 
   var taskStream = taskQuery.watch(fireImmediately: true);
 

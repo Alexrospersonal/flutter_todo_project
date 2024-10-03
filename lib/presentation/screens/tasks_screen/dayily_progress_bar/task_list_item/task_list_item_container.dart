@@ -71,9 +71,9 @@ class TaskListItemDatesInfo extends StatelessWidget {
     String weekDays = data.repetlyDates != null
         ? data.repeatlyDaysAsStrings(S.of(context))!.join(',')
         : S.of(context).none;
-    String duration = data.duration != null
-        ? "${data.duration!.inHours} ${S.of(context).hours}"
-        : S.of(context).none;
+    // String duration = data.duration != null
+    //     ? "${data.duration!.inHours} ${S.of(context).hours}"
+    //     : S.of(context).none;
     String reminds =
         "${S.of(context).remind}: ${data.isRemidresExists() ? S.of(context).yes : S.of(context).no}";
 
@@ -90,10 +90,10 @@ class TaskListItemDatesInfo extends StatelessWidget {
           // "Mon, Tue, Sat, Wen, But, Ass",
           style: textStyle,
         ),
-        Text(
-          duration,
-          style: textStyle,
-        ),
+        // Text(
+        //   duration,
+        //   style: textStyle,
+        // ),
         Text(
           reminds,
           style: textStyle,

@@ -115,7 +115,7 @@
     "description": "Label for newest filter",
     "placeholders": {}
   },
-  "startIn": "Починається",
+  "startIn": "Починається через",
   "@startIn": {
     "description": "Label for newest filter",
     "placeholders": {}

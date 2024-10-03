@@ -30,16 +30,10 @@ class TaskFinishingController {
     var id = taskId;
 
     await DbService.db.writeTxn(() async {
-      var isNotCopy = await DbService.db.taskEntitys
-              .filter()
-              .idEqualTo(id)
-              .originalTaskIsNull()
-              .count() >
-          0;
+      var task = await DbService.db.taskEntitys
+              .get(id);
 
-      // TODO: замінити провірку на копію через поле isCopy
-
-      if (isNotCopy == false) {
+      if (task!.isCopy == true) {
         var copyTask = await DbService.db.taskEntitys.get(id);
         await copyTask!.originalTask.load();
         id = copyTask.originalTask.value!.id;
@@ -64,7 +58,7 @@ class TaskFinishingController {
         var idsCopiesOfWask = copiesOfTask.map((task) => task.id).toList();
         await DbService.db.taskEntitys.deleteAll(idsCopiesOfWask);
       }
-      // TODO: додати пошук копій якщо такі є і видалити всі в яких isFinished == false
+
       await DbService.db.taskEntitys.delete(id);
     });
   }

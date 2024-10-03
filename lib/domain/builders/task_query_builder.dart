@@ -112,6 +112,7 @@ class TaskQueryBuilderDirector {
     return builder
         .addCategory()
         .addIsNotFinished()
+        .addTaskDateIsNotNull()
         .addNotOutdated()
         .addFilter(TaskFilter.newest)
         .build();
@@ -121,6 +122,7 @@ class TaskQueryBuilderDirector {
     return builder
         .addCategory()
         .addIsNotFinished()
+        .addTaskDateIsNotNull()
         .addNotOutdated()
         .addFilter(TaskFilter.oldest)
         .build();
@@ -167,7 +169,7 @@ class TaskQueryBuilderDirector {
   }
 
   Query<TaskEntity> buildsAll() {
-    return builder.addCategory().addIsNotFinished().addAllTaskDate().build();
+    return builder.addCategory().addIsNotFinished().addAllTaskDate().addFilter(TaskFilter.oldest).build();
   }
 
   Query<TaskEntity> build(TaskFilter filter) {

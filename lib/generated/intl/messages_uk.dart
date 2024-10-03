@@ -65,7 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "none": MessageLookupByLibrary.simpleMessage("Нема"),
         "notes": MessageLookupByLibrary.simpleMessage("Замітки"),
         "oldest": MessageLookupByLibrary.simpleMessage("Найстаріші"),
-        "overdue": MessageLookupByLibrary.simpleMessage("Прострочені"),
+        "overdue": MessageLookupByLibrary.simpleMessage("Протерміноване"),
         "remind": MessageLookupByLibrary.simpleMessage("Нагадування"),
         "repeatInTime":
             MessageLookupByLibrary.simpleMessage("Повторення в години"),

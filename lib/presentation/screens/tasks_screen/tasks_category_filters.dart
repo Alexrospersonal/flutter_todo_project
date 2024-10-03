@@ -121,7 +121,7 @@ class TaskCategoryFiltersItem extends StatelessWidget {
           callback(filter);
         },
         child: Container(
-            width: 72,
+            width: 100,
             height: 22,
             decoration: decoration,
             child: Center(

@@ -85,7 +85,7 @@
     "description": "Label for newest filter",
     "placeholders": {}
   },
-  "overdue": "Прострочені",
+  "overdue": "Протерміноване",
   "@overdue": {
     "description": "Label for newest filter",
     "placeholders": {}

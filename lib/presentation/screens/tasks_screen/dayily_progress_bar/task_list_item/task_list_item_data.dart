@@ -87,7 +87,7 @@ class TaskListItemData {
     if (date != null) {
       DateTime now = DateTime.now();
       if (date!.isBefore(now)) {
-        return "Протерміноване";
+        return s.overdue;
       }
 
       var startIn = date!.difference(now);

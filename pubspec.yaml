@@ -24,6 +24,8 @@ dependencies:
   vibration: ^1.8.4
   flutter_quill: ^10.1.9
   rxdart: ^0.28.0
+  flutter_local_notifications: ^17.2.3
+  timezone: ^0.9.4
 
 dev_dependencies:
   flutter_test:

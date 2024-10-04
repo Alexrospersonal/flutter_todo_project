@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
-// TODO: Виправити баги пов'язані з відображенням дати та часу
 class TaskListItemData {
   int id;
   String name;

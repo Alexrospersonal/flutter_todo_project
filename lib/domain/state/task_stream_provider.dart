@@ -76,6 +76,10 @@ TaskListItemData buildTaskListItemData(TaskEntity task) {
     taskData.isCopy = true;
   }
 
+  if (task.notificationId != null) {
+    taskData.notificationId = task.notificationId;
+  }
+
   if (task.hasRepeats && task.isCopy) {
     task.originalTask.loadSync();
     var originalTask = task.originalTask.value;

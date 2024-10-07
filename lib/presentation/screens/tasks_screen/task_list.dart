@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/contollers/task_finishing_controller.dart';
 import 'package:flutter_todo_project/domain/contollers/task_list_controller.dart';
+import 'package:flutter_todo_project/domain/services/notification_service.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/domain/state/task_stream_provider.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
@@ -96,6 +97,9 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
     } else {
       removeFromAnimatedList(index, tasks[index]);
       removeAfterSnackBar(index, delete);
+    }
+    if (tasks[index].notificationId != null) {
+      NotificationService.cancelNotification(tasks[index].notificationId!);
     }
   }
 

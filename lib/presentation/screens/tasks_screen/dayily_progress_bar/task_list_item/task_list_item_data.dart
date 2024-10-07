@@ -17,6 +17,7 @@ class TaskListItemData {
   Duration? duration;
   List<DateTime>? reminders;
   bool isCopy = false;
+  int? notificationId;
 
   TaskListItemData({required this.id, required this.name});
 
@@ -108,21 +109,4 @@ class TaskListItemData {
   bool isRemidresExists() {
     return reminders != null ? true : false;
   }
-}
-
-TaskListItemData buildTask(String taskName, List<bool> repeatlyDays, bool important, Color? color) {
-  var task1 = TaskListItemData(id: 1, name: taskName);
-  if (important) {
-    task1.important = true;
-  }
-  if (color != null) {
-    task1.color = color;
-  }
-  task1.addCategory("Home");
-  task1.addDate(DateTime(2024, 9, 12, 17, 33));
-  task1.addrepetlyDate(repeatlyDays);
-  task1.addDuration(const Duration(hours: 7));
-  task1.addRemiders([DateTime(2024, 8, 12, 17, 33)]);
-
-  return task1;
 }

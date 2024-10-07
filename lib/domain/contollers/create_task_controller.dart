@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/builders/repeated_task_builder_director.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_todo_project/domain/builders/task_builder_director.dart'
 import 'package:flutter_todo_project/domain/builders/task_entity_date_time_data_builder.dart';
 import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
+import 'package:flutter_todo_project/domain/services/notification_service.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
 import 'package:provider/provider.dart';
@@ -76,6 +79,8 @@ class CreateTaskController {
         } else {
           await createAndSaveOneCopiedTask(task, nextDate);
         }
+      } else if (task.taskDate != null) {
+        addNotification(task);
       }
     });
   }
@@ -87,6 +92,7 @@ class CreateTaskController {
     for (var time in times) {
       var dateWithTime = copyTimeToNewDate(nextDate, time!);
       var copiestTask = createCopyTaskFromRepeated(task, dateWithTime);
+      addNotificationIdToCopy(copiestTask);
       copiestTasks.add(copiestTask);
     }
 
@@ -96,17 +102,35 @@ class CreateTaskController {
       addCategory(task, copiestTask);
       addOriginalTask(task, copiestTask);
     }
+
+    for (var copiestTask in copiestTasks) {
+      addNotification(copiestTask);
+    }
+  }
+
+  void addNotificationIdToCopy(TaskEntity copiestTask) {
+    copiestTask.notificationId = Random().nextInt(999999) + 1;
   }
 
   Future<void> createAndSaveOneCopiedTask(
       TaskEntity task, DateTime nextDate) async {
     var dateWithTime = copyTimeToNewDate(nextDate, task.taskDate!);
     var copiestTask = createCopyTaskFromRepeated(task, dateWithTime);
+    addNotificationIdToCopy(copiestTask);
 
     await DbService.db.taskEntitys.put(copiestTask);
 
     addCategory(task, copiestTask);
     addOriginalTask(task, copiestTask);
+
+    addNotification(copiestTask);
+  }
+
+  void addNotification(TaskEntity task) {
+    var notificationDate =
+        task.taskDate!.copyWith(minute: task.taskDate!.minute - 1);
+    NotificationService.scheduleNotification(
+        task.notificationId!, "нагадування", task.title, notificationDate);
   }
 
   DateTime getNextDate(List<int> weekdays) {

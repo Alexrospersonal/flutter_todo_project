@@ -27,6 +27,7 @@ class TaskBuilderDirector {
         .setDate()
         .setTime()
         .setHasRepeats()
+        .setNotificationId()
         .build();
   }
 }

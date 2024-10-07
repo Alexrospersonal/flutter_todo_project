@@ -3,7 +3,17 @@ import 'package:timezone/timezone.dart';
 
 class NotificationService {
   static Future<void> onDidReceiveBackgroundNotificationResponse(
-      NotificationResponse response) async {}
+      NotificationResponse response) async {
+    print("Notification tapped");
+
+    // Якщо додаток в фоновому режимі або закритий, відкриється
+    // Додайте тут навігацію, якщо потрібно відкрити певний екран
+    if (response.payload != null) {
+      // Наприклад, можна обробити payload (дані) та виконати навігацію
+      // String? payload = response.payload;
+      // Виклик навігації або іншої дії
+    }
+  }
 
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -20,11 +30,12 @@ class NotificationService {
       iOS: iOSinitializationSettings,
     );
 
+    // Фукнція яка викликається при тапі на сповіщення
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse:
             (NotificationResponse response) async {
       // Додайте логіку обробки натискання на сповіщення тут
-      print("Tapped on notification");
+      // print("Tapped on notification");
     },
         onDidReceiveBackgroundNotificationResponse:
             onDidReceiveBackgroundNotificationResponse);
@@ -38,23 +49,26 @@ class NotificationService {
   static Future<void> showInstantNotification(String title, String body) async {
     const NotificationDetails platrofmChanelSpecifics = NotificationDetails(
         android: AndroidNotificationDetails("channel_Id", "channel_Name",
-            importance: Importance.high, priority: Priority.high),
+            importance: Importance.high,
+            priority: Priority.high,
+            autoCancel: true),
         iOS: DarwinNotificationDetails());
     await flutterLocalNotificationsPlugin.show(
         0, title, body, platrofmChanelSpecifics);
   }
 
-  static Future<void> scheduleNotification(
+  static Future<void> scheduleNotification(int id, 
       String title, String body, DateTime scheduledDate) async {
     const NotificationDetails platrofmChanelSpecifics = NotificationDetails(
         android: AndroidNotificationDetails("channel_Id", "channel_Name",
             importance: Importance.high, priority: Priority.high),
         iOS: DarwinNotificationDetails());
 
-    await flutterLocalNotificationsPlugin.zonedSchedule(1, title, body,
+    await flutterLocalNotificationsPlugin.zonedSchedule(id, title, body,
         TZDateTime.from(scheduledDate, local), platrofmChanelSpecifics,
         uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime, matchDateTimeComponents: DateTimeComponents.dateAndTime);
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dateAndTime);
   }
 
   static Future<void> cancelNotification(int notificationId) async {

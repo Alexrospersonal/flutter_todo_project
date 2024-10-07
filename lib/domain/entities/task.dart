@@ -38,6 +38,8 @@ class TaskEntity {
 
   bool isCopy = false;
 
+  int? notificationId;
+
   TaskEntity({required this.title});
 
   TaskEntity copyWith(

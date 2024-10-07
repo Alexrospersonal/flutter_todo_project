@@ -52,13 +52,18 @@ const TaskEntitySchema = CollectionSchema(
       name: r'notate',
       type: IsarType.string,
     ),
-    r'taskDate': PropertySchema(
+    r'notificationId': PropertySchema(
       id: 7,
+      name: r'notificationId',
+      type: IsarType.long,
+    ),
+    r'taskDate': PropertySchema(
+      id: 8,
       name: r'taskDate',
       type: IsarType.dateTime,
     ),
     r'title': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'title',
       type: IsarType.string,
     )
@@ -147,8 +152,9 @@ void _taskEntitySerialize(
   writer.writeBool(offsets[4], object.isCopy);
   writer.writeBool(offsets[5], object.isFinished);
   writer.writeString(offsets[6], object.notate);
-  writer.writeDateTime(offsets[7], object.taskDate);
-  writer.writeString(offsets[8], object.title);
+  writer.writeLong(offsets[7], object.notificationId);
+  writer.writeDateTime(offsets[8], object.taskDate);
+  writer.writeString(offsets[9], object.title);
 }
 
 TaskEntity _taskEntityDeserialize(
@@ -158,7 +164,7 @@ TaskEntity _taskEntityDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TaskEntity(
-    title: reader.readString(offsets[8]),
+    title: reader.readString(offsets[9]),
   );
   object.color = reader.readLongOrNull(offsets[0]);
   object.hasRepeats = reader.readBool(offsets[1]);
@@ -168,7 +174,8 @@ TaskEntity _taskEntityDeserialize(
   object.isCopy = reader.readBool(offsets[4]);
   object.isFinished = reader.readBool(offsets[5]);
   object.notate = reader.readStringOrNull(offsets[6]);
-  object.taskDate = reader.readDateTimeOrNull(offsets[7]);
+  object.notificationId = reader.readLongOrNull(offsets[7]);
+  object.taskDate = reader.readDateTimeOrNull(offsets[8]);
   return object;
 }
 
@@ -194,8 +201,10 @@ P _taskEntityDeserializeProp<P>(
     case 6:
       return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 8:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 9:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -744,6 +753,80 @@ extension TaskEntityQueryFilter
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      notificationIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'notificationId',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      notificationIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'notificationId',
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      notificationIdEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'notificationId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      notificationIdGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'notificationId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      notificationIdLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'notificationId',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition>
+      notificationIdBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'notificationId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> taskDateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1188,6 +1271,19 @@ extension TaskEntityQuerySortBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByNotificationId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy>
+      sortByNotificationIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationId', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> sortByTaskDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taskDate', Sort.asc);
@@ -1311,6 +1407,19 @@ extension TaskEntityQuerySortThenBy
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByNotificationId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy>
+      thenByNotificationIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'notificationId', Sort.desc);
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QAfterSortBy> thenByTaskDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taskDate', Sort.asc);
@@ -1381,6 +1490,12 @@ extension TaskEntityQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByNotificationId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'notificationId');
+    });
+  }
+
   QueryBuilder<TaskEntity, TaskEntity, QDistinct> distinctByTaskDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'taskDate');
@@ -1442,6 +1557,12 @@ extension TaskEntityQueryProperty
   QueryBuilder<TaskEntity, String?, QQueryOperations> notateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'notate');
+    });
+  }
+
+  QueryBuilder<TaskEntity, int?, QQueryOperations> notificationIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'notificationId');
     });
   }
 

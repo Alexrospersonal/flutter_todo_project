@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_todo_project/domain/builders/entity_builder.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
@@ -54,6 +56,11 @@ class TaskBuilder implements EntityBuilder<TaskEntity> {
   TaskBuilder setHasRepeats() {
     var hasRepeats = dependencies.repeatlyNotifier.repeatOfDays.any((day) => day);
     _entity?.hasRepeats = hasRepeats;
+    return this;
+  }
+
+  TaskBuilder setNotificationId() {
+    _entity?.notificationId = Random().nextInt(999999) + 1;
     return this;
   }
 

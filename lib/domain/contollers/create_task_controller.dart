@@ -2,15 +2,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
-import 'package:flutter_todo_project/domain/builders/repeated_task_builder_director.dart';
+import 'package:flutter_todo_project/domain/builders/directors/repeated_task_builder_director.dart';
 import 'package:flutter_todo_project/domain/builders/task_builder.dart';
-import 'package:flutter_todo_project/domain/builders/task_builder_director.dart';
+import 'package:flutter_todo_project/domain/builders/directors/task_builder_director.dart';
 import 'package:flutter_todo_project/domain/builders/task_entity_date_time_data_builder.dart';
 import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/services/notification_service.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
+import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
 class CreateTaskController {
@@ -130,7 +131,7 @@ class CreateTaskController {
     var notificationDate =
         task.taskDate!.copyWith(minute: task.taskDate!.minute - 1);
     NotificationService.scheduleNotification(
-        task.notificationId!, "нагадування", task.title, notificationDate);
+        task.notificationId!, S.of(context).notificationTitle, task.title, notificationDate);
   }
 
   DateTime getNextDate(List<int> weekdays) {

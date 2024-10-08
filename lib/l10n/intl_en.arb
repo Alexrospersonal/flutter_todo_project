@@ -284,5 +284,10 @@
   "@deleteRepeatedTaskwarningText": {
     "description": "Delete duplicate task? All further repetitions will also be deleted.",
     "placeholders": {}
+  },
+  "notificationTitle": "Task",
+  "@notificationTitle": {
+    "description": "Delete duplicate task? All further repetitions will also be deleted.",
+    "placeholders": {}
   }
 }

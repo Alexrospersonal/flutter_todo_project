@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/domain/builders/directors/filtered_task_query_director.dart';
+import 'package:flutter_todo_project/domain/builders/task_list_item_data_builder.dart';
 import 'package:flutter_todo_project/domain/builders/task_query_builder.dart';
 import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
@@ -58,43 +59,13 @@ final taskStreamProvider = StreamProvider<List<TaskListItemData>>((ref) {
 });
 
 TaskListItemData buildTaskListItemData(TaskEntity task) {
-  var taskData = TaskListItemData(id: task.id, name: task.title);
-
-  if (task.category.value != null) {
-    taskData.category = task.category.value.toString();
-  }
-
-  if (task.color != null) {
-    taskData.color = Color(task.color!);
-  }
-
-  if (task.taskDate != null) {
-    taskData.date = task.taskDate;
-  }
-
-  if (task.originalTask.value != null) {
-    taskData.isCopy = true;
-  }
-
-  if (task.notificationId != null) {
-    taskData.notificationId = task.notificationId;
-  }
-
-  if (task.hasRepeats && task.isCopy) {
-    task.originalTask.loadSync();
-    var originalTask = task.originalTask.value;
-
-    originalTask!.repeatedTask.loadSync();
-    var repeatedTask = originalTask.repeatedTask.first;
-
-    taskData.repeatedDuringDay = repeatedTask.repeatDuringDay;
-    taskData.endDate = repeatedTask.endDateOfRepeatedly;
-
-    taskData.repetlyDates = List<bool>.generate(
-        7,
-        (int index) =>
-            repeatedTask.repeatDuringWeek!.contains(index + 1) ? true : false);
-  }
-
-  return taskData;
+  return TaskItemDataBuilder(task: task)
+      .createTaskData()
+      .addCategory()
+      .addColor()
+      .addDate()
+      .addIsOriginal()
+      .addNotificationId()
+      .addRepeatedData()
+      .build();
 }

@@ -621,6 +621,17 @@ class S {
       args: [],
     );
   }
+
+  /// `Task`
+  String get notificationTitle {
+    return Intl.message(
+      'Task',
+      name: 'notificationTitle',
+      desc:
+          'Delete duplicate task? All further repetitions will also be deleted.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

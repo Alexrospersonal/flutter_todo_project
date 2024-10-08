@@ -62,6 +62,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "none": MessageLookupByLibrary.simpleMessage("None"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "notificationTitle": MessageLookupByLibrary.simpleMessage("Task"),
         "oldest": MessageLookupByLibrary.simpleMessage("Oldest"),
         "overdue": MessageLookupByLibrary.simpleMessage("Overdue"),
         "remind": MessageLookupByLibrary.simpleMessage("Remind"),

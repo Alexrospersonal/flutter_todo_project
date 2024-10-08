@@ -21,30 +21,6 @@ class TaskListItemData {
 
   TaskListItemData({required this.id, required this.name});
 
-  void addCategory(String category) {
-    this.category = category;
-  }
-
-  void addColor(Color color) {
-    this.color = color;
-  }
-
-  void addDate(DateTime? date) {
-    this.date = date;
-  }
-
-  void addDuration(Duration duration) {
-    this.duration = duration;
-  }
-
-  void addrepetlyDate(List<bool> list) {
-    repetlyDates = list;
-  }
-
-  void addRemiders(List<DateTime> newReminders) {
-    reminders = newReminders;
-  }
-
   List<String>? repeatlyDaysAsStrings(S s) {
     final dateFormat = DateFormat('EEE');
 

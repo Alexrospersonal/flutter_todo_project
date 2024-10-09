@@ -43,6 +43,13 @@ class TaskListController {
         i--;
       }
     }
+    if (tasks.isEmpty && newTasks.isNotEmpty) {
+      final initialLength = tasks.length;
+      tasks = List.from(newTasks);
+      for (var i = initialLength; i < newTasks.length; i++) {
+        listKey.currentState?.insertItem(i);
+      }
+    }
   }
 
   void syncAndRemoveFromAnimatedList(List<TaskListItemData> newTasks) {
@@ -54,6 +61,7 @@ class TaskListController {
   }
 
   List<TaskListItemData> updateList(List<TaskListItemData> newTasks) {
+    // TODO: тестування відображення списків.
     if (tasks.isEmpty) {
       tasks = List.from(newTasks);
       insertAllTasksToAnimationState();

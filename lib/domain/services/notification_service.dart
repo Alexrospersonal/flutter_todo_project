@@ -4,7 +4,7 @@ import 'package:timezone/timezone.dart';
 class NotificationService {
   static Future<void> onDidReceiveBackgroundNotificationResponse(
       NotificationResponse response) async {
-    print("Notification tapped");
+    // print("Notification tapped");
 
     // Якщо додаток в фоновому режимі або закритий, відкриється
     // Додайте тут навігацію, якщо потрібно відкрити певний екран

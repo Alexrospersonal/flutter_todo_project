@@ -142,7 +142,7 @@ class _TaskFormState extends ConsumerState<TaskForm> {
               action: () {
                 if (_titleController.text.isNotEmpty) {
                   saveTextFromControllersToNotifier();
-                  CreateTaskController(context: context).saveTask();
+                  CreateTaskController(context: context).saveTask(ref);
                   ref.read(categoriesProvider.notifier).loadCategories();
                   return true;
                 }

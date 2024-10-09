@@ -46,20 +46,21 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
   Future<CategoryData> buildCategoryData(CategoryEntity cat) async {
     int tasks = 0;
 
-    if (cat.name == "#01") {
-      var today = DateTime.now().copyWith(hour: 0, minute: 0);
-      tasks = await DbService.db.taskEntitys
-          .filter()
-          .isFinishedEqualTo(false)
-          .taskDateBetween(today.subtract(const Duration(days: 1)),
-              today.add(const Duration(days: 1)))
-          .group((q) =>
-              q.taskDateIsNull().or().taskDateGreaterThan(DateTime.now()))
-          .count();
-    } else {
-      cat.tasks.load();
-      tasks = await cat.tasks.filter().isFinishedEqualTo(false).count();
-    }
+    cat.tasks.load();
+    // TODO: Тестування категорій. 
+    tasks = await cat.tasks
+        .filter()
+        .isFinishedEqualTo(false)
+        .group(
+            (q) => q.taskDateGreaterThan(DateTime.now()).or().taskDateIsNull())
+        .group((q) => q
+            .isCopyEqualTo(false)
+            .or()
+            .isCopyEqualTo(true)
+            .and()
+            .originalTask((q) => q.originalTaskIsNull()))
+        .count();
+    // tasks = await cat.tasks.filter().isFinishedEqualTo(false).count();
     return CategoryData(
         name: cat.name, emoji: cat.emoji, tasks: tasks, categoryId: cat.id);
   }

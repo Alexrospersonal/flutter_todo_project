@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todo_project/data/services/db_service.dart';
 import 'package:flutter_todo_project/domain/builders/directors/repeated_task_builder_director.dart';
 import 'package:flutter_todo_project/domain/builders/task_builder.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/services/notification_service.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_date_notifier.dart';
 import 'package:flutter_todo_project/domain/state/build_task_notifiers/task_dependencies_notifier.dart';
+import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +49,7 @@ class CreateTaskController {
     return repeatedTaskEntity;
   }
 
-  void saveTask() {
+  void saveTask(WidgetRef ref) {
     TaskDependencies dependencies = TaskDependencies.fromContext(context);
 
     var task = buildTask(dependencies);
@@ -83,7 +85,8 @@ class CreateTaskController {
       } else if (task.taskDate != null) {
         addNotification(task);
       }
-    });
+    }).then(
+        (onValue) => ref.read(categoriesProvider.notifier).loadCategories());
   }
 
   Future<void> createAndSaveAllCopiedTasks(
@@ -130,8 +133,8 @@ class CreateTaskController {
   void addNotification(TaskEntity task) {
     var notificationDate =
         task.taskDate!.copyWith(minute: task.taskDate!.minute - 1);
-    NotificationService.scheduleNotification(
-        task.notificationId!, S.of(context).notificationTitle, task.title, notificationDate);
+    NotificationService.scheduleNotification(task.notificationId!,
+        S.of(context).notificationTitle, task.title, notificationDate);
   }
 
   DateTime getNextDate(List<int> weekdays) {

@@ -10,12 +10,15 @@ class TaskQueryBuilder {
   final int categoryId;
 
   TaskQueryBuilder({required this.categoryId})
-      : query = DbService.db.taskEntitys.filter().isFinishedEqualTo(false).group((q) => q
-              .isCopyEqualTo(true)
-              .or()
-              .isCopyEqualTo(false)
-              .and()
-              .hasRepeatsEqualTo(false));
+      : query = DbService.db.taskEntitys
+            .filter()
+            // .isFinishedEqualTo(false)
+            .group((q) => q
+                .isCopyEqualTo(true)
+                .or()
+                .isCopyEqualTo(false)
+                .and()
+                .hasRepeatsEqualTo(false));
 
   TaskQueryBuilder addCategory() {
     query = query.category((q) => q.idEqualTo(categoryId));

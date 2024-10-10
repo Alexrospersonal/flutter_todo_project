@@ -2,10 +2,17 @@ import 'dart:ui';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todo_project/data/services/db_service.dart';
+import 'package:flutter_todo_project/domain/entities/category.dart';
+import 'package:flutter_todo_project/domain/entities/finished_task_entity.dart';
+import 'package:flutter_todo_project/domain/entities/overdue_task_entity.dart';
+import 'package:flutter_todo_project/domain/entities/repeated_task_entity.dart';
+import 'package:flutter_todo_project/domain/entities/task.dart';
 import 'package:flutter_todo_project/domain/state/list_state.dart';
 import 'package:flutter_todo_project/generated/l10n.dart';
 import 'package:flutter_todo_project/presentation/create_task_dialog/category/category_creator_widget.dart';
 import 'package:flutter_todo_project/presentation/styles/theme_styles.dart';
+import 'package:isar/isar.dart';
 
 class CategoryList extends ConsumerStatefulWidget {
   const CategoryList({super.key});
@@ -49,19 +56,68 @@ class _CategoryListState extends ConsumerState<CategoryList> {
 
               bool isSelected = selectedIndex == index;
 
-              return GestureDetector(
-                onTap: () {
-                  ref.read(selectedCategoryId.notifier).state = list[index].categoryId;
+              return Material(
+                color: isSelected ? primaryColor : Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(bigBorderRadius),
+                child: InkWell(
+                  highlightColor: cancelBtnColor,
+                  splashColor:
+                      Theme.of(context).colorScheme.primary.withBlue(200),
+                  borderRadius: BorderRadius.circular(bigBorderRadius),
+                  onLongPress: () async {
+                    var categoryId = list[index].categoryId;
 
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                child: CategoryListItemContainer(
-                    isSelected: isSelected,
-                    categoryText: list[index].name == "#01" ? today : list[index].name,
-                    emoji: list[index].emoji,
-                    tasksCount: list[index].tasks),
+                    // TODO: Testing and Refactoring
+
+                    await DbService.db.writeTxn(() async {
+                      final category =
+                          await DbService.db.categoryEntitys.get(categoryId);
+
+                      if (category != null) {
+                        var tasks = await DbService.db.taskEntitys.filter().category((q) => q.idEqualTo(categoryId)).findAll();
+
+                        for (final task in tasks) {
+                          await DbService
+                              .db.repeatedTaskEntitys
+                              .filter()
+                              .task((q) => q.idEqualTo(task.id))
+                              .deleteAll();
+
+                          await DbService
+                              .db.overdueTaskEntitys
+                              .filter()
+                              .task((q) => q.idEqualTo(task.id))
+                              .deleteAll();
+
+                          await DbService
+                              .db.finishedTaskEntitys
+                              .filter()
+                              .task((q) => q.idEqualTo(task.id))
+                              .deleteAll();
+
+                          await DbService.db.taskEntitys.delete(task.id);
+                        }
+
+                        await DbService.db.categoryEntitys.delete(categoryId);
+                      }
+                    });
+                    await ref.read(categoriesProvider.notifier).loadCategories();
+                  },
+                  onTap: () {
+                    ref.read(selectedCategoryId.notifier).state =
+                        list[index].categoryId;
+
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  child: CategoryListItemContainer(
+                      isSelected: isSelected,
+                      categoryText:
+                          list[index].name == "#01" ? today : list[index].name,
+                      emoji: list[index].emoji,
+                      tasksCount: list[index].tasks),
+                ),
               );
             },
           );
@@ -92,7 +148,8 @@ class CreateCategoryButton extends StatelessWidget {
           builder: (BuildContext context) {
             return BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: CategoryCreatorWidget(context: context, getCreatedCategoryId: (p0) {}));
+                child: CategoryCreatorWidget(
+                    context: context, getCreatedCategoryId: (p0) {}));
           },
         );
       },
@@ -135,8 +192,9 @@ class CategoryListItemContainer extends StatelessWidget {
     return Container(
       width: 125,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(bigBorderRadius),
-          color: isSelected ? primaryColor : Theme.of(context).cardColor),
+        borderRadius: BorderRadius.circular(bigBorderRadius),
+        // color: isSelected ? primaryColor : Theme.of(context).cardColor
+      ),
       child: Container(
         padding: const EdgeInsets.all(10),
         child: Stack(alignment: Alignment.topCenter, children: [
@@ -149,7 +207,8 @@ class CategoryListItemContainer extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   height: 1,
-                  color: isSelected ? Theme.of(context).canvasColor : textColor),
+                  color:
+                      isSelected ? Theme.of(context).canvasColor : textColor),
             ),
           ),
           Positioned(

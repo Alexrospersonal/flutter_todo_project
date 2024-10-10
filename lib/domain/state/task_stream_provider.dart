@@ -62,6 +62,7 @@ TaskListItemData buildTaskListItemData(TaskEntity task) {
       .addCategory()
       .addColor()
       .addDate()
+      .addHasTime()
       .addIsOriginal()
       .addNotificationId()
       .addRepeatedData()

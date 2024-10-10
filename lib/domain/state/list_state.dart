@@ -46,11 +46,17 @@ class ListCategoryFromDbNotifier extends AsyncNotifier<List<CategoryData>> {
   Future<CategoryData> buildCategoryData(CategoryEntity cat) async {
     int tasks = 0;
 
+    DateTime startOfDay =
+        DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0);
+
     cat.tasks.load();
     // TODO: Тестування категорій. 
     tasks = await cat.tasks
         .filter()
         .isFinishedEqualTo(false)
+        .group((q) =>
+            q.hasTimeEqualTo(false).and().taskDateLessThan(startOfDay))
+            .or()
         .group(
             (q) => q.taskDateGreaterThan(DateTime.now()).or().taskDateIsNull())
         .group((q) => q

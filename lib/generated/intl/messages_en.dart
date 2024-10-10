@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Determinated\ntasks:"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
+        "duringTheDay": MessageLookupByLibrary.simpleMessage("During the day"),
         "hours": MessageLookupByLibrary.simpleMessage("hours"),
         "important": MessageLookupByLibrary.simpleMessage("Important"),
         "isComing": MessageLookupByLibrary.simpleMessage("Is coming"),

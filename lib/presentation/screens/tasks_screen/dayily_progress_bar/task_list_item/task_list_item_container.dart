@@ -11,8 +11,6 @@ class TaskListItemContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String startIn = S.of(context).startIn;
-
     return Container(
       height: 64,
       padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 13),
@@ -40,7 +38,7 @@ class TaskListItemContainer extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
-                    "$startIn: ${data.getFormatedStartIn(data.startIn, S.of(context))}",
+                    data.getFormatedStartIn(data.startIn, S.of(context)),
                     style: Theme.of(context).textTheme.labelSmall,
                   )
                 ],

@@ -289,6 +289,11 @@
   "@notificationTitle": {
     "description": "Delete duplicate task? All further repetitions will also be deleted.",
     "placeholders": {}
+  },
+  "duringTheDay": "Протягом дня",
+  "@duringTheDay": {
+    "description": "Delete duplicate task? All further repetitions will also be deleted.",
+    "placeholders": {}
   }
   
 }

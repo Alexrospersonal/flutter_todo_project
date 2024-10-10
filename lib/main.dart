@@ -17,7 +17,7 @@ void main() async {
   await NotificationService.init();
   await DbService.initialize();
   initializeTimeZones();
-  // TODO: test adding categories
+
   List<CategoryEntity> categories = await DbService.db.categoryEntitys.where().findAll();
   if (categories.isEmpty) {
     final initialCategories = [

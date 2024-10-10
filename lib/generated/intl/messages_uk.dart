@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "determinatedTasks":
             MessageLookupByLibrary.simpleMessage("Прострочені\nзавдання:"),
         "done": MessageLookupByLibrary.simpleMessage("Завершені"),
+        "duringTheDay": MessageLookupByLibrary.simpleMessage("Протягом дня"),
         "hours": MessageLookupByLibrary.simpleMessage("годин"),
         "important": MessageLookupByLibrary.simpleMessage("Важливі"),
         "isComing": MessageLookupByLibrary.simpleMessage("Майбутні"),

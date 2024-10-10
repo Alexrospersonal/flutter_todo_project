@@ -41,6 +41,11 @@ class TaskItemDataBuilder {
     return this;
   }
 
+  TaskItemDataBuilder addHasTime() {
+    taskData?.hasTime = task.hasTime;
+    return this;
+  }
+
   TaskItemDataBuilder addIsOriginal() {
     if (task.originalTask.value != null) {
       taskData?.isCopy = true;

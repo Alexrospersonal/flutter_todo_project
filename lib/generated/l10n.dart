@@ -632,6 +632,17 @@ class S {
       args: [],
     );
   }
+
+  /// `During the day`
+  String get duringTheDay {
+    return Intl.message(
+      'During the day',
+      name: 'duringTheDay',
+      desc:
+          'Delete duplicate task? All further repetitions will also be deleted.',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

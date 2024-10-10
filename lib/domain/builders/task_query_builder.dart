@@ -26,8 +26,20 @@ class TaskQueryBuilder {
   }
 
   TaskQueryBuilder addNotOutdated() {
-    query = query.group(
-        (q) => q.taskDateIsNull().or().taskDateGreaterThan(DateTime.now()));
+    DateTime startOfDay =
+        DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0);
+    DateTime endOfDay = DateTime.now()
+        .copyWith(hour: 23, minute: 59, second: 59, millisecond: 999);
+
+    query = query.group((q) => q
+        .taskDateIsNull()
+        .or()
+        .taskDateGreaterThan(DateTime.now())
+        .or()
+        .group((q) => q
+            .hasTimeEqualTo(false)
+            .and()
+            .taskDateBetween(startOfDay, endOfDay)));
     return this;
   }
 
@@ -89,7 +101,27 @@ class TaskQueryBuilder {
   }
 
   QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> getOutdated() {
-    return query.taskDateLessThan(DateTime.now());
+    // DateTime endOfDay = DateTime.now()
+    //     .copyWith(hour: 23, minute: 59, second: 59, millisecond: 999);
+
+    DateTime startOfDay =
+        DateTime.now().copyWith(hour: 0, minute: 0, second: 0, millisecond: 0);
+
+    // .group(
+    //     (q) => q.hasTimeEqualTo(false).and().taskDateGreaterThan(endOfDay))
+
+    return query
+        .group((q) =>
+            query.hasTimeEqualTo(false).and().taskDateLessThan(startOfDay))
+        .or()
+        .group((q) =>
+            query.hasTimeEqualTo(true).and().taskDateLessThan(DateTime.now()));
+
+    // return query.hasTimeEqualTo(false).and().taskDateLessThan(startOfDay);
+
+    // return query.hasTimeEqualTo(true).and().taskDateLessThan(DateTime.now());
+
+    // return query.taskDateLessThan(DateTime.now());
   }
 
   QueryBuilder<TaskEntity, TaskEntity, QAfterFilterCondition> getToday() {

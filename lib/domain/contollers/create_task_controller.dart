@@ -96,6 +96,7 @@ class CreateTaskController {
     for (var time in times) {
       var dateWithTime = copyTimeToNewDate(nextDate, time!);
       var copiestTask = createCopyTaskFromRepeated(task, dateWithTime);
+      copiestTask.hasTime = true;
       addNotificationIdToCopy(copiestTask);
       copiestTasks.add(copiestTask);
     }
@@ -121,6 +122,7 @@ class CreateTaskController {
     var dateWithTime = copyTimeToNewDate(nextDate, task.taskDate!);
     var copiestTask = createCopyTaskFromRepeated(task, dateWithTime);
     addNotificationIdToCopy(copiestTask);
+    copiestTask.hasTime = task.hasTime;
 
     await DbService.db.taskEntitys.put(copiestTask);
 
